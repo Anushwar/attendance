@@ -1,5 +1,5 @@
-import { updateUser } from "../actions";
-import { postAdminLogin, postAdminRegister } from "../api";
+import { updateUser } from '../actions';
+import { postAdminLogin, postAdminRegister } from '../api';
 
 const dispatchRegisterUser = (uid, name, role, password) => {
   return async (dispatch) => {

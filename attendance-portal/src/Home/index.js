@@ -1,17 +1,17 @@
 /** @jsxImportSource @emotion/core */
-import { Button } from "@chakra-ui/core";
-import styled from "@emotion/styled";
-import { Link  } from "react-router-dom";
+import { Button } from '@chakra-ui/core';
+import styled from '@emotion/styled';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div({
-  display: "flex",
-  flexDirection: "column",
+  display: 'flex',
+  flexDirection: 'column',
   margin: 30,
 });
 
 const HomeButton = styled(Button)({
-  marginTop:30,
-  width:'100%',
+  marginTop: 30,
+  width: '100%',
 });
 
 const Admin = () => {

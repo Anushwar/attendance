@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/core */
-import { Button } from "@chakra-ui/core";
-import { Link, useRouteMatch } from "react-router-dom";
+
+import { Button } from '@chakra-ui/core';
+import { Link, useRouteMatch } from 'react-router-dom';
 
 const Dashboard = () => {
   const { path } = useRouteMatch();

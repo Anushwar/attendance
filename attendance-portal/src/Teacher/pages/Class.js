@@ -1,11 +1,7 @@
 /** @jsxImportSource @emotion/core */
 
 const Class = () => {
-    return (
-        <div>
-            
-        </div>
-    );
+  return <div />;
 };
 
 export default Class;
