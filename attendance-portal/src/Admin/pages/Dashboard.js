@@ -14,6 +14,9 @@ const Dashboard = () => {
       <Link to={`${path}/register`}>
         <Button>Register</Button>
       </Link>
+      <Link to={`${path}/create/teacher`}>
+        <Button css={{ marginLeft: 20 }}>Create Teacher</Button>
+      </Link>
     </>
   );
 };
