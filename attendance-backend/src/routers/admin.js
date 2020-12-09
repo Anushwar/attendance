@@ -9,7 +9,7 @@ router.use(adminAuth);
 /**
  * request  :  { tid, name, password }
  *
- * response :  201 CREATED EMPTY-RESPONSE
+ * response :  201 CREATED RESPONSE-USER
  */
 router.post('/teachers', postAdminTeacherRegisterController);
 

@@ -1,12 +1,15 @@
 /** @jsxImportSource @emotion/core */
 import { Input, Button } from '@chakra-ui/core';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useRouteMatch, Redirect } from 'react-router-dom';
 import { dispatchLoginUser } from '../../redux/triggers';
 
 const Login = () => {
   const [uid, setUid] = useState('');
   const [password, setPassword] = useState('');
+  const admin = useSelector(({ adminData }) => adminData.user);
+  const { path } = useRouteMatch();
   const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
@@ -17,6 +20,9 @@ const Login = () => {
       //
     }
   };
+  if (!admin) {
+    return <Redirect to={path} />;
+  }
 
   return (
     <form css={{ maxWidth: 300 }} onSubmit={handleSubmit}>

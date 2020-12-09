@@ -10,6 +10,7 @@ exports.adminAuth = async (req, res, next) => {
   }
   try {
     const user = await getAdminDetails(id);
+    req.user = user;
     if (user.password !== password) {
       unauthorizedResponse(res, createPermissionError('admin_password_mismatch', 'Admin password does not match'));
       return;
