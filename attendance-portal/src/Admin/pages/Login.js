@@ -2,36 +2,35 @@
 import { Input, Button } from '@chakra-ui/core';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useRouteMatch, Redirect } from 'react-router-dom';
-import { dispatchLoginUser } from '../../redux/triggers';
+import { Redirect } from 'react-router-dom';
+import { dispatchLoginAdminUser } from '../../redux/triggers';
 
 const Login = () => {
-  const [uid, setUid] = useState('');
+  const [aid, setAid] = useState('');
   const [password, setPassword] = useState('');
   const admin = useSelector(({ adminData }) => adminData.user);
-  const { path } = useRouteMatch();
   const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await dispatchLoginUser(uid, password)(dispatch);
+      await dispatchLoginAdminUser(aid, password)(dispatch);
     } catch (error) {
       //
     }
   };
-  if (!admin) {
-    return <Redirect to={path} />;
+  if (admin) {
+    return <Redirect to="/admin" />;
   }
 
   return (
     <form css={{ maxWidth: 300 }} onSubmit={handleSubmit}>
-      <p>This is register page</p>
+      <p>This is login page</p>
       <Input
-        placeholder="uid"
-        value={uid}
+        placeholder="aid"
+        value={aid}
         onChange={(e) => {
-          setUid(e.target.value);
+          setAid(e.target.value);
         }}
       />
       <Input
@@ -43,7 +42,7 @@ const Login = () => {
         }}
       />
       <Button type="submit" css={{ width: '100%', marginTop: 10 }}>
-        Register
+        Login
       </Button>
     </form>
   );

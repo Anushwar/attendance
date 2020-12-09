@@ -8,12 +8,6 @@ const Dashboard = () => {
   return (
     <>
       <p>This is a Dashboard</p>
-      <Link to={`${path}/login`}>
-        <Button css={{ marginRight: 20 }}>Login</Button>
-      </Link>
-      <Link to={`${path}/register`}>
-        <Button>Register</Button>
-      </Link>
       <Link to={`${path}/create/teacher`}>
         <Button css={{ marginLeft: 20 }}>Create Teacher</Button>
       </Link>

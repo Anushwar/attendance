@@ -5,8 +5,8 @@ const { createPermissionError, createValidationError } = require('../helpers/err
 const SELECT_ADMIN_BY_AID = (aid) => `SELECT * FROM ADMIN WHERE aid='${aid}'`;
 
 module.exports.getAdminDetails = async (aid) => {
-  if (!/^\S{6,}$/.test(aid)) {
-    throw createValidationError('admin_id_invalid', 'Invalid admin ID');
+  if (!/^\S{5,}$/.test(aid)) {
+    throw createValidationError('admin_id_invalid', 'Invalid admin ID, id cannot be smaller than 6 characters');
   }
   const { data } = await makeQuery(
     SELECT_ADMIN_BY_AID(aid),
