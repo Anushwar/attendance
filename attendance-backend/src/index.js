@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { userRouter } = require('./routers/router');
+const { adminRouter } = require('./routers/router');
 const init = require('./sql/init');
 
 const { PORT: port } = process.env;
@@ -20,7 +20,7 @@ app.use(cors({
 
 app.use(express.json());
 
-app.use('/users', userRouter);
+app.use('/admins', adminRouter);
 
 app.listen(port, () => {
   console.log(`Server running on port :${port}`);

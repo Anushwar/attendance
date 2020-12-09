@@ -1,1 +1,1 @@
-module.exports.userRouter = require('./user');
+module.exports.adminRouter = require('./admin');

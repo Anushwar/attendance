@@ -1,5 +1,7 @@
 const connection = require('../db/db');
 
+const { databasePermissions } = require('./constants');
+
 const {
   // ROOT user
   SQL_USER: user,
@@ -12,28 +14,28 @@ const {
   SQL_TEACHER_PASSWORD: teacherPassword,
 } = process.env;
 
-module.exports = (query) => new Promise((resolve, reject) => {
-  connection.changeUser({ user, password });
-  connection.query(query, (err, results, fields) => {
-    if (err) {
-      reject(err);
-    }
-    resolve({ data: results, fields });
-  });
-});
+const getDbmsUserFromPermissionLevel = (permissionLevel) => {
+  switch (permissionLevel) {
+    case databasePermissions.ROOT:
+      return { user, password };
+    case databasePermissions.ADMIN:
+      return { user: adminUser, password: adminPassword };
+    case databasePermissions.TEACHER:
+      return { user: teacherUser, password: teacherPassword };
+    default:
+    case databasePermissions.NONE:
+      throw new Error('No permissions to access database');
+  }
+};
 
-module.exports.makeAdminQuery = (query) => new Promise((resolve, reject) => {
-  connection.changeUser({ user: adminUser, password: adminPassword });
-  connection.query(query, (err, results, fields) => {
-    if (err) {
-      reject(err);
-    }
-    resolve({ data: results, fields });
-  });
-});
-
-module.exports.makeTeacherQuery = (query) => new Promise((resolve, reject) => {
-  connection.changeUser({ user: teacherUser, password: teacherPassword });
+module.exports = (query, permissionLevel) => new Promise((resolve, reject) => {
+  const dbmsUser = getDbmsUserFromPermissionLevel(permissionLevel);
+  if (connection.user !== dbmsUser.user) {
+    connection.changeUser({
+      user: dbmsUser.user,
+      password: dbmsUser.password,
+    });
+  }
   connection.query(query, (err, results, fields) => {
     if (err) {
       reject(err);
