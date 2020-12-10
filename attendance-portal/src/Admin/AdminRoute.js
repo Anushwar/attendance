@@ -1,14 +1,15 @@
 /** @jsxImportSource  @emotion/core */
 
 import { useSelector } from 'react-redux';
-import { Route, Redirect, useRouteMatch } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { Login } from './pages';
 
 const AdminRoute = ({ component, ...rest }) => {
   const admin = useSelector(({ adminData }) => adminData.user);
-  const { path } = useRouteMatch();
   if (!admin) {
-    return <Redirect to={`${path}/login`} />;
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    return <Route {...rest} component={Login} />;
   }
   // eslint-disable-next-line react/jsx-props-no-spreading
   return <Route {...rest} component={component} />;
