@@ -7,6 +7,17 @@ import axios from 'axios';
  * here redux states will be transferred to backend.
  * and nothing more.
  */
-export default axios.create({
+const baseAxios = axios.create({
   baseURL: `http://localhost:5000/`,
 });
+
+const setAuthHeaders = (id, password) => {
+  baseAxios.defaults.headers.common['x-user-id'] = id;
+  baseAxios.defaults.headers.common['x-user-password'] = password;
+};
+
+// TODO remoce later
+setAuthHeaders('admin', 'admin');
+
+export default baseAxios;
+export { setAuthHeaders };

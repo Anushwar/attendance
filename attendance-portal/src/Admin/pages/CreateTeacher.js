@@ -4,13 +4,15 @@ import { Input, Button } from '@chakra-ui/core';
 import { useState } from 'react';
 import JSONViewer from 'react-json-viewer';
 import { Container } from '../../components';
+import { postAdminRegisterTeacher } from '../../redux/api';
 
 const CreateTeacher = () => {
   const [tid, setTid] = useState('');
   const [password1, setPassword1] = useState('');
+  const [name, setName] = useState('');
   const [password2, setPassword2] = useState('');
   const [error, setErrorMessage] = useState('');
-  const [result, setResult] = useState('');
+  const [result, setResult] = useState();
 
   const handlleTid = (e) => {
     setTid(e.target.value);
@@ -21,13 +23,26 @@ const CreateTeacher = () => {
   const handlePassword2 = (e) => {
     setPassword2(e.target.value);
   };
+  const handleName = (e) => {
+    setName(e.target.value);
+  };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setResult('hola');
+      if (password1 !== password2) {
+        throw new Error("Passwords don't match");
+      }
+      const { data: teacher } = await postAdminRegisterTeacher(
+        tid,
+        name,
+        password1
+      );
+      setResult(teacher);
+      setErrorMessage();
     } catch (err) {
-      setErrorMessage(err.message);
+      setResult();
+      setErrorMessage(err.response.data.message);
     }
   };
   return (
@@ -38,6 +53,12 @@ const CreateTeacher = () => {
         placeholder="Enter Teacher's id"
         value={tid}
         onChange={handlleTid}
+      />
+      name
+      <Input
+        placeholder="Enter Teacher's name"
+        value={name}
+        onChange={handleName}
       />
       password
       <Input
@@ -63,7 +84,12 @@ const CreateTeacher = () => {
           <h4>{error}</h4>
         </>
       )}
-      <JSONViewer json={result} />
+      {result && (
+        <>
+          Teacher Created succesfully
+          <JSONViewer json={result} />
+        </>
+      )}
     </Container>
   );
 };

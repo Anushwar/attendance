@@ -14,6 +14,7 @@ module.exports.postAdminLoginController = [async (req, res) => {
     if (admin.password !== password) {
       throw createPermissionError('admin_password_mismatch', 'Admin password does not match');
     }
+    delete admin.password;
     successResponseWithData(res, admin);
   } catch (error) {
     errorResponse(res, error);

@@ -7,6 +7,8 @@ router.use(adminAuth);
 
 /** admin section */
 /**
+ * path : /admins/teachers
+ *
  * request  :  { tid, name, password }
  *
  * response :  201 CREATED RESPONSE-USER
