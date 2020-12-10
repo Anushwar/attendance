@@ -4,7 +4,9 @@ const {
 
 const { getAdminDetails } = require('../sql/admins');
 const { createPermissionError } = require('../helpers/errors');
+const { getTeacherDetails } = require('../sql/teachers');
 
+// admin section
 module.exports.postAdminLoginController = [async (req, res) => {
   try {
     const {
@@ -16,6 +18,23 @@ module.exports.postAdminLoginController = [async (req, res) => {
     }
     delete admin.password;
     successResponseWithData(res, admin);
+  } catch (error) {
+    errorResponse(res, error);
+  }
+}];
+
+// teacher section
+module.exports.postTeacherLoginConttroller = [async (req, res) => {
+  try {
+    const {
+      tid, password,
+    } = req.body;
+    const teacher = await getTeacherDetails(tid);
+    if (teacher.password !== password) {
+      throw createPermissionError('teacher_password_mismatch', 'Teacher password does not match');
+    }
+    delete teacher.password;
+    successResponseWithData(res, teacher);
   } catch (error) {
     errorResponse(res, error);
   }

@@ -1,5 +1,5 @@
 const express = require('express');
-const { postAdminLoginController } = require('../controllers/AuthController');
+const { postAdminLoginController, postTeacherLoginConttroller } = require('../controllers/AuthController');
 
 const router = express.Router();
 
@@ -9,5 +9,7 @@ const router = express.Router();
  * response :  200 OK RESPONSE-USER
  */
 router.post('/admin/login', postAdminLoginController);
+
+router.post('/teacher/login', postTeacherLoginConttroller);
 
 module.exports = router;

@@ -14,12 +14,12 @@ module.exports.createNewTeacher = async (tid, name, password) => {
   if (!/^\S{5,}$/.test(tid)) {
     throw createValidationError('teacher_id_invalid', 'Invalid teacher ID');
   }
-  if (!/^\S+$/.test(name)) {
-    throw createValidationError('teacher_name_invalid', 'Teacher name is incorrect');
-  }
-  if (!/^\S{5,}$/.test(password)) {
-    throw createValidationError('teacher_id_passoword', 'Teacher password is incorrect');
-  }
+  // if (!/^\S+$/.test(name)) {
+  //   throw createValidationError('teacher_name_invalid', 'Teacher name is incorrect');
+  // }
+  // if (!/^\S{5,}$/.test(password)) {
+  //   throw createValidationError('teacher_id_passoword', 'Teacher password is incorrect');
+  // }
   await makeQuery(INSERT_TEACHER(tid, name, password), databasePermissions.ADMIN);
 
   return { tid, name, password };
