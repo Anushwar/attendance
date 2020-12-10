@@ -24,7 +24,7 @@ module.exports.postAdminLoginController = [async (req, res) => {
 }];
 
 // teacher section
-module.exports.postTeacherLoginConttroller = [async (req, res) => {
+module.exports.postTeacherLoginController = [async (req, res) => {
   try {
     const {
       tid, password,

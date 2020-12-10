@@ -26,7 +26,7 @@ const GRANT_ADMIN_PRIV = `GRANT ALL ON university.* TO '${SQL_ADMIN_USER}'@'${SQ
 
 // teacher section
 const CREATE_TEACHER_USER = `CREATE USER IF NOT EXISTS 
-'${SQL_TEACHER_USER}'@'${SQL_HOST}' IDENTIFIED WITH mysql_native_password BY '${SQL_TEACHER_PASSWORD}';`;
+  '${SQL_TEACHER_USER}'@'${SQL_HOST}' IDENTIFIED WITH mysql_native_password BY '${SQL_TEACHER_PASSWORD}';`;
 
 const CREATE_TEACHER_TABLE = `CREATE TABLE IF NOT EXISTS TEACHER(
     tid VARCHAR(20),
@@ -35,6 +35,7 @@ const CREATE_TEACHER_TABLE = `CREATE TABLE IF NOT EXISTS TEACHER(
     PRIMARY KEY (tid)
 );`;
 
+const GRANT_TEACHER_PRIV = `GRANT SELECT ON university.TEACHER TO '${SQL_TEACHER_USER}'@'${SQL_HOST}'`;
 module.exports = async () => {
   try {
     // admin section
@@ -44,6 +45,7 @@ module.exports = async () => {
     // teacher section
     await makeQuery(CREATE_TEACHER_USER, databasePermissions.ROOT);
     await makeQuery(CREATE_TEACHER_TABLE, databasePermissions.ROOT);
+    await makeQuery(GRANT_TEACHER_PRIV, databasePermissions.ROOT);
   } catch (err) {
     console.log(err);
   }
