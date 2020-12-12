@@ -1,5 +1,5 @@
 const {
-  successResponseWithData, errorResponse,
+  successResponseWithData, unauthorizedResponse,
 } = require('../helpers/response');
 
 const { getAdminDetails } = require('../sql/admins');
@@ -19,7 +19,7 @@ module.exports.postAdminLoginController = [async (req, res) => {
     delete admin.password;
     successResponseWithData(res, admin);
   } catch (error) {
-    errorResponse(res, error);
+    unauthorizedResponse(res, error);
   }
 }];
 
@@ -36,6 +36,6 @@ module.exports.postTeacherLoginController = [async (req, res) => {
     delete teacher.password;
     successResponseWithData(res, teacher);
   } catch (error) {
-    errorResponse(res, error);
+    unauthorizedResponse(res, error);
   }
 }];

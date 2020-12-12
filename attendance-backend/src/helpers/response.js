@@ -15,6 +15,10 @@ exports.notFoundResponse = (res, error) => res.status(HttpStatus.NOT_FOUND).json
   error, message: error.message,
 });
 
+exports.conflictResponse = (res, error) => res.status(HttpStatus.CONFLICT).json({
+  error, message: error.message,
+});
+
 exports.validationErrorResponse = (res, error) => res.status(HttpStatus.BAD_REQUEST)
   .json({ error, message: error.message });
 

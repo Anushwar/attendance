@@ -1,5 +1,5 @@
 const {
-  createdResponseWithData, errorResponse,
+  createdResponseWithData, conflictResponse,
 } = require('../helpers/response');
 
 const { createNewTeacher } = require('../sql/teachers');
@@ -13,6 +13,6 @@ module.exports.postAdminTeacherRegisterController = [async (req, res) => {
     delete teacher.password;
     createdResponseWithData(res, teacher);
   } catch (error) {
-    errorResponse(res, error);
+    conflictResponse(res, error);
   }
 }];
