@@ -6,8 +6,8 @@ import PropTypes from 'prop-types';
 import { Login } from './pages';
 
 const TeacherRoute = ({ component, ...rest }) => {
-  const admin = useSelector(({ teacherData }) => teacherData.user);
-  if (!admin) {
+  const teacher = useSelector(({ teacherData }) => teacherData.user);
+  if (!teacher) {
     // eslint-disable-next-line react/jsx-props-no-spreading
     return <Route {...rest} component={Login} />;
   }
