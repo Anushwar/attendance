@@ -1,6 +1,6 @@
 const makeQuery = require('../helpers/result');
 const { databasePermissions } = require('../helpers/constants');
-const { createValidationError } = require('../helpers/errors');
+const { createValidationError, createPermissionError } = require('../helpers/errors');
 
 const INSERT_TEACHER = (tid, name, password) => `INSERT INTO TEACHER VALUES(
     '${tid}',
@@ -27,9 +27,11 @@ module.exports.createNewTeacher = async (tid, name, password) => {
 
 module.exports.getTeacherDetails = async (tid) => {
   if (!/^\S{5,}$/.test(tid)) {
-    throw createValidationError('teacher_id_invalid', 'Invalid teacher ID');
+    throw createValidationError('teacher_id_invalid', 'The requested teacher id format is incorrect');
   }
   const { data } = await makeQuery(SELECT_TEACHER_BY_TID(tid), databasePermissions.TEACHER);
-
+  if (data.length <= 0) {
+    throw createPermissionError('teacher_id_notfound', 'The teacher ID entered is not present');
+  }
   return data[0];
 };
