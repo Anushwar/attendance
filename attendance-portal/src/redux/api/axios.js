@@ -16,8 +16,5 @@ const setAuthHeaders = (id, password) => {
   baseAxios.defaults.headers.common['x-user-password'] = password;
 };
 
-// TODO remoce later
-setAuthHeaders('admin', 'admin');
-
 export default baseAxios;
 export { setAuthHeaders };

@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/core */
 
 const Login = () => {
-  return <div />;
+  return <div>This is Login</div>;
 };
 
 export default Login;

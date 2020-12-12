@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/core */
 
 const Dashboard = () => {
-  return <div />;
+  return <p>This is Dashboard</p>;
 };
 
 export default Dashboard;

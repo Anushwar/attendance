@@ -4,7 +4,7 @@ import { postAdminLogin } from '../api';
 const dispatchLoginAdminUser = (aid, password) => {
   return async (dispatch) => {
     const { data } = await postAdminLogin(aid, password);
-    dispatch(updateAdminUser(data));
+    dispatch(updateAdminUser({ ...data, password }));
   };
 };
 
