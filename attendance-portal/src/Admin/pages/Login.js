@@ -1,32 +1,31 @@
 /** @jsxImportSource @emotion/core */
-import { Input, Button } from "@chakra-ui/core";
-import { useState } from "react";
-import { dispatchLoginUser } from "../../redux/triggers";
-import { useDispatch } from "react-redux";
+import { Input, Button } from '@chakra-ui/core';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { dispatchLoginAdminUser } from '../../redux/triggers';
 
 const Login = () => {
-  const [uid, setUid] = useState("");
-  const [password, setPassword] = useState("");
+  const [aid, setAid] = useState('');
+  const [password, setPassword] = useState('');
   const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await dispatchLoginUser(uid, password)(dispatch);
-      console.log("user logged in succesfully");
+      await dispatchLoginAdminUser(aid, password)(dispatch);
     } catch (error) {
-      console.log("user password incorrect");
+      //
     }
   };
 
   return (
     <form css={{ maxWidth: 300 }} onSubmit={handleSubmit}>
-      <p>This is register page</p>
+      <p>This is login page</p>
       <Input
-        placeholder="uid"
-        value={uid}
+        placeholder="aid"
+        value={aid}
         onChange={(e) => {
-          setUid(e.target.value);
+          setAid(e.target.value);
         }}
       />
       <Input
@@ -37,8 +36,8 @@ const Login = () => {
           setPassword(e.target.value);
         }}
       />
-      <Button type="submit" css={{ width: "100%", marginTop: 10 }}>
-        Register
+      <Button type="submit" css={{ width: '100%', marginTop: 10 }}>
+        Login
       </Button>
     </form>
   );

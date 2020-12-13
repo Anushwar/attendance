@@ -1,16 +1,16 @@
 /** @jsxImportSource @emotion/core */
 
-import { Route, Switch, useRouteMatch } from "react-router-dom";
-import { Register, Login, Dashboard } from './pages';
+import { Switch, useRouteMatch } from 'react-router-dom';
+import { Dashboard, CreateTeacher } from './pages';
+import AdminRoute from './AdminRoute';
 
 const Admin = () => {
   const { path } = useRouteMatch();
   return (
     <Switch>
-    <Route path={`${path}/register`} component={Register} />
-    <Route path={`${path}/login`} component={Login} />
-    <Route exact path={path} component={Dashboard} />
-  </Switch>
+      <AdminRoute path={`${path}/create/teacher`} component={CreateTeacher} />
+      <AdminRoute exact path={path} component={Dashboard} />
+    </Switch>
   );
 };
 

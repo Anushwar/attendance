@@ -1,4 +1,4 @@
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Admin from '../Admin';
 import Teacher from '../Teacher';
 import Student from '../Student';
