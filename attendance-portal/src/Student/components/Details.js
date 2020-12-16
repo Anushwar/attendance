@@ -1,24 +1,22 @@
 /** @jsxImportSource @emotion/core */
 
-import { useEffect, useState } from 'react';
-import { getStudentDetails } from '../../redux/api';
-import ReactJson from 'react-json-viewer'
-
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { dispatchAddStudentDetails } from '../../redux/triggers';
 
 const Details = () => {
-    const [initialState, setInitialState] = useState([])
+    const details = useSelector(store => {
+        return store.studentData.details;
+    })
+    const dispatch = useDispatch();
     useEffect(() => {
-        async function fetchData() {
-            const res = await getStudentDetails();
-            return res.data;
-        }
-        fetchData().then(jsonResponse => setInitialState(jsonResponse));
+        dispatchAddStudentDetails()(dispatch)
         
-    }, []);
+    }, [dispatch]);
 
     return (
         <div>
-            <ReactJson json={initialState} />
+            {JSON.stringify(details)}
         </div>
     )
 }
