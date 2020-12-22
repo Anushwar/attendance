@@ -9,6 +9,4 @@ const localHostConnection = connection.createConnection({
   database,
 });
 
-localHostConnection.connect();
-
 module.exports = localHostConnection;

@@ -1,10 +1,12 @@
-import { combineReducers } from "redux";
-import userReducer from "./user";
-import studentReducer from './student';
+import { combineReducers } from 'redux';
+import adminData from './admin';
+import teacherData from './teacher';
+import studentData from './student';
 
 const reducer = combineReducers({
-  userData: userReducer,
-  studentData: studentReducer,
+  adminData,
+  teacherData,
+  studentData,
 });
 
 export default reducer;
