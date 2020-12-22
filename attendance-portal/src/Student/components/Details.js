@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { dispatchAddStudentDetails } from '../../redux/triggers';
+import JSONView from 'react-json-viewer';
 
 const Details = () => {
     const details = useSelector(store => {
@@ -16,7 +17,7 @@ const Details = () => {
 
     return (
         <div>
-            {JSON.stringify(details)}
+            <JSONView json={details} />
         </div>
     )
 }
