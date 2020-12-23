@@ -31,9 +31,15 @@ const CreateCourse = () => {
         courseDescription
       );
       setResult(course);
+      toast({
+        title: 'Sucessful',
+        description: `Course ${courseName} created`,
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
     } catch (err) {
       setResult();
-      console.log(JSON.stringify(err.res, null, 4));
       toast({
         title: 'Warning.',
         description: err?.response?.data?.message,

@@ -20,6 +20,8 @@ const INSERT_COURSE = (courseCode,
     '${courseDescription}'
   )`;
 
+const SELECT_ALL_TEACHER = () => 'SELECT * FROM TEACHER;';
+
 module.exports.getAdminDetails = async (aid) => {
   if (!/^\S{5,}$/.test(aid)) {
     throw createValidationError('admin_id_invalid', 'Invalid admin ID, id cannot be smaller than 5 characters');
@@ -66,4 +68,9 @@ module.exports.createCourse = async (
     courseCredits,
     courseDescription,
   };
+};
+
+module.exports.getAllTeachers = async () => {
+  const { data: teachers } = await makeQuery(SELECT_ALL_TEACHER(), databasePermissions.ADMIN);
+  return teachers;
 };

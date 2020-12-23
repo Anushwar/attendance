@@ -1,8 +1,9 @@
 const express = require('express');
 const cors = require('cors');
+const morganBody = require('morgan-body');
+const bodyParser = require('body-parser');
 const { adminRouter, authRouter, teacherRouter } = require('./routers/router');
 const init = require('./sql/init');
-const morgan = require('morgan')
 
 const { PORT: port } = process.env;
 
@@ -20,14 +21,12 @@ app.use(cors({
 }));
 
 app.use(express.json());
+app.use(bodyParser.json());
+morganBody(app);
 
 app.use('/admins', adminRouter);
 app.use('/teachers', teacherRouter);
 app.use('/auth', authRouter);
-
-
-morgan.token('body', (req) => JSON.stringify(req.body, null, 4));
-app.use(morgan('REQUEST TYPE::method\nEND POINT::url\nSTATUS::status, TIME::response-time ms, CONTENT-LENGTH::res[content-length]\nBODY:\n:body'));
 
 app.listen(port, () => {
   console.log(`Server running on port :${port}`);
