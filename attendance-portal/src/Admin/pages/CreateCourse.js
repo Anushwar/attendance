@@ -4,6 +4,7 @@ import { Input, Button, useToast, Textarea } from '@chakra-ui/core';
 import { useState } from 'react';
 import JSONViewer from 'react-json-viewer';
 import { Container } from '../../components';
+import { postAdminCreateCourse } from '../../redux/api';
 
 const CreateCourse = () => {
   const [courseCode, setCourseCode] = useState('');
@@ -20,12 +21,22 @@ const CreateCourse = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      //
+      const { data: course } = await postAdminCreateCourse(
+        courseCode,
+        courseName,
+        courseHoursLecture,
+        courseHoursTutorial,
+        courseHoursPractical,
+        courseCredits,
+        courseDescription
+      );
+      setResult(course);
     } catch (err) {
       setResult();
+      console.log(JSON.stringify(err.res, null, 4));
       toast({
         title: 'Warning.',
-        description: err.message,
+        description: err?.response?.data?.message,
         status: 'warning',
         duration: 5000,
         isClosable: true,
@@ -103,12 +114,12 @@ const CreateCourse = () => {
         css={{ margin: '1rem auto 2rem', display: 'block', width: '100%' }}
         type="submit"
       >
-        Create Teacher
+        Create Course
       </Button>
       {result && (
         <>
-          Teacher Created succesfully
-          <JSONViewer json={result} />
+          Course Created succesfully
+          <JSONViewer json={result} css={{ width: '100%' }} />
         </>
       )}
     </Container>

@@ -29,7 +29,6 @@ module.exports.postAdminCreateCourseController = [async (req, res) => {
       courseCredits,
       courseDescription,
     } = req.body;
-
     const course = await createCourse(courseCode,
       courseName,
       courseHoursLecture,
