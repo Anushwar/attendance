@@ -4,6 +4,20 @@ const { createPermissionError, createValidationError } = require('../helpers/err
 
 const SELECT_ADMIN_BY_AID = (aid) => `SELECT * FROM ADMIN WHERE aid='${aid}'`;
 
+module.exports.getAdminDetails = async (aid) => {
+  if (!/^\S{5,}$/.test(aid)) {
+    throw createValidationError('admin_id_invalid', 'Invalid admin ID, id cannot be smaller than 5 characters');
+  }
+  const { data } = await makeQuery(
+    SELECT_ADMIN_BY_AID(aid),
+    databasePermissions.ADMIN,
+  );
+  if (data.length <= 0) {
+    throw createPermissionError('admin_id_invalid', 'Admin not found');
+  }
+  return data[0];
+};
+
 const INSERT_COURSE = (courseCode,
   courseName,
   courseHoursLecture,
@@ -19,22 +33,6 @@ const INSERT_COURSE = (courseCode,
     ${courseCredits},
     '${courseDescription}'
   )`;
-
-const SELECT_ALL_TEACHER = () => 'SELECT * FROM TEACHER;';
-
-module.exports.getAdminDetails = async (aid) => {
-  if (!/^\S{5,}$/.test(aid)) {
-    throw createValidationError('admin_id_invalid', 'Invalid admin ID, id cannot be smaller than 5 characters');
-  }
-  const { data } = await makeQuery(
-    SELECT_ADMIN_BY_AID(aid),
-    databasePermissions.ADMIN,
-  );
-  if (data.length <= 0) {
-    throw createPermissionError('admin_id_invalid', 'Admin not found');
-  }
-  return data[0];
-};
 
 module.exports.createCourse = async (
   courseCode,
@@ -70,7 +68,24 @@ module.exports.createCourse = async (
   };
 };
 
+const SELECT_ALL_TEACHER = () => 'SELECT * FROM TEACHER;';
+
 module.exports.getAllTeachers = async () => {
   const { data: teachers } = await makeQuery(SELECT_ALL_TEACHER(), databasePermissions.ADMIN);
   return teachers;
+};
+
+const INSERT_CLASS = (classID, semester, section, tid) => `INSERT INTO CLASS VALUES (
+  '${classID}',
+  ${semester},
+  '${section}',
+  '${tid}'
+);`;
+
+module.exports.createClass = async (classID, semester, section, tid) => {
+  await makeQuery(INSERT_CLASS(classID, semester, section, tid), databasePermissions.ADMIN);
+
+  return {
+    classID, semester, section, tid,
+  };
 };

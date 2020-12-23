@@ -40,35 +40,35 @@ const GRANT_TEACHER_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.TEACHER TO '${SQL_TE
 
 // courses section
 const CREATE_COURSE_TABLE = `CREATE TABLE IF NOT EXISTS COURSE(
-  course_id VARCHAR(20),
-  course_name VARCHAR(200),
-  course_hours_lecture SMALLINT,
-  course_hours_tutorial SMALLINT,
-  course_hours_practical SMALLINT,
-  course_credits SMALLINT,
-  course_description VARCHAR(400),
-  PRIMARY KEY (course_id)
+  courseID VARCHAR(20),
+  courseName VARCHAR(200),
+  courseHoursLecture SMALLINT,
+  courseHoursTutorial SMALLINT,
+  courseHoursPractical SMALLINT,
+  courseCredits SMALLINT,
+  courseDescription VARCHAR(400),
+  PRIMARY KEY (courseID)
 );`;
 
 const GRANT_TEACHER_COURSE_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.COURSE TO '${SQL_TEACHER_USER}'@'${SQL_HOST}';`;
 
 // class section
 const CREATE_CLASS_TABLE = `CREATE TABLE IF NOT EXISTS CLASS(
-  class_id VARCHAR(20),
+  classID VARCHAR(20),
   semester SMALLINT,
   section VARCHAR(2),
   tid VARCHAR(20),
-  PRIMARY KEY (class_id),
+  PRIMARY KEY (classID),
   FOREIGN KEY (tid) REFERENCES TEACHER(tid) ON DELETE SET NULL
 );`;
 
 // course teacher section
 const CREATE_COURSE_TEACHER_TABLE = `CREATE TABLE IF NOT EXISTS COURSE_TEACHER(
-  course_teacher_id VARCHAR(40),
-  course_id VARCHAR(20),
+  courseTeacherID VARCHAR(40),
+  courseID VARCHAR(20),
   tid VARCHAR(20),
-  PRIMARY KEY (course_teacher_id),
-  FOREIGN KEY (course_id) REFERENCES COURSE(course_id) ON DELETE CASCADE,
+  PRIMARY KEY (courseTeacherID),
+  FOREIGN KEY (courseID) REFERENCES COURSE(courseID) ON DELETE CASCADE,
   FOREIGN KEY (tid) REFERENCES  TEACHER(tid) ON DELETE SET NULL
 );`;
 

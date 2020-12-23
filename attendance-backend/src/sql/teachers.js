@@ -10,7 +10,6 @@ const INSERT_TEACHER = (tid, name, password) => `INSERT INTO TEACHER VALUES(
 
 const SELECT_TEACHER_BY_TID = (tid) => `SELECT * FROM TEACHER WHERE tid='${tid}'`;
 
-
 module.exports.createNewTeacher = async (tid, name, password) => {
   if (!/^\S{5,}$/.test(tid)) {
     throw createValidationError('teacher_id_invalid', 'Invalid teacher ID');

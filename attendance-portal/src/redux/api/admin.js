@@ -7,6 +7,8 @@ export const postAdminLogin = (aid, password) =>
 export const postAdminRegisterTeacher = (tid, name, password) =>
   axios.post('/admins/teachers', { tid, name, password });
 
+export const getAdminTeachers = () => axios.get('/admins/teachers');
+
 export const postAdminCreateCourse = (
   courseCode,
   courseName,
@@ -25,3 +27,6 @@ export const postAdminCreateCourse = (
     courseCredits,
     courseDescription,
   });
+
+export const postAdminCreateClass = (courseID, semester, section, tid) =>
+  axios.post('/admins/classes', { courseID, semester, section, tid });

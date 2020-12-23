@@ -1,5 +1,10 @@
 const express = require('express');
-const { postAdminTeacherRegisterController, postAdminCreateCourseController, getAllTeachersController } = require('../controllers/AdminController');
+const {
+  postAdminTeacherRegisterController,
+  postAdminCreateCourseController,
+  getAdminAllTeachersController,
+  postAdminCreateClassController,
+} = require('../controllers/AdminController');
 const { adminAuth } = require('../middlewares/auth');
 
 const router = express.Router();
@@ -23,7 +28,7 @@ router.post('/teachers', postAdminTeacherRegisterController);
  *
  * response :  200 OK RESPONSE-TEACHER-LIST
  */
-router.get('/teachers', getAllTeachersController);
+router.get('/teachers', getAdminAllTeachersController);
 
 /**
  * path: /admins/courses
@@ -34,5 +39,14 @@ router.get('/teachers', getAllTeachersController);
  * response: 201 CREATED RESPONSE-COURSE
  */
 router.post('/courses', postAdminCreateCourseController);
+
+/**
+ * path: /admins/classes
+ *
+ * request : { classID, semester, section, tid }
+ *
+ * response: 201 CREATED RESPONSE-COURSE
+ */
+router.post('/classes', postAdminCreateClassController);
 
 module.exports = router;

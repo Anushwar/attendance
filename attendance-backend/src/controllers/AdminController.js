@@ -3,7 +3,7 @@ const {
 } = require('../helpers/response');
 
 const { createNewTeacher } = require('../sql/teachers');
-const { createCourse, getAllTeachers } = require('../sql/admins');
+const { createCourse, getAllTeachers, createClass } = require('../sql/admins');
 
 module.exports.postAdminTeacherRegisterController = [async (req, res) => {
   try {
@@ -42,10 +42,22 @@ module.exports.postAdminCreateCourseController = [async (req, res) => {
   }
 }];
 
-module.exports.getAllTeachersController = [async (req, res) => {
+module.exports.getAdminAllTeachersController = [async (req, res) => {
   try {
     const teachers = (await getAllTeachers()).map(({ password, ...teacher }) => teacher);
     successResponseWithData(res, teachers);
+  } catch (error) {
+    conflictResponse(res, error);
+  }
+}];
+
+module.exports.postAdminCreateClassController = [async (req, res) => {
+  const {
+    classID, semester, section, tid,
+  } = req.body;
+  try {
+    const newClass = await createClass(classID, semester, section, tid);
+    createdResponseWithData(res, newClass);
   } catch (error) {
     conflictResponse(res, error);
   }
