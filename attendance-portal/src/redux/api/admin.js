@@ -28,5 +28,5 @@ export const postAdminCreateCourse = (
     courseDescription,
   });
 
-export const postAdminCreateClass = (courseID, semester, section, tid) =>
-  axios.post('/admins/classes', { courseID, semester, section, tid });
+export const postAdminCreateClass = (classID, semester, section, tid) =>
+  axios.post('/admins/classes', { classID, semester, section, tid });
