@@ -41,12 +41,12 @@ const GRANT_TEACHER_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.TEACHER TO '${SQL_TE
 // courses section
 const CREATE_COURSE_TABLE = `CREATE TABLE IF NOT EXISTS COURSE(
     course_id VARCHAR(20),
-    course_name VARCHAR(50),
+    course_name VARCHAR(200),
     course_hours_lecture SMALLINT,
     course_hours_tutorial SMALLINT,
     course_hours_practical SMALLINT,
     course_credits SMALLINT,
-    course_description VARCHAR(200),
+    course_description VARCHAR(400),
     PRIMARY KEY (course_id)
 );`;
 
