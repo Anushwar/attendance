@@ -24,6 +24,7 @@ module.exports.postAdminStudentRegisterController = [async (req, res) => {
       uid, name, password,
     } = req.body;
     const student = await createNewStudent(uid, name, password);
+    delete student.password;
     createdResponseWithData(res, student);
   } catch (error) {
     conflictResponse(res, error);

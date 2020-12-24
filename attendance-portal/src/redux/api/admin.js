@@ -6,3 +6,6 @@ export const postAdminLogin = (aid, password) =>
 
 export const postAdminRegisterTeacher = (tid, name, password) =>
   axios.post('/admins/teachers', { tid, name, password });
+
+export const postAdminRegisterStudent = (uid, name, password) =>
+  axios.post('/admins/students', { uid, name, password });
