@@ -1,14 +1,15 @@
 import axios from './axios';
 
-// eslint-disable-next-line import/prefer-default-export
 export const postAdminLogin = (aid, password) =>
   axios.post('/auth/admin/login', { aid, password });
 
+// teacher section
 export const postAdminRegisterTeacher = (tid, name, password) =>
   axios.post('/admins/teachers', { tid, name, password });
 
-export const getAdminTeachers = () => axios.get('/admins/teachers');
+export const getAdminTeachersList = () => axios.get('/admins/teachers');
 
+// course section
 export const postAdminCreateCourse = (
   courseCode,
   courseName,
@@ -28,5 +29,16 @@ export const postAdminCreateCourse = (
     courseDescription,
   });
 
+export const getAdminCoursesList = () => axios.get('/admins/courses');
+
+// class section
 export const postAdminCreateClass = (classID, semester, section, tid) =>
   axios.post('/admins/classes', { classID, semester, section, tid });
+
+export const getAdminClassesList = () => axios.get('/admins/classes');
+
+// enrollment section
+export const getAdminEnrollmentsList = () => axios.get('/admins/enrollments');
+
+export const postAdminEnrollment = (classID, courseID, tid) =>
+  axios.post('/admins/enrollments', { classID, courseID, tid });

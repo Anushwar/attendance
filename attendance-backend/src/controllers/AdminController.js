@@ -3,7 +3,7 @@ const {
 } = require('../helpers/response');
 
 const { createNewTeacher, getAllTeachers } = require('../sql/teachers');
-const { createCourse, getALlCourses } = require('../sql/courses');
+const { createCourse, getAllCourses } = require('../sql/courses');
 const { createClass, getAllClasses } = require('../sql/classes');
 const { getAllEnrollment, createEnrollment } = require('../sql/enrollments');
 
@@ -57,7 +57,7 @@ module.exports.postAdminCreateCourseController = [async (req, res) => {
 
 module.exports.getAdminAllCourseController = [async (req, res) => {
   try {
-    const classes = await getALlCourses();
+    const classes = await getAllCourses();
     successResponseWithData(res, classes);
   } catch (error) {
     conflictResponse(res, error);

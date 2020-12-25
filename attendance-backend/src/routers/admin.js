@@ -7,9 +7,9 @@ const {
   getAdminAllCourseController,
   getAdminAllClassesController,
   postAdminCreateEnrollmentController,
+  getAdminAllEnrollmentController,
 } = require('../controllers/AdminController');
 const { adminAuth } = require('../middlewares/auth');
-const { getAllEnrollment } = require('../sql/enrollments');
 
 const router = express.Router();
 router.use(adminAuth);
@@ -85,6 +85,6 @@ router.post('/enrollments', postAdminCreateEnrollmentController);
  *
  * response :  200 OK RESPONSE-CLASS-LIST
  */
-router.get('/enrollments', getAllEnrollment);
+router.get('/enrollments', getAdminAllEnrollmentController);
 
 module.exports = router;

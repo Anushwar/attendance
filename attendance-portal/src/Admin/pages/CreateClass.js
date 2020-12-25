@@ -4,7 +4,7 @@ import { Input, Button, useToast, Select } from '@chakra-ui/core';
 import { useEffect, useState } from 'react';
 import JSONViewer from 'react-json-viewer';
 import { Container } from '../../components';
-import { getAdminTeachers, postAdminCreateClass } from '../../redux/api';
+import { getAdminTeachersList, postAdminCreateClass } from '../../redux/api';
 
 const CreateClass = () => {
   const [classID, setClassID] = useState('');
@@ -15,7 +15,7 @@ const CreateClass = () => {
   const [result, setResult] = useState();
 
   useEffect(async () => {
-    const { data: teachers } = await getAdminTeachers();
+    const { data: teachers } = await getAdminTeachersList();
     setTeacherList(teachers);
   }, []);
 

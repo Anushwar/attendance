@@ -2,7 +2,7 @@ const makeQuery = require('../helpers/result');
 const { databasePermissions } = require('../helpers/constants');
 const { createValidationError } = require('../helpers/errors');
 
-// functions
+// queries
 const INSERT_COURSE = (courseCode,
   courseName,
   courseHoursLecture,
@@ -55,7 +55,7 @@ module.exports.createCourse = async (
     courseDescription,
   };
 };
-module.exports.getALlCourses = async () => {
+module.exports.getAllCourses = async () => {
   const { data: courses } = await makeQuery(SELECT_ALL_COURSE(), databasePermissions.ADMIN);
   return courses;
 };
