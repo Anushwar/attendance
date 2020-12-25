@@ -1,4 +1,4 @@
-/** @jsxImportSource  @emotion/core */
+/** @jsxImportSource @emotion/core */
 
 import { useSelector } from 'react-redux';
 import { Route } from 'react-router-dom';

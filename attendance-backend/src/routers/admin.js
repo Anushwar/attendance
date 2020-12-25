@@ -14,6 +14,15 @@ router.use(adminAuth);
  * response :  201 CREATED RESPONSE-USER
  */
 router.post('/teachers', postAdminTeacherRegisterController);
+
+/** student section */
+/**
+ * path : /admins/students
+ *
+ * request  :  { uid, name, password }
+ *
+ * response :  201 CREATED RESPONSE-USER
+ */
 router.post('/students', postAdminStudentRegisterController);
 
 module.exports = router;

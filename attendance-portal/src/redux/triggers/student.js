@@ -1,12 +1,5 @@
-import { addStudentDetails, updateStudentUser } from '../actions';
-import { getStudentDetails, postStudentLogin } from '../api';
-
-const dispatchAddStudentDetails = () => {
-  return async (dispatch) => {
-    const { data } = await getStudentDetails();
-    dispatch(addStudentDetails(data));
-  };
-};
+import { updateStudentUser } from '../actions';
+import { postStudentLogin } from '../api';
 
 const dispatchLoginStudentUser = (uid, password) => {
   return async (dispatch) => {
@@ -15,4 +8,5 @@ const dispatchLoginStudentUser = (uid, password) => {
   };
 };
 
-export { dispatchAddStudentDetails, dispatchLoginStudentUser };
+// eslint-disable-next-line import/prefer-default-export
+export { dispatchLoginStudentUser };
