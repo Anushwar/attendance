@@ -1,10 +1,15 @@
 /** @jsxImportSource @emotion/core */
 
+import { Switch, useRouteMatch } from 'react-router-dom';
+import { Dashboard } from './pages';
+import StudentRoute from './StudentRoute';
+
 const Student = () => {
+  const { path } = useRouteMatch();
   return (
-    <div>
-      <p>This is Student page</p>
-    </div>
+    <Switch>
+      <StudentRoute exact path={path} component={Dashboard} />
+    </Switch>
   );
 };
 

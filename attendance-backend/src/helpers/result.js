@@ -12,6 +12,9 @@ const {
   // teacher login
   SQL_TEACHER_USER: teacherUser,
   SQL_TEACHER_PASSWORD: teacherPassword,
+  // student login
+  SQL_STUDENT_USER: studentUser,
+  SQL_STUDENT_PASSWORD: studentPassword,
 } = process.env;
 
 const getDbmsUserFromPermissionLevel = (permissionLevel) => {
@@ -22,6 +25,8 @@ const getDbmsUserFromPermissionLevel = (permissionLevel) => {
       return { user: adminUser, password: adminPassword };
     case databasePermissions.TEACHER:
       return { user: teacherUser, password: teacherPassword };
+    case databasePermissions.STUDENT:
+      return { user: studentUser, password: studentPassword };
     default:
     case databasePermissions.NONE:
       throw new Error('No permissions to access database');

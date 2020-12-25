@@ -1,6 +1,11 @@
 const express = require('express');
 const cors = require('cors');
-const { adminRouter, authRouter, teacherRouter } = require('./routers/router');
+const {
+  adminRouter,
+  authRouter,
+  teacherRouter,
+  studentRouter,
+} = require('./routers/router');
 const init = require('./sql/init');
 
 const { PORT: port } = process.env;
@@ -20,6 +25,7 @@ app.use(cors({
 
 app.use(express.json());
 
+app.use('/students', studentRouter);
 app.use('/admins', adminRouter);
 app.use('/teachers', teacherRouter);
 app.use('/auth', authRouter);
