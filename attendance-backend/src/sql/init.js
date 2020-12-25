@@ -62,6 +62,8 @@ const CREATE_CLASS_TABLE = `CREATE TABLE IF NOT EXISTS CLASS(
   FOREIGN KEY (tid) REFERENCES TEACHER(tid) ON DELETE SET NULL
 );`;
 
+const GRANT_CLASS_ENROLLMENT_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.CLASS TO '${SQL_TEACHER_USER}'@'${SQL_HOST}';`;
+
 // course teacher section
 const CREATE_ENROLLMENT_TABLE = `CREATE TABLE IF NOT EXISTS ENROLLMENT(
   classID VARCHAR(20),
@@ -90,6 +92,7 @@ module.exports = async () => {
     await makeQuery(GRANT_TEACHER_COURSE_PRIV, databasePermissions.ROOT);
     // class section
     await makeQuery(CREATE_CLASS_TABLE, databasePermissions.ROOT);
+    await makeQuery(GRANT_CLASS_ENROLLMENT_PRIV, databasePermissions.ROOT);
     // enrollment section
     await makeQuery(CREATE_ENROLLMENT_TABLE, databasePermissions.ROOT);
     await makeQuery(GRANT_TEACHER_ENROLLMENT_PRIV, databasePermissions.ROOT);
