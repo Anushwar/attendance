@@ -1,5 +1,5 @@
 const express = require('express');
-const { postAdminLoginController, postTeacherLoginController } = require('../controllers/AuthController');
+const { postAdminLoginController, postTeacherLoginController, postStudentLoginController } = require('../controllers/AuthController');
 
 const router = express.Router();
 
@@ -16,5 +16,12 @@ router.post('/admin/login', postAdminLoginController);
  * response :  200 OK RESPONSE-USER
  */
 router.post('/teacher/login', postTeacherLoginController);
+
+/**
+ * request  :  { uid, password }
+ *
+ * response :  200 OK RESPONSE-USER
+ */
+router.post('/students/login', postStudentLoginController);
 
 module.exports = router;
