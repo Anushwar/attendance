@@ -1,16 +1,21 @@
 /** @jsxImportSource @emotion/core */
 
-import { Button } from '@chakra-ui/core';
-import { Link, useRouteMatch } from 'react-router-dom';
+import { Heading, Text } from '@chakra-ui/core';
+import styled from '@emotion/styled';
+import { useSelector } from 'react-redux';
+import { Container } from '../../components';
+
+const DashboardContainer = styled(Container)({
+  paddingTop: '3rem',
+});
 
 const Dashboard = () => {
-  const { path } = useRouteMatch();
+  const { name } = useSelector(({ studentData }) => studentData.user);
   return (
-    <>
-      <Link to={`${path}/details`}>
-        <Button css={{ marginRight: 20 }}>Student Details</Button>
-      </Link>
-    </>
+    <DashboardContainer type="center">
+      <Heading as="h2">{`Hello ${name},`}</Heading>
+      <Text>14/04/2000, Friday</Text>
+    </DashboardContainer>
   );
 };
 
