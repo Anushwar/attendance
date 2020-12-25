@@ -4,13 +4,16 @@ const {
   postAdminCreateCourseController,
   getAdminAllTeachersController,
   postAdminCreateClassController,
+  getAdminAllCourseController,
+  getAdminAllClassesController,
+  postAdminCreateEnrollmentController,
 } = require('../controllers/AdminController');
 const { adminAuth } = require('../middlewares/auth');
+const { getAllEnrollment } = require('../sql/enrollments');
 
 const router = express.Router();
 router.use(adminAuth);
 
-/** admin section */
 /**
  * path : /admins/teachers
  *
@@ -20,7 +23,6 @@ router.use(adminAuth);
  */
 router.post('/teachers', postAdminTeacherRegisterController);
 
-/** admin section */
 /**
  * path : /admins/teachers
  *
@@ -41,6 +43,15 @@ router.get('/teachers', getAdminAllTeachersController);
 router.post('/courses', postAdminCreateCourseController);
 
 /**
+ * path : /admins/courses
+ *
+ * request  :  {}
+ *
+ * response :  200 OK RESPONSE-COURSE-LIST
+ */
+router.get('/courses', getAdminAllCourseController);
+
+/**
  * path: /admins/classes
  *
  * request : { classID, semester, section, tid }
@@ -48,5 +59,32 @@ router.post('/courses', postAdminCreateCourseController);
  * response: 201 CREATED RESPONSE-COURSE
  */
 router.post('/classes', postAdminCreateClassController);
+
+/**
+ * path : /admins/classes
+ *
+ * request  :  {}
+ *
+ * response :  200 OK RESPONSE-CLASS-LIST
+ */
+router.get('/classes', getAdminAllClassesController);
+
+/**
+ * path: /admins/enrollments
+ *
+ * request : { classID, semester, section, tid }
+ *
+ * response: 201 CREATED RESPONSE-COURSE
+ */
+router.post('/enrollments', postAdminCreateEnrollmentController);
+
+/**
+ * path : /admins/classes
+ *
+ * request  :  {}
+ *
+ * response :  200 OK RESPONSE-CLASS-LIST
+ */
+router.get('/enrollments', getAllEnrollment);
 
 module.exports = router;

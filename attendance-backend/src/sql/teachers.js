@@ -3,13 +3,10 @@ const { databasePermissions } = require('../helpers/constants');
 const { createValidationError, createPermissionError } = require('../helpers/errors');
 
 const INSERT_TEACHER = (tid, name, password) => `INSERT INTO TEACHER VALUES(
-    '${tid}',
-    '${name}',
-    '${password}'
+  '${tid}',
+  '${name}',
+  '${password}'
 );`;
-
-const SELECT_TEACHER_BY_TID = (tid) => `SELECT * FROM TEACHER WHERE tid='${tid}'`;
-
 module.exports.createNewTeacher = async (tid, name, password) => {
   if (!/^\S{5,}$/.test(tid)) {
     throw createValidationError('teacher_id_invalid', 'Invalid teacher ID');
@@ -25,6 +22,7 @@ module.exports.createNewTeacher = async (tid, name, password) => {
   return { tid, name, password };
 };
 
+const SELECT_TEACHER_BY_TID = (tid) => `SELECT * FROM TEACHER WHERE tid='${tid}'`;
 module.exports.getTeacherDetails = async (tid) => {
   if (!/^\S{5,}$/.test(tid)) {
     throw createValidationError('teacher_id_invalid', 'The requested teacher id format is incorrect');
@@ -34,4 +32,10 @@ module.exports.getTeacherDetails = async (tid) => {
     throw createPermissionError('teacher_id_notfound', 'The teacher ID entered is not present');
   }
   return data[0];
+};
+
+const SELECT_ALL_TEACHER = () => 'SELECT * FROM TEACHER;';
+module.exports.getAllTeachers = async () => {
+  const { data: teachers } = await makeQuery(SELECT_ALL_TEACHER(), databasePermissions.ADMIN);
+  return teachers;
 };
