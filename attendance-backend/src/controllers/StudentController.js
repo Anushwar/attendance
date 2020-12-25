@@ -3,21 +3,8 @@ const {
 } = require('../helpers/response');
 
 module.exports.getStudentDetailsController = [async (req, res) => {
-  const result = {
-    name: 'Jeevan',
-    uid: '1AY18CS045',
-    courses: [{
-      totalClass: 70,
-      classAttended: 55,
-    }, {
-      totalClass: 70,
-      classAttended: 55,
-    }, {
-      totalClass: 70,
-      classAttended: 55,
-    }],
-  };
-  successResponseWithData(res, result);
+  delete req.user.password;
+  successResponseWithData(res, res);
 }];
 
 module.exports.getStudentCoursesController = [async (req, res) => {
