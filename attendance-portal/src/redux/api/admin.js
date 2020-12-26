@@ -2,6 +2,9 @@ import axios from './axios';
 
 export const postAdminLogin = (aid, password) =>
   axios.post('/auth/admin/login', { aid, password });
+// student section
+export const postAdminRegisterStudent = (uid, name, password) =>
+  axios.post('/admins/students', { uid, name, password });
 
 // teacher section
 export const postAdminRegisterTeacher = (tid, name, password) =>

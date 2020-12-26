@@ -10,6 +10,9 @@ const {
   // teacher login
   SQL_TEACHER_USER,
   SQL_TEACHER_PASSWORD,
+  // student login
+  SQL_STUDENT_USER,
+  SQL_STUDENT_PASSWORD,
 } = process.env;
 
 // admin section
@@ -64,7 +67,7 @@ const CREATE_CLASS_TABLE = `CREATE TABLE IF NOT EXISTS CLASS(
 
 const GRANT_CLASS_ENROLLMENT_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.CLASS TO '${SQL_TEACHER_USER}'@'${SQL_HOST}';`;
 
-// course teacher section
+// enrollment section section
 const CREATE_ENROLLMENT_TABLE = `CREATE TABLE IF NOT EXISTS ENROLLMENT(
   classID VARCHAR(20),
   courseID VARCHAR(20),
@@ -76,6 +79,19 @@ const CREATE_ENROLLMENT_TABLE = `CREATE TABLE IF NOT EXISTS ENROLLMENT(
 );`;
 
 const GRANT_TEACHER_ENROLLMENT_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.ENROLLMENT TO '${SQL_TEACHER_USER}'@'${SQL_HOST}';`;
+
+// student section
+const CREATE_STUDENT_USER = `CREATE USER IF NOT EXISTS
+  '${SQL_STUDENT_USER}'@'${SQL_HOST}' IDENTIFIED WITH mysql_native_password BY '${SQL_STUDENT_PASSWORD}';`;
+
+const CREATE_STUDENT_TABLE = `CREATE TABLE IF NOT EXISTS STUDENT(
+    uid VARCHAR(20),
+    name VARCHAR(50),
+    password VARCHAR(50) NOT NULL,
+    PRIMARY KEY (uid)
+);`;
+
+const GRANT_STUDENT_PRIV = `GRANT SELECT ON university.STUDENT TO '${SQL_STUDENT_USER}'@'${SQL_HOST}';`;
 
 module.exports = async () => {
   try {
@@ -96,6 +112,10 @@ module.exports = async () => {
     // enrollment section
     await makeQuery(CREATE_ENROLLMENT_TABLE, databasePermissions.ROOT);
     await makeQuery(GRANT_TEACHER_ENROLLMENT_PRIV, databasePermissions.ROOT);
+    // student section
+    await makeQuery(CREATE_STUDENT_USER, databasePermissions.ROOT);
+    await makeQuery(CREATE_STUDENT_TABLE, databasePermissions.ROOT);
+    await makeQuery(GRANT_STUDENT_PRIV, databasePermissions.ROOT);
   } catch (err) {
     console.log(err);
   }

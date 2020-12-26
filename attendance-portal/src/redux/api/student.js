@@ -1,0 +1,5 @@
+import axios from './axios';
+
+// eslint-disable-next-line import/prefer-default-export
+export const postStudentLogin = (uid, password) =>
+  axios.post('/auth/students/login', { uid, password });

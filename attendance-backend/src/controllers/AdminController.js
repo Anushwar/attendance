@@ -1,6 +1,7 @@
 const {
   createdResponseWithData, conflictResponse, successResponseWithData,
 } = require('../helpers/response');
+const { createNewStudent } = require('../sql/students');
 
 const { createNewTeacher, getAllTeachers } = require('../sql/teachers');
 const { createCourse, getAllCourses } = require('../sql/courses');
@@ -103,6 +104,20 @@ module.exports.getAdminAllEnrollmentController = [async (req, res) => {
   try {
     const enrollments = await getAllEnrollment();
     successResponseWithData(res, enrollments);
+  } catch (error) {
+    conflictResponse(res, error);
+  }
+}];
+
+/* student section */
+module.exports.postAdminStudentRegisterController = [async (req, res) => {
+  try {
+    const {
+      uid, name, password,
+    } = req.body;
+    const student = await createNewStudent(uid, name, password);
+    delete student.password;
+    createdResponseWithData(res, student);
   } catch (error) {
     conflictResponse(res, error);
   }
