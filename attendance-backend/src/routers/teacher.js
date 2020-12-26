@@ -1,5 +1,5 @@
 const express = require('express');
-const { getMyTeacherDetailsController, getAllTeacherClassesController } = require('../controllers/TeacherController');
+const { getMyTeacherDetailsController, getAllTeacherCoursesController } = require('../controllers/TeacherController');
 const { teacherAuth } = require('../middlewares/auth');
 
 const router = express.Router();
@@ -15,12 +15,12 @@ router.use(teacherAuth);
 router.get('/me', getMyTeacherDetailsController);
 
 /**
- * path : /teachers/classes
+ * path : /teachers/courses
  *
  * request  : EMPTY
  *
  * response :  200 OK Response
  */
-router.get('/classes', getAllTeacherClassesController);
+router.get('/courses', getAllTeacherCoursesController);
 
 module.exports = router;
