@@ -5,3 +5,5 @@ export const postTeacherLogin = (tid, password) =>
   axios.post('/auth/teacher/login', { tid, password });
 
 export const getMyTeacherDetails = () => axios.get('/teachers/me');
+
+export const getTeacherCourses = () => axios.get('/teachers/courses');

@@ -1,5 +1,5 @@
-import { updateTeacherUser } from '../actions';
-import { postTeacherLogin } from '../api';
+import { loadTeacherCourses, updateTeacherUser } from '../actions';
+import { getTeacherCourses, postTeacherLogin } from '../api';
 
 const dispatchLoginTeacherUser = (tid, password) => {
   return async (dispatch) => {
@@ -8,5 +8,11 @@ const dispatchLoginTeacherUser = (tid, password) => {
   };
 };
 
-// eslint-disable-next-line import/prefer-default-export
-export { dispatchLoginTeacherUser };
+const dispatchLoadCoursesTeacher = () => {
+  return async (dispatch) => {
+    const { data: courses } = await getTeacherCourses();
+    dispatch(loadTeacherCourses(courses));
+  };
+};
+
+export { dispatchLoginTeacherUser, dispatchLoadCoursesTeacher };
