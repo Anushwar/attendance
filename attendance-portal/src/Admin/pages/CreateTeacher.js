@@ -42,7 +42,7 @@ const CreateTeacher = () => {
       setErrorMessage();
     } catch (err) {
       setResult();
-      setErrorMessage(err.response.data.message);
+      setErrorMessage(err.message);
     }
   };
   return (

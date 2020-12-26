@@ -11,6 +11,15 @@ const Dashboard = () => {
       <Link to={`${path}/create/teacher`}>
         <Button css={{ marginLeft: 20 }}>Create Teacher</Button>
       </Link>
+      <Link to={`${path}/create/course`}>
+        <Button css={{ marginLeft: 20 }}>Create Course</Button>
+      </Link>
+      <Link to={`${path}/create/class`}>
+        <Button css={{ marginLeft: 20 }}>Create Class</Button>
+      </Link>
+      <Link to={`${path}/create/enrollment`}>
+        <Button css={{ marginLeft: 20 }}>Create Enrollment</Button>
+      </Link>
       <Link to={`${path}/create/student`}>
         <Button css={{ marginLeft: 20 }}>Create Student</Button>
       </Link>

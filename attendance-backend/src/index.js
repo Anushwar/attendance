@@ -1,5 +1,7 @@
 const express = require('express');
 const cors = require('cors');
+const morganBody = require('morgan-body');
+const bodyParser = require('body-parser');
 const {
   adminRouter,
   authRouter,
@@ -24,6 +26,8 @@ app.use(cors({
 }));
 
 app.use(express.json());
+app.use(bodyParser.json());
+morganBody(app);
 
 app.use('/students', studentRouter);
 app.use('/admins', adminRouter);

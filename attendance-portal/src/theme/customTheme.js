@@ -10,6 +10,11 @@ const customTheme = {
       700: '#2a69ac',
     },
   },
+  speeds: {
+    default: 150,
+    200: 200,
+    300: 300,
+  },
   fonts: {
     body: "'Space Grotesk', sans-serif",
     heading: "'Space Grotesk', sans-serif",
