@@ -87,11 +87,23 @@ const CREATE_STUDENT_USER = `CREATE USER IF NOT EXISTS
 const CREATE_STUDENT_TABLE = `CREATE TABLE IF NOT EXISTS STUDENT(
     uid VARCHAR(20),
     name VARCHAR(50),
+    classID VARCHAR(20),
     password VARCHAR(50) NOT NULL,
     PRIMARY KEY (uid)
 );`;
 
-const GRANT_STUDENT_PRIV = `GRANT SELECT ON university.STUDENT TO '${SQL_STUDENT_USER}'@'${SQL_HOST}';`;
+const GRANT_STUDENT_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.STUDENT TO '${SQL_STUDENT_USER}'@'${SQL_HOST}';`;
+
+// student enlistment section
+const CREATE_STUDENT_ENLISTMENT_TABLE = `CREATE TABLE IF NOT EXISTS STUD_ENLISTMENT(
+  uid VARCHAR(20),
+  courseID VARCHAR(20),
+  PRIMARY KEY (uid, courseID),
+  FOREIGN KEY (uid) REFERENCES STUDENT(uid) ON DELETE CASCADE,
+  FOREIGN KEY (courseID) REFERENCES COURSE(courseID) ON DELETE CASCADE
+);`;
+
+const GRANT_STUDENT_ENLISTMENT_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.STUD_ENLISTMENT TO '${SQL_STUDENT_USER}'@'${SQL_HOST}';`;
 
 module.exports = async () => {
   try {
@@ -116,6 +128,9 @@ module.exports = async () => {
     await makeQuery(CREATE_STUDENT_USER, databasePermissions.ROOT);
     await makeQuery(CREATE_STUDENT_TABLE, databasePermissions.ROOT);
     await makeQuery(GRANT_STUDENT_PRIV, databasePermissions.ROOT);
+    // student enlistment section
+    await makeQuery(CREATE_STUDENT_ENLISTMENT_TABLE, databasePermissions.ROOT);
+    await makeQuery(GRANT_STUDENT_ENLISTMENT_PRIV, databasePermissions.ROOT);
   } catch (err) {
     console.log(err);
   }

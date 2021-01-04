@@ -8,8 +8,6 @@ const INSERT_STUDENT = (uid, name, password) => `INSERT INTO STUDENT VALUES(
     '${password}'
 )`;
 
-const SELECT_STUDENT_BY_UID = (uid) => `SELECT * FROM STUDENT WHERE uid='${uid}'`;
-
 module.exports.createNewStudent = async (uid, name, password) => {
   if (!/^\S{5,}$/.test(uid)) {
     throw createValidationError('student_id_invalid', 'Invalid student ID');
@@ -20,6 +18,8 @@ module.exports.createNewStudent = async (uid, name, password) => {
   return { uid, name, password };
 };
 
+const SELECT_STUDENT_BY_UID = (uid) => `SELECT * FROM STUDENT WHERE uid='${uid}'`;
+
 module.exports.getStudentDetails = async (uid) => {
   if (!/^\S{5,}$/.test(uid)) {
     throw createValidationError('student_id_invalid', 'The requested student id format is incorrect');
@@ -29,4 +29,10 @@ module.exports.getStudentDetails = async (uid) => {
     throw createPermissionError('student_id_notfound', 'The student ID entered is not present');
   }
   return data[0];
+};
+
+const SELECT_ALL_STUDENT = () => 'SELECT * FROM STUDENT;';
+module.exports.getAllStudents = async () => {
+  const { data: students } = await makeQuery(SELECT_ALL_STUDENT(), databasePermissions.ADMIN);
+  return students;
 };

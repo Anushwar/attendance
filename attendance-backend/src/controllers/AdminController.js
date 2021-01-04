@@ -1,12 +1,13 @@
 const {
   createdResponseWithData, conflictResponse, successResponseWithData,
 } = require('../helpers/response');
-const { createNewStudent } = require('../sql/students');
+const { createNewStudent, getAllStudents } = require('../sql/students');
 
 const { createNewTeacher, getAllTeachers } = require('../sql/teachers');
 const { createCourse, getAllCourses } = require('../sql/courses');
 const { createClass, getAllClasses } = require('../sql/classes');
 const { getAllEnrollment, createEnrollment } = require('../sql/enrollments');
+const { createEnlistment, getAllEnlistment } = require('../sql/enlistment');
 
 /* teacher section  */
 module.exports.postAdminTeacherRegisterController = [async (req, res) => {
@@ -118,6 +119,37 @@ module.exports.postAdminStudentRegisterController = [async (req, res) => {
     const student = await createNewStudent(uid, name, password);
     delete student.password;
     createdResponseWithData(res, student);
+  } catch (error) {
+    conflictResponse(res, error);
+  }
+}];
+
+module.exports.getAdminAllStudentsController = [async (req, res) => {
+  try {
+    const students = (await getAllStudents()).map(({ password, ...student }) => student);
+    successResponseWithData(res, students);
+  } catch (error) {
+    conflictResponse(res, error);
+  }
+}];
+
+/* enlistment section */
+module.exports.postAdminCreateEnlitmentController = [async (req, res) => {
+  try {
+    const {
+      classID, courseID, uid,
+    } = req.body;
+    const enrollment = await createEnlistment(classID, courseID, uid);
+    createdResponseWithData(res, enrollment);
+  } catch (error) {
+    conflictResponse(res, error);
+  }
+}];
+
+module.exports.getAdminAllEnlistmentController = [async (req, res) => {
+  try {
+    const enrollments = await getAllEnlistment();
+    successResponseWithData(res, enrollments);
   } catch (error) {
     conflictResponse(res, error);
   }
