@@ -11,7 +11,6 @@ const DashboardContainer = styled(Container)({
 });
 
 const Course = styled.div(({ theme }) => {
-  console.log(theme);
   const { speeds, colors, radii } = theme;
   return {
     width: '100%',

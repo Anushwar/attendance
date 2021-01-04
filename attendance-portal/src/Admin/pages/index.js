@@ -5,6 +5,7 @@ import CreateCourse from './CreateCourse';
 import CreateClass from './CreateClass';
 import CreateEnrollment from './CreateEnrollment';
 import CreateStudent from './CreateStudent';
+import CreateEnlistment from './createEnlistment';
 
 export {
   Login,
@@ -14,4 +15,5 @@ export {
   CreateClass,
   CreateEnrollment,
   CreateStudent,
+  CreateEnlistment,
 };

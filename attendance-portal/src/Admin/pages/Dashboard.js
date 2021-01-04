@@ -23,6 +23,9 @@ const Dashboard = () => {
       <Link to={`${path}/create/student`}>
         <Button css={{ marginLeft: 20 }}>Create Student</Button>
       </Link>
+      <Link to={`${path}/create/enlistment`}>
+        <Button css={{ marginLeft: 20 }}>Create Enlistment</Button>
+      </Link>
     </>
   );
 };

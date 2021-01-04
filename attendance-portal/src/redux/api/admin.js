@@ -6,6 +6,7 @@ export const postAdminLogin = (aid, password) =>
 export const postAdminRegisterStudent = (uid, name, password) =>
   axios.post('/admins/students', { uid, name, password });
 
+export const getAdminStudentsList = () => axios.get('/admins/students');
 // teacher section
 export const postAdminRegisterTeacher = (tid, name, password) =>
   axios.post('/admins/teachers', { tid, name, password });
@@ -45,3 +46,9 @@ export const getAdminEnrollmentsList = () => axios.get('/admins/enrollments');
 
 export const postAdminEnrollment = (classID, courseID, tid) =>
   axios.post('/admins/enrollments', { classID, courseID, tid });
+
+// enlistment section
+export const getAdminEnlistmentsList = () => axios.get('/admins/enlistments');
+
+export const postAdminEnlistment = (classID, courseID, uid) =>
+  axios.post('/admins/enlistments', { classID, courseID, uid });
