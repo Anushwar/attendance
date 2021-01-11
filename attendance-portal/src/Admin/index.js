@@ -8,6 +8,7 @@ import {
   CreateClass,
   CreateStudent,
   CreateEnrollment,
+  CreateSlot,
 } from './pages';
 import AdminRoute from './AdminRoute';
 
@@ -23,6 +24,7 @@ const Admin = () => {
         component={CreateEnrollment}
       />
       <AdminRoute path={`${path}/create/student`} component={CreateStudent} />
+      <AdminRoute path={`${path}/create/slot`} component={CreateSlot} />
       <AdminRoute exact path={path} component={Dashboard} />
     </Switch>
   );

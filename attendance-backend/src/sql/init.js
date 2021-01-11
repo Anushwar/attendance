@@ -100,7 +100,7 @@ const CREATE_SLOT_TABLE = `CREATE TABLE IF NOT EXISTS SLOT(
   name VARCHAR(20),
   startTime TIME,
   endTime TIME,
-  CONSTRAINT endTimeAfterStartTime CHECK ( endTime > startTime ),
+  CONSTRAINT end_time_after_start_time CHECK ( endTime > startTime ),
   PRIMARY KEY (id)
   );`;
 

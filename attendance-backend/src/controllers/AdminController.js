@@ -127,13 +127,9 @@ module.exports.postAdminStudentRegisterController = [async (req, res) => {
 /* slots section */
 module.exports.postAdminCreateSlotController = [async (req, res) => {
   try {
-    const {
-      name,
-      startDate,
-      endDate,
-    } = req.body;
+    const { name, startTime, endTime } = req.body;
 
-    const slot = await createSlot(name, startDate, endDate);
+    const slot = await createSlot(name, startTime, endTime);
     createdResponseWithData(res, slot);
   } catch (error) {
     conflictResponse(res, error);

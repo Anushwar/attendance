@@ -45,3 +45,7 @@ export const getAdminEnrollmentsList = () => axios.get('/admins/enrollments');
 
 export const postAdminEnrollment = (classID, courseID, tid) =>
   axios.post('/admins/enrollments', { classID, courseID, tid });
+
+// slot section
+export const postAdminCreateSlot = (name, startTime, endTime) =>
+  axios.post('/admins/slots', { name, startTime, endTime });
