@@ -9,6 +9,7 @@ const {
   postAdminCreateEnrollmentController,
   getAdminAllEnrollmentController,
   postAdminStudentRegisterController,
+  postAdminCreateSlotController,
 } = require('../controllers/AdminController');
 const { adminAuth } = require('../middlewares/auth');
 
@@ -97,5 +98,15 @@ router.get('/enrollments', getAdminAllEnrollmentController);
  * response :  201 CREATED RESPONSE-USER
  */
 router.post('/students', postAdminStudentRegisterController);
+
+/** slot section */
+/**
+ * path : /admins/slots
+ *
+ * request  :  { name, startDate, endDate }
+ *
+ * response :  201 CREATED RESPONSE-USER
+ */
+router.post('/slots', postAdminCreateSlotController);
 
 module.exports = router;

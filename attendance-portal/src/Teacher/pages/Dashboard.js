@@ -64,7 +64,7 @@ const Dashboard = () => {
                   fontSize="lg"
                   textAlign="center"
                   fontWeight="medium"
-                  color="gray.700"
+                  color="gray.600"
                   paddingTop={2.5}
                   paddingBottom={2.5}
                 >

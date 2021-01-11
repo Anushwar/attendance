@@ -7,6 +7,7 @@ const { createNewTeacher, getAllTeachers } = require('../sql/teachers');
 const { createCourse, getAllCourses } = require('../sql/courses');
 const { createClass, getAllClasses } = require('../sql/classes');
 const { getAllEnrollment, createEnrollment } = require('../sql/enrollments');
+const { createSlot } = require('../sql/slots');
 
 /* teacher section  */
 module.exports.postAdminTeacherRegisterController = [async (req, res) => {
@@ -118,6 +119,22 @@ module.exports.postAdminStudentRegisterController = [async (req, res) => {
     const student = await createNewStudent(uid, name, password);
     delete student.password;
     createdResponseWithData(res, student);
+  } catch (error) {
+    conflictResponse(res, error);
+  }
+}];
+
+/* slots section */
+module.exports.postAdminCreateSlotController = [async (req, res) => {
+  try {
+    const {
+      name,
+      startDate,
+      endDate,
+    } = req.body;
+
+    const slot = await createSlot(name, startDate, endDate);
+    createdResponseWithData(res, slot);
   } catch (error) {
     conflictResponse(res, error);
   }

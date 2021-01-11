@@ -93,6 +93,17 @@ const CREATE_STUDENT_TABLE = `CREATE TABLE IF NOT EXISTS STUDENT(
 
 const GRANT_STUDENT_PRIV = `GRANT SELECT ON university.STUDENT TO '${SQL_STUDENT_USER}'@'${SQL_HOST}';`;
 
+// class slots in a day table
+
+const CREATE_SLOT_TABLE = `CREATE TABLE IF NOT EXISTS SLOT(
+  id INT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(20),
+  startTime TIME,
+  endTime TIME,
+  CONSTRAINT endTimeAfterStartTime CHECK ( endTime > startTime ),
+  PRIMARY KEY (id)
+  );`;
+
 module.exports = async () => {
   try {
     // admin section
@@ -116,6 +127,8 @@ module.exports = async () => {
     await makeQuery(CREATE_STUDENT_USER, databasePermissions.ROOT);
     await makeQuery(CREATE_STUDENT_TABLE, databasePermissions.ROOT);
     await makeQuery(GRANT_STUDENT_PRIV, databasePermissions.ROOT);
+    // slot table
+    await makeQuery(CREATE_SLOT_TABLE, databasePermissions.ROOT);
   } catch (err) {
     console.log(err);
   }
