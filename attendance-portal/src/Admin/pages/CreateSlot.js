@@ -33,9 +33,9 @@ const CreateCourse = () => {
     } catch (err) {
       setResult();
       toast({
-        title: 'Warning.',
+        title: 'Error!!.',
         description: err?.response?.data?.message,
-        status: 'warning',
+        status: 'error',
         duration: 5000,
         isClosable: true,
       });

@@ -38,7 +38,16 @@ export const getAdminCoursesList = () => axios.get('/admins/courses');
 export const postAdminCreateClass = (classID, semester, section, tid) =>
   axios.post('/admins/classes', { classID, semester, section, tid });
 
+export const getAdminTimetableOfClass = (classID) =>
+  axios.get(`admins/classes/${classID}/timetables`);
+
+export const postAdminTimetableOfClass = (classID, day, slotID, courseID) =>
+  axios.post(`admins/classes/${classID}/timetables`, { day, slotID, courseID });
+
 export const getAdminClassesList = () => axios.get('/admins/classes');
+
+export const getAdminCoursesOfClass = (classID) =>
+  axios.get(`admins/classes/${classID}/courses`);
 
 // enrollment section
 export const getAdminEnrollmentsList = () => axios.get('/admins/enrollments');
@@ -49,3 +58,5 @@ export const postAdminEnrollment = (classID, courseID, tid) =>
 // slot section
 export const postAdminCreateSlot = (name, startTime, endTime) =>
   axios.post('/admins/slots', { name, startTime, endTime });
+
+export const getAdminSlotList = () => axios.get('/admins/slots');

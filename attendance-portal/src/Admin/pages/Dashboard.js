@@ -26,6 +26,9 @@ const Dashboard = () => {
       <Link to={`${path}/create/slot`}>
         <Button css={{ marginLeft: 20 }}>Create Slot</Button>
       </Link>
+      <Link to={`${path}/timetable`}>
+        <Button css={{ marginLeft: 20 }}>Timetables</Button>
+      </Link>
     </>
   );
 };
