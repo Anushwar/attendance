@@ -4,7 +4,10 @@ import styled from '@emotion/styled';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container } from '../../components';
-import { dispatchLoadCoursesTeacher } from '../../redux/triggers/teacher';
+import {
+  dispatchLoadCoursesTeacher,
+  dispatchLoadCoursesTeacherToday,
+} from '../../redux/triggers/teacher';
 
 const DashboardContainer = styled(Container)({
   paddingTop: '3rem',
@@ -36,10 +39,14 @@ const Dashboard = () => {
   const name = useSelector(({ teacherData }) => teacherData.user.name);
   const tid = useSelector(({ teacherData }) => teacherData.user.tid);
   const courses = useSelector(({ teacherData }) => teacherData.courses);
+  const coursesToday = useSelector(
+    ({ teacherData }) => teacherData.coursesToday
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatchLoadCoursesTeacher()(dispatch);
+    dispatchLoadCoursesTeacherToday()(dispatch);
   }, [tid]);
   return (
     <DashboardContainer type="center">
@@ -50,6 +57,40 @@ const Dashboard = () => {
         Today:
       </Heading>
       <br />
+      <Grid templateColumns="repeat(auto-fill, minmax(250px, 1fr))" gap={5}>
+        {coursesToday?.map(
+          ({
+            classID,
+            courseName,
+            section,
+            semester,
+            courseID,
+            startTime,
+            endTime,
+          }) => {
+            return (
+              <Course key={`${classID}-${courseID}`}>
+                <Text fontSize="sm" color="gray.500">
+                  {`${courseID} / ${semester} - ${section}`}
+                </Text>
+                <Text
+                  fontSize="lg"
+                  textAlign="center"
+                  fontWeight="medium"
+                  color="gray.600"
+                  paddingTop={2.5}
+                  paddingBottom={2.5}
+                >
+                  {courseName}
+                </Text>
+                <Text textAlign="right" color="gray.500">
+                  {`${startTime}-${endTime}`}
+                </Text>
+              </Course>
+            );
+          }
+        )}
+      </Grid>
       <br />
       <Heading as="h3" size="lg">
         Courses:

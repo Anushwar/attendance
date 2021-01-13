@@ -29,7 +29,8 @@ CLASS C WHERE courseID IN (select courseID FROM STUD_ENLISTMENT WHERE uid ='${ui
 
 const SELECT_COURSE_DETAILS_FROM_CLASS_ID = (classID) => `SELECT * FROM course where courseID in (select courseID from ENROLLMENT where classID='${classID}');`;
 
-const SELECT_COURSE_DETAILS_FOR_TODAY_FROM_TID = (tid) => `SELECT C.classID, C.semester, C.section, CO.courseID, CO.courseName, s.startTime, s.endTime from COURSE CO,
+const SELECT_COURSE_DETAILS_FOR_TODAY_FROM_TID = (tid) => `SELECT C.classID, C.semester, C.section, CO.courseID, CO.courseName, 
+TIME_FORMAT(s.startTime, '%h:%i %p') as startTime, TIME_FORMAT(s.endTime, '%h:%i %p') as endTime from COURSE CO,
 CLASS C, slot S where courseID in (select courseID from TIMETABLE T where day=dayofweek(now()) and s.slotID = t.slotID and t.courseID in 
 (select courseID FROM ENROLLMENT WHERE tid ='${tid}' AND c.classID = classID));`;
 

@@ -1,5 +1,13 @@
-import { loadTeacherCourses, updateTeacherUser } from '../actions';
-import { getTeacherCourses, postTeacherLogin } from '../api';
+import {
+  loadTeacherCourses,
+  loadTeacherCoursesToday,
+  updateTeacherUser,
+} from '../actions';
+import {
+  getTeacherCourses,
+  getTeacherCoursesToday,
+  postTeacherLogin,
+} from '../api';
 
 const dispatchLoginTeacherUser = (tid, password) => {
   return async (dispatch) => {
@@ -15,4 +23,15 @@ const dispatchLoadCoursesTeacher = () => {
   };
 };
 
-export { dispatchLoginTeacherUser, dispatchLoadCoursesTeacher };
+const dispatchLoadCoursesTeacherToday = () => {
+  return async (dispatch) => {
+    const { data: courses } = await getTeacherCoursesToday();
+    dispatch(loadTeacherCoursesToday(courses));
+  };
+};
+
+export {
+  dispatchLoginTeacherUser,
+  dispatchLoadCoursesTeacher,
+  dispatchLoadCoursesTeacherToday,
+};
