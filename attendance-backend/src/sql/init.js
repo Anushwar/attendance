@@ -71,7 +71,6 @@ const GRANT_TEACHER_CLASS_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.CLASS TO '${SQ
 
 const GRANT_STUDENT_CLASS_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.CLASS TO '${SQL_STUDENT_USER}'@'${SQL_HOST}';`;
 
-
 // enrollment section section
 const CREATE_ENROLLMENT_TABLE = `CREATE TABLE IF NOT EXISTS ENROLLMENT(
   classID VARCHAR(20),
@@ -92,21 +91,20 @@ const CREATE_STUDENT_USER = `CREATE USER IF NOT EXISTS
 const CREATE_STUDENT_TABLE = `CREATE TABLE IF NOT EXISTS STUDENT(
     uid VARCHAR(20),
     name VARCHAR(50),
-    classID VARCHAR(20),
     password VARCHAR(50) NOT NULL,
-    PRIMARY KEY (uid)
+    classID VARCHAR(20),
+    PRIMARY KEY (uid),
+    FOREIGN KEY (classID) REFERENCES CLASS(classID) ON DELETE SET NULL
 );`;
 
 const GRANT_STUDENT_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.STUDENT TO '${SQL_STUDENT_USER}'@'${SQL_HOST}';`;
 
 // student enlistment section
 const CREATE_STUDENT_ENLISTMENT_TABLE = `CREATE TABLE IF NOT EXISTS STUD_ENLISTMENT(
-  classID VARCHAR(20),
-  courseID VARCHAR(20),
   uid VARCHAR(20),
-  PRIMARY KEY (classID, courseID, uid),
+  courseID VARCHAR(20),
+  PRIMARY KEY (uid, courseID),
   FOREIGN KEY (uid) REFERENCES STUDENT(uid) ON DELETE CASCADE,
-  FOREIGN KEY (classID) REFERENCES CLASS(classID) ON DELETE CASCADE,
   FOREIGN KEY (courseID) REFERENCES COURSE(courseID) ON DELETE CASCADE
 );`;
 
@@ -130,7 +128,7 @@ module.exports = async () => {
     await makeQuery(CREATE_CLASS_TABLE, databasePermissions.ROOT);
     await makeQuery(GRANT_TEACHER_CLASS_PRIV, databasePermissions.ROOT);
     await makeQuery(GRANT_STUDENT_CLASS_PRIV, databasePermissions.ROOT);
-    
+
     // enrollment section
     await makeQuery(CREATE_ENROLLMENT_TABLE, databasePermissions.ROOT);
     await makeQuery(GRANT_TEACHER_ENROLLMENT_PRIV, databasePermissions.ROOT);

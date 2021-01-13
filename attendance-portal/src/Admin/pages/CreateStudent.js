@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/core */
 
-import { Input, Button } from '@chakra-ui/core';
-import { useState } from 'react';
+import { Input, Button, FormLabel, FormControl, Select } from '@chakra-ui/core';
+import { useEffect, useState } from 'react';
 import JSONViewer from 'react-json-viewer';
-import { postAdminRegisterStudent } from '../../redux/api';
+import { getAdminClassesList, postAdminRegisterStudent } from '../../redux/api';
 import { Container } from '../../components';
 
 const CreateStudent = () => {
@@ -12,6 +12,8 @@ const CreateStudent = () => {
   const [name, setName] = useState('');
   const [password2, setPassword2] = useState('');
   const [error, setErrorMessage] = useState('');
+  const [classList, setClassList] = useState([]);
+  const [classID, setClassID] = useState([]);
   const [result, setResult] = useState('');
 
   const handleUid = (e) => {
@@ -27,6 +29,11 @@ const CreateStudent = () => {
     setName(e.target.value);
   };
 
+  useEffect(async () => {
+    const { data: classes } = await getAdminClassesList();
+    setClassList(classes);
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -36,7 +43,8 @@ const CreateStudent = () => {
       const { data: student } = await postAdminRegisterStudent(
         uid,
         name,
-        password1
+        password1,
+        classID
       );
       setResult(student);
       setErrorMessage();
@@ -72,6 +80,20 @@ const CreateStudent = () => {
         value={password2}
         onChange={handlePassword2}
       />
+      <FormControl>
+        <FormLabel>Select a class</FormLabel>
+        <Select
+          value={classID}
+          placeholder="Select a Class"
+          onChange={(e) => setClassID(e.target.value)}
+        >
+          {classList.map((myClass) => (
+            <option key={myClass.classID} value={myClass.classID}>
+              {`${myClass.semester} - ${myClass.section} (teacherID-${myClass.tid})`}
+            </option>
+          ))}
+        </Select>
+      </FormControl>
       <Button
         css={{ margin: '1rem auto 2rem', display: 'block', width: '100%' }}
         type="submit"

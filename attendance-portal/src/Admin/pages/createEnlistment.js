@@ -11,7 +11,6 @@ import { useEffect, useState } from 'react';
 import JSONViewer from 'react-json-viewer';
 import { Container } from '../../components';
 import {
-  getAdminClassesList,
   getAdminCoursesList,
   getAdminEnlistmentsList,
   getAdminStudentsList,
@@ -19,11 +18,9 @@ import {
 } from '../../redux/api';
 
 const CreateEnlistment = () => {
-  const [classID, setClassID] = useState('');
   const [courseID, setCourseID] = useState('');
   const [uid, setUid] = useState('');
   const [studentsList, setStudentsList] = useState([]);
-  const [classesList, setClassesList] = useState([]);
   const [coursesList, setCoursesList] = useState([]);
   const [enlistmentsList, setEnlistmentsList] = useState([]);
   const [result, setResult] = useState();
@@ -31,8 +28,6 @@ const CreateEnlistment = () => {
   useEffect(async () => {
     const { data: students } = await getAdminStudentsList();
     setStudentsList(students);
-    const { data: classes } = await getAdminClassesList();
-    setClassesList(classes);
     const { data: courses } = await getAdminCoursesList();
     setCoursesList(courses);
     const { data: enlistments } = await getAdminEnlistmentsList();
@@ -40,11 +35,11 @@ const CreateEnlistment = () => {
   }, []);
 
   let applicableCoursesList = null;
-  if (!classID || !enlistmentsList) {
+  if (!enlistmentsList) {
     applicableCoursesList = coursesList;
   } else {
     const enlistedCourseIDList = enlistmentsList
-      .filter((enlistment) => enlistment.classID === classID)
+      .filter((enlistment) => enlistment.uid === uid)
       .map((enlistment) => enlistment.courseID);
     if (enlistedCourseIDList.length === 0) {
       applicableCoursesList = coursesList;
@@ -59,11 +54,7 @@ const CreateEnlistment = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data: enlistment } = await postAdminEnlistment(
-        classID,
-        courseID,
-        uid
-      );
+      const { data: enlistment } = await postAdminEnlistment(uid, courseID);
       setResult(enlistment);
       toast({
         title: 'Successful',
@@ -89,15 +80,15 @@ const CreateEnlistment = () => {
     <Container type="center" as="form" onSubmit={handleSubmit}>
       <p>Hello this is enlistments</p>
       <FormControl>
-        <FormLabel>Select a class</FormLabel>
+        <FormLabel>Select a student</FormLabel>
         <Select
-          value={classID}
-          placeholder="Select a Class"
-          onChange={(e) => setClassID(e.target.value)}
+          value={uid}
+          placeholder="Select a student"
+          onChange={(e) => setUid(e.target.value)}
         >
-          {classesList.map((myClass) => (
-            <option key={myClass.classID} value={myClass.classID}>
-              {`${myClass.semester} - ${myClass.section} (studentID-${myClass.tid})`}
+          {studentsList.map((student) => (
+            <option key={student.uid} value={student.uid}>
+              {`${student.name}(uid-${student.uid})`}
             </option>
           ))}
         </Select>
@@ -116,20 +107,6 @@ const CreateEnlistment = () => {
           ))}
         </Select>
       </FormControl>
-      <FormControl>
-        <FormLabel>Select a student</FormLabel>
-        <Select
-          value={uid}
-          placeholder="Select a student"
-          onChange={(e) => setUid(e.target.value)}
-        >
-          {studentsList.map((student) => (
-            <option key={student.uid} value={student.uid}>
-              {`${student.name}(uid-${student.uid})`}
-            </option>
-          ))}
-        </Select>
-      </FormControl>
 
       <Button
         css={{ margin: '1rem auto 2rem', display: 'block', width: '100%' }}
@@ -141,12 +118,6 @@ const CreateEnlistment = () => {
         <>
           Students:
           <JSONViewer json={studentsList} css={{ width: '100%' }} />
-        </>
-      )}
-      {classesList && (
-        <>
-          Classes:
-          <JSONViewer json={classesList} css={{ width: '100%' }} />
         </>
       )}
       {coursesList && (

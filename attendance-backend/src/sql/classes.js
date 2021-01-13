@@ -1,6 +1,5 @@
 const makeQuery = require('../helpers/result');
 const { databasePermissions } = require('../helpers/constants');
-const { createValidationError } = require('../helpers/errors');
 
 // queries
 const INSERT_CLASS = (classID, semester, section, tid) => `INSERT INTO CLASS VALUES (

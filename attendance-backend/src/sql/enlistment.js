@@ -2,19 +2,18 @@ const { databasePermissions } = require('../helpers/constants');
 const makeQuery = require('../helpers/result');
 
 // queries
-const INSERT_ENLISTMENT = (classID, courseID, uid) => `INSERT INTO STUD_ENLISTMENT VALUES (
-    '${classID}',
-    '${courseID}',
-    '${uid}'
+const INSERT_ENLISTMENT = (uid, courseID) => `INSERT INTO STUD_ENLISTMENT VALUES (
+    '${uid}',
+    '${courseID}'
 );`;
 
 const GET_ALL_ENLISTMENT = 'SELECT * FROM STUD_ENLISTMENT';
 
 // executors
-module.exports.createEnlistment = async (classID, courseID, uid) => {
-  await makeQuery(INSERT_ENLISTMENT(classID, courseID, uid), databasePermissions.ADMIN);
+module.exports.createEnlistment = async (uid, courseID) => {
+  await makeQuery(INSERT_ENLISTMENT(uid, courseID), databasePermissions.ADMIN);
 
-  return { classID, courseID, uid };
+  return { uid, courseID };
 };
 
 module.exports.getAllEnlistment = async () => {

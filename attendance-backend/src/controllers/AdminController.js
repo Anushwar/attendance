@@ -114,9 +114,9 @@ module.exports.getAdminAllEnrollmentController = [async (req, res) => {
 module.exports.postAdminStudentRegisterController = [async (req, res) => {
   try {
     const {
-      uid, name, password,
+      uid, name, password, classID,
     } = req.body;
-    const student = await createNewStudent(uid, name, password);
+    const student = await createNewStudent(uid, name, password, classID);
     delete student.password;
     createdResponseWithData(res, student);
   } catch (error) {
@@ -137,9 +137,9 @@ module.exports.getAdminAllStudentsController = [async (req, res) => {
 module.exports.postAdminCreateEnlitmentController = [async (req, res) => {
   try {
     const {
-      classID, courseID, uid,
+      uid, courseID,
     } = req.body;
-    const enrollment = await createEnlistment(classID, courseID, uid);
+    const enrollment = await createEnlistment(uid, courseID);
     createdResponseWithData(res, enrollment);
   } catch (error) {
     conflictResponse(res, error);

@@ -2,18 +2,19 @@ const makeQuery = require('../helpers/result');
 const { databasePermissions } = require('../helpers/constants');
 const { createValidationError, createPermissionError } = require('../helpers/errors');
 
-const INSERT_STUDENT = (uid, name, password) => `INSERT INTO STUDENT VALUES(
+const INSERT_STUDENT = (uid, name, password, classID) => `INSERT INTO STUDENT VALUES(
     '${uid}',
     '${name}',
-    '${password}'
+    '${password}',
+    '${classID}'
 )`;
 
-module.exports.createNewStudent = async (uid, name, password) => {
+module.exports.createNewStudent = async (uid, name, password, classID) => {
   if (!/^\S{5,}$/.test(uid)) {
     throw createValidationError('student_id_invalid', 'Invalid student ID');
   }
 
-  await makeQuery(INSERT_STUDENT(uid, name, password), databasePermissions.ADMIN);
+  await makeQuery(INSERT_STUDENT(uid, name, password, classID), databasePermissions.ADMIN);
 
   return { uid, name, password };
 };
