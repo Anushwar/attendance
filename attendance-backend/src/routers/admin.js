@@ -9,6 +9,11 @@ const {
   postAdminCreateEnrollmentController,
   getAdminAllEnrollmentController,
   postAdminStudentRegisterController,
+  postAdminCreateSlotController,
+  getAdminAllSlotsController,
+  getAdminTimetableFromClassController,
+  postAdminCreateTimetableEntryFromClassController,
+  getAdminCoursesFromClassController,
 } = require('../controllers/AdminController');
 const { adminAuth } = require('../middlewares/auth');
 
@@ -71,6 +76,34 @@ router.post('/classes', postAdminCreateClassController);
 router.get('/classes', getAdminAllClassesController);
 
 /**
+ * path : /classes/:classID/timetables
+ *
+ * request  :  param:classID
+ *
+ * response :  200 OK RESPONSE-CLASS-LIST
+ */
+router.get('/classes/:classID/timetables', getAdminTimetableFromClassController);
+
+/**
+ * path : /classes/:classID/timetables
+ *
+ * request  :  param:classID
+ *
+ * response :  200 OK RESPONSE-CLASS-LIST
+ */
+router.post('/classes/:classID/timetables', postAdminCreateTimetableEntryFromClassController);
+
+/**
+ * path : /classes/:classID/courses
+ *
+ * request  :  param:classID
+ *
+ * response :  200 OK RESPONSE-CLASS-LIST
+ */
+router.get('/classes/:classID/courses', getAdminCoursesFromClassController);
+
+/** enrollment section */
+/**
  * path: /admins/enrollments
  *
  * request : { classID, semester, section, tid }
@@ -97,5 +130,24 @@ router.get('/enrollments', getAdminAllEnrollmentController);
  * response :  201 CREATED RESPONSE-USER
  */
 router.post('/students', postAdminStudentRegisterController);
+
+/** slot section */
+/**
+ * path : /admins/slots
+ *
+ * request  :  { name, startDate, endDate }
+ *
+ * response :  201 CREATED RESPONSE-USER
+ */
+router.post('/slots', postAdminCreateSlotController);
+
+/**
+ * path : /admins/slots
+ *
+ * request  :  { name, startDate, endDate }
+ *
+ * response :  201 CREATED RESPONSE-USER
+ */
+router.get('/slots', getAdminAllSlotsController);
 
 module.exports = router;

@@ -24,6 +24,8 @@ const SELECT_ALL_COURSE = () => 'SELECT * FROM COURSE;';
 const SELECT_COURSE_DETAILS_FROM_TID = (tid) => `SELECT C.classID, C.semester, C.section, CO.courseID, CO.courseName from COURSE CO,
 CLASS C WHERE courseID IN (select courseID FROM ENROLLMENT WHERE tid ='${tid}' AND c.classID = classID )`;
 
+const SELECT_COURSE_DETAILS_FROM_COURSE_ID = (courseID) => `SELECT * FROM course where courseID in (select courseID from ENROLLMENT where classID='${courseID}');`;
+
 // executors
 module.exports.createCourse = async (
   courseCode,
@@ -69,6 +71,13 @@ module.exports.getCoursesFromTid = async (tid) => {
   }
   const { data: classes } = await makeQuery(
     SELECT_COURSE_DETAILS_FROM_TID(tid), databasePermissions.TEACHER,
+  );
+  return classes;
+};
+
+module.exports.getCoursesFromClass = async (classID) => {
+  const { data: classes } = await makeQuery(
+    SELECT_COURSE_DETAILS_FROM_COURSE_ID(classID), databasePermissions.ADMIN,
   );
   return classes;
 };

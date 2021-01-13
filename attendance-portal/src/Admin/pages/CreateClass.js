@@ -52,7 +52,7 @@ const CreateClass = () => {
   return (
     <Container type="center" as="form" onSubmit={handleSubmit}>
       <p>Hello this is Class creation</p>
-      CLass id
+      Class id
       <Input
         placeholder="Enter Class ID"
         value={classID}

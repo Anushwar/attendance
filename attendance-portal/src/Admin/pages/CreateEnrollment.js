@@ -135,7 +135,7 @@ const CreateClass = () => {
         css={{ margin: '1rem auto 2rem', display: 'block', width: '100%' }}
         type="submit"
       >
-        Create Class
+        Create Enrollment
       </Button>
       {teachersList && (
         <>

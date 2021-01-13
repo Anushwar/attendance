@@ -1,4 +1,4 @@
 import Container from './Container';
+import Agog from './Agog';
 
-// eslint-disable-next-line import/prefer-default-export
-export { Container };
+export { Container, Agog };

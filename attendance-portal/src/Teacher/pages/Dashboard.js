@@ -11,7 +11,6 @@ const DashboardContainer = styled(Container)({
 });
 
 const Course = styled.div(({ theme }) => {
-  console.log(theme);
   const { speeds, colors, radii } = theme;
   return {
     width: '100%',
@@ -64,7 +63,7 @@ const Dashboard = () => {
                   fontSize="lg"
                   textAlign="center"
                   fontWeight="medium"
-                  color="gray.700"
+                  color="gray.600"
                   paddingTop={2.5}
                   paddingBottom={2.5}
                 >

@@ -5,6 +5,9 @@ import CreateCourse from './CreateCourse';
 import CreateClass from './CreateClass';
 import CreateEnrollment from './CreateEnrollment';
 import CreateStudent from './CreateStudent';
+import CreateSlot from './CreateSlot';
+import TimeTable from './TimeTable';
+import TimeTables from './TimeTables';
 
 export {
   Login,
@@ -14,4 +17,7 @@ export {
   CreateClass,
   CreateEnrollment,
   CreateStudent,
+  CreateSlot,
+  TimeTable,
+  TimeTables,
 };
