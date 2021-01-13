@@ -136,7 +136,7 @@ const TimeTable = () => {
       {courseList && (
         <>
           Courses
-          <JSONViewer json={slotsList} css={{ width: '100%' }} />
+          <JSONViewer json={courseList} css={{ width: '100%' }} />
         </>
       )}
     </Container>
