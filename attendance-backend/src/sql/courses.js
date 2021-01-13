@@ -27,7 +27,11 @@ CLASS C WHERE courseID IN (select courseID FROM ENROLLMENT WHERE tid ='${tid}' A
 const SELECT_COURSE_DETAILS_FROM_UID = (uid) => `SELECT C.classID, C.semester, C.section, CO.courseID, CO.courseName from COURSE CO,
 CLASS C WHERE courseID IN (select courseID FROM STUD_ENLISTMENT WHERE uid ='${uid}' AND C.classID = classID )`;
 
-const SELECT_COURSE_DETAILS_FROM_COURSE_ID = (courseID) => `SELECT * FROM course where courseID in (select courseID from ENROLLMENT where classID='${courseID}');`;
+const SELECT_COURSE_DETAILS_FROM_CLASS_ID = (classID) => `SELECT * FROM course where courseID in (select courseID from ENROLLMENT where classID='${classID}');`;
+
+const SELECT_COURSE_DETAILS_FOR_TODAY_FROM_TID = (tid) => `SELECT C.classID, C.semester, C.section, CO.courseID, CO.courseName, s.startTime, s.endTime from COURSE CO,
+CLASS C, slot S where courseID in (select courseID from TIMETABLE T where day=dayofweek(now()) and s.slotID = t.slotID and t.courseID in 
+(select courseID FROM ENROLLMENT WHERE tid ='${tid}' AND c.classID = classID));`;
 
 // executors
 module.exports.createCourse = async (
@@ -72,15 +76,25 @@ module.exports.getCoursesFromTid = async (tid) => {
   if (!/^\S{5,}$/.test(tid)) {
     throw createValidationError('teacher_id_invalid', 'The requested teacher id format is incorrect');
   }
-  const { data: classes } = await makeQuery(
+  const { data: courses } = await makeQuery(
     SELECT_COURSE_DETAILS_FROM_TID(tid), databasePermissions.TEACHER,
   );
-  return classes;
+  return courses;
+};
+
+module.exports.getCoursesForTodayFromTid = async (tid) => {
+  if (!/^\S{5,}$/.test(tid)) {
+    throw createValidationError('teacher_id_invalid', 'The requested teacher id format is incorrect');
+  }
+  const { data: courses } = await makeQuery(
+    SELECT_COURSE_DETAILS_FOR_TODAY_FROM_TID(tid), databasePermissions.TEACHER,
+  );
+  return courses;
 };
 
 module.exports.getCoursesFromClass = async (classID) => {
   const { data: classes } = await makeQuery(
-    SELECT_COURSE_DETAILS_FROM_COURSE_ID(classID), databasePermissions.ADMIN,
+    SELECT_COURSE_DETAILS_FROM_CLASS_ID(classID), databasePermissions.ADMIN,
   );
   return classes;
 };

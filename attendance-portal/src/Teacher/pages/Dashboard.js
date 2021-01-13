@@ -21,7 +21,7 @@ const Course = styled.div(({ theme }) => {
     justifyContent: 'space-between',
     border: `0.1px solid ${colors.gray[100]}`,
     userSelect: 'none',
-    padding: '1rem',
+    padding: '0.5rem 1rem',
     cursor: 'pointer',
     transition: `all ${speeds.default}ms ease`,
     '&:hover': {
@@ -45,6 +45,10 @@ const Dashboard = () => {
     <DashboardContainer type="center">
       <Heading as="h2">{`Hello ${name},`}</Heading>
       <Text>03/11/2020, Monday</Text>
+      <br />
+      <Heading as="h3" size="lg">
+        Today:
+      </Heading>
       <br />
       <br />
       <Heading as="h3" size="lg">

@@ -120,6 +120,8 @@ const CREATE_SLOT_TABLE = `CREATE TABLE IF NOT EXISTS SLOT(
   PRIMARY KEY (slotID)
   );`;
 
+const GRANT_TEACHER_SLOT_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.SLOT TO '${SQL_TEACHER_USER}'@'${SQL_HOST}'`;
+
 // timetable section
 const CREATE_TIMETABLE_TABLE = `CREATE TABLE IF NOT EXISTS TIMETABLE(
   classID VARCHAR(20),
@@ -131,6 +133,8 @@ const CREATE_TIMETABLE_TABLE = `CREATE TABLE IF NOT EXISTS TIMETABLE(
   FOREIGN KEY (slotID) REFERENCES SLOT(slotID) ON DELETE CASCADE,
   FOREIGN KEY (courseID) REFERENCES COURSE(courseID) ON DELETE CASCADE
 );`;
+
+const GRANT_TEACHER_TIMETABLE_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.TIMETABLE TO '${SQL_TEACHER_USER}'@'${SQL_HOST}'`;
 
 module.exports = async () => {
   try {
@@ -160,8 +164,10 @@ module.exports = async () => {
     await makeQuery(GRANT_STUDENT_PRIV, databasePermissions.ROOT);
     // slot table
     await makeQuery(CREATE_SLOT_TABLE, databasePermissions.ROOT);
+    await makeQuery(GRANT_TEACHER_SLOT_PRIV, databasePermissions.ROOT);
     // timetable table
     await makeQuery(CREATE_TIMETABLE_TABLE, databasePermissions.ROOT);
+    await makeQuery(GRANT_TEACHER_TIMETABLE_PRIV, databasePermissions.ROOT);
     // student enlistment section
     await makeQuery(CREATE_STUDENT_ENLISTMENT_TABLE, databasePermissions.ROOT);
     await makeQuery(GRANT_STUDENT_ENLISTMENT_PRIV, databasePermissions.ROOT);
