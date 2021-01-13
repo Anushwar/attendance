@@ -4,10 +4,11 @@ const {
 const { createNewStudent } = require('../sql/students');
 
 const { createNewTeacher, getAllTeachers } = require('../sql/teachers');
-const { createCourse, getAllCourses } = require('../sql/courses');
+const { createCourse, getAllCourses, getCoursesFromClass } = require('../sql/courses');
 const { createClass, getAllClasses } = require('../sql/classes');
 const { getAllEnrollment, createEnrollment } = require('../sql/enrollments');
-const { createSlot } = require('../sql/slots');
+const { createSlot, getAllSlots } = require('../sql/slots');
+const { getTimeTableFromClass, createTimtableEntry } = require('../sql/timetables');
 
 /* teacher section  */
 module.exports.postAdminTeacherRegisterController = [async (req, res) => {
@@ -59,8 +60,8 @@ module.exports.postAdminCreateCourseController = [async (req, res) => {
 
 module.exports.getAdminAllCourseController = [async (req, res) => {
   try {
-    const classes = await getAllCourses();
-    successResponseWithData(res, classes);
+    const courses = await getAllCourses();
+    successResponseWithData(res, courses);
   } catch (error) {
     conflictResponse(res, error);
   }
@@ -83,6 +84,47 @@ module.exports.getAdminAllClassesController = [async (req, res) => {
   try {
     const classes = await getAllClasses();
     successResponseWithData(res, classes);
+  } catch (error) {
+    conflictResponse(res, error);
+  }
+}];
+
+module.exports.getAdminTimetableFromClassController = [async (req, res) => {
+  try {
+    const {
+      classID,
+    } = req.params;
+    const timetable = await getTimeTableFromClass(classID);
+    successResponseWithData(res, timetable);
+  } catch (error) {
+    conflictResponse(res, error);
+  }
+}];
+
+module.exports.postAdminCreateTimetableEntryFromClassController = [async (req, res) => {
+  try {
+    const {
+      classID,
+    } = req.params;
+    const {
+      day,
+      slotID,
+      courseID,
+    } = req.body;
+    const timetableEntry = await createTimtableEntry(classID, day, slotID, courseID);
+    createdResponseWithData(res, timetableEntry);
+  } catch (error) {
+    conflictResponse(res, error);
+  }
+}];
+
+module.exports.getAdminCoursesFromClassController = [async (req, res) => {
+  try {
+    const {
+      classID,
+    } = req.params;
+    const courses = await getCoursesFromClass(classID);
+    successResponseWithData(res, courses);
   } catch (error) {
     conflictResponse(res, error);
   }
@@ -131,6 +173,15 @@ module.exports.postAdminCreateSlotController = [async (req, res) => {
 
     const slot = await createSlot(name, startTime, endTime);
     createdResponseWithData(res, slot);
+  } catch (error) {
+    conflictResponse(res, error);
+  }
+}];
+
+module.exports.getAdminAllSlotsController = [async (req, res) => {
+  try {
+    const slots = await getAllSlots();
+    successResponseWithData(res, slots);
   } catch (error) {
     conflictResponse(res, error);
   }

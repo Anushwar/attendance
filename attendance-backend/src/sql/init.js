@@ -93,16 +93,27 @@ const CREATE_STUDENT_TABLE = `CREATE TABLE IF NOT EXISTS STUDENT(
 
 const GRANT_STUDENT_PRIV = `GRANT SELECT ON university.STUDENT TO '${SQL_STUDENT_USER}'@'${SQL_HOST}';`;
 
-// class slots in a day table
-
+// slot section
 const CREATE_SLOT_TABLE = `CREATE TABLE IF NOT EXISTS SLOT(
-  id INT NOT NULL AUTO_INCREMENT,
+  slotID INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(20),
   startTime TIME,
   endTime TIME,
   CONSTRAINT end_time_after_start_time CHECK ( endTime > startTime ),
-  PRIMARY KEY (id)
+  PRIMARY KEY (slotID)
   );`;
+
+// timetable section
+const CREATE_TIMETABLE_TABLE = `CREATE TABLE IF NOT EXISTS TIMETABLE(
+  classID VARCHAR(20),
+  day TINYINT CHECK (DAY BETWEEN 1 AND 7),
+  slotID INT,
+  courseID VARCHAR(20) NOT NULL,
+  PRIMARY KEY (classID, day, slotID),
+  FOREIGN KEY (classID) REFERENCES CLASS(classID) ON DELETE CASCADE,
+  FOREIGN KEY (slotID) REFERENCES SLOT(slotID) ON DELETE CASCADE,
+  FOREIGN KEY (courseID) REFERENCES COURSE(courseID) ON DELETE CASCADE
+);`;
 
 module.exports = async () => {
   try {
@@ -129,7 +140,9 @@ module.exports = async () => {
     await makeQuery(GRANT_STUDENT_PRIV, databasePermissions.ROOT);
     // slot table
     await makeQuery(CREATE_SLOT_TABLE, databasePermissions.ROOT);
+    // timetable table
+    await makeQuery(CREATE_TIMETABLE_TABLE, databasePermissions.ROOT);
   } catch (err) {
-    console.log(err);
+    console.error(err);
   }
 };
