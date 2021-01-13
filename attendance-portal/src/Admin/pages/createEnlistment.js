@@ -30,7 +30,6 @@ const CreateEnlistment = () => {
 
   useEffect(async () => {
     const { data: students } = await getAdminStudentsList();
-    console.log(students, 'bruh');
     setStudentsList(students);
     const { data: classes } = await getAdminClassesList();
     setClassesList(classes);
@@ -158,7 +157,7 @@ const CreateEnlistment = () => {
       )}
       {enlistmentsList && (
         <>
-          Enrollments:
+          Enlistments:
           <JSONViewer json={enlistmentsList} css={{ width: '100%' }} />
         </>
       )}
