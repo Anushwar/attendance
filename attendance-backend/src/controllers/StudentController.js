@@ -8,7 +8,7 @@ module.exports.getMyStudentDetailsController = [async (req, res) => {
   successResponseWithData(res, res);
 }];
 
-module.exports.getAllStudentoursesController = [async (req, res) => {
+module.exports.getAllStudentCoursesController = [async (req, res) => {
   const { uid } = req.user;
   try {
     const classes = await getCoursesFromUid(uid);

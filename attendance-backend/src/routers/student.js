@@ -1,5 +1,5 @@
 const express = require('express');
-const { getMyStudentDetailsController, getAllStudentoursesController } = require('../controllers/StudentController');
+const { getMyStudentDetailsController, getAllStudentCoursesController } = require('../controllers/StudentController');
 const { studentAuth } = require('../middlewares/auth');
 
 const router = express.Router();
@@ -21,6 +21,6 @@ router.get('/details', getMyStudentDetailsController);
  *
  * response :  200 OK Response
  */
-router.get('/details', getAllStudentoursesController);
+router.get('/courses', getAllStudentCoursesController);
 
 module.exports = router;

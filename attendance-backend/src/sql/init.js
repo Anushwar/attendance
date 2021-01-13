@@ -55,6 +55,8 @@ const CREATE_COURSE_TABLE = `CREATE TABLE IF NOT EXISTS COURSE(
 
 const GRANT_TEACHER_COURSE_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.COURSE TO '${SQL_TEACHER_USER}'@'${SQL_HOST}';`;
 
+const GRANT_STUDENT_COURSE_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.COURSE TO '${SQL_STUDENT_USER}'@'${SQL_HOST}';`;
+
 // class section
 const CREATE_CLASS_TABLE = `CREATE TABLE IF NOT EXISTS CLASS(
   classID VARCHAR(20),
@@ -65,7 +67,10 @@ const CREATE_CLASS_TABLE = `CREATE TABLE IF NOT EXISTS CLASS(
   FOREIGN KEY (tid) REFERENCES TEACHER(tid) ON DELETE SET NULL
 );`;
 
-const GRANT_CLASS_ENROLLMENT_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.CLASS TO '${SQL_TEACHER_USER}'@'${SQL_HOST}';`;
+const GRANT_TEACHER_CLASS_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.CLASS TO '${SQL_TEACHER_USER}'@'${SQL_HOST}';`;
+
+const GRANT_STUDENT_CLASS_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.CLASS TO '${SQL_STUDENT_USER}'@'${SQL_HOST}';`;
+
 
 // enrollment section section
 const CREATE_ENROLLMENT_TABLE = `CREATE TABLE IF NOT EXISTS ENROLLMENT(
@@ -120,9 +125,12 @@ module.exports = async () => {
     // course section
     await makeQuery(CREATE_COURSE_TABLE, databasePermissions.ROOT);
     await makeQuery(GRANT_TEACHER_COURSE_PRIV, databasePermissions.ROOT);
+    await makeQuery(GRANT_STUDENT_COURSE_PRIV, databasePermissions.ROOT);
     // class section
     await makeQuery(CREATE_CLASS_TABLE, databasePermissions.ROOT);
-    await makeQuery(GRANT_CLASS_ENROLLMENT_PRIV, databasePermissions.ROOT);
+    await makeQuery(GRANT_TEACHER_CLASS_PRIV, databasePermissions.ROOT);
+    await makeQuery(GRANT_STUDENT_CLASS_PRIV, databasePermissions.ROOT);
+    
     // enrollment section
     await makeQuery(CREATE_ENROLLMENT_TABLE, databasePermissions.ROOT);
     await makeQuery(GRANT_TEACHER_ENROLLMENT_PRIV, databasePermissions.ROOT);
