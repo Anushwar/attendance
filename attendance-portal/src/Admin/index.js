@@ -11,6 +11,7 @@ import {
   CreateSlot,
   TimeTable,
   TimeTables,
+  CreateEnlistment,
 } from './pages';
 import AdminRoute from './AdminRoute';
 
@@ -29,6 +30,10 @@ const Admin = () => {
       <AdminRoute path={`${path}/create/slot`} component={CreateSlot} />
       <AdminRoute exact path={`${path}/timetable`} component={TimeTables} />
       <AdminRoute path={`${path}/timetable/:classID`} component={TimeTable} />
+      <AdminRoute
+        path={`${path}/create/enlistment`}
+        component={CreateEnlistment}
+      />
       <AdminRoute exact path={path} component={Dashboard} />
     </Switch>
   );

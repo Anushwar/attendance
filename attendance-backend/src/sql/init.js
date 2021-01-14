@@ -55,6 +55,8 @@ const CREATE_COURSE_TABLE = `CREATE TABLE IF NOT EXISTS COURSE(
 
 const GRANT_TEACHER_COURSE_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.COURSE TO '${SQL_TEACHER_USER}'@'${SQL_HOST}';`;
 
+const GRANT_STUDENT_COURSE_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.COURSE TO '${SQL_STUDENT_USER}'@'${SQL_HOST}';`;
+
 // class section
 const CREATE_CLASS_TABLE = `CREATE TABLE IF NOT EXISTS CLASS(
   classID VARCHAR(20),
@@ -65,7 +67,9 @@ const CREATE_CLASS_TABLE = `CREATE TABLE IF NOT EXISTS CLASS(
   FOREIGN KEY (tid) REFERENCES TEACHER(tid) ON DELETE SET NULL
 );`;
 
-const GRANT_CLASS_ENROLLMENT_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.CLASS TO '${SQL_TEACHER_USER}'@'${SQL_HOST}';`;
+const GRANT_TEACHER_CLASS_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.CLASS TO '${SQL_TEACHER_USER}'@'${SQL_HOST}';`;
+
+const GRANT_STUDENT_CLASS_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.CLASS TO '${SQL_STUDENT_USER}'@'${SQL_HOST}';`;
 
 // enrollment section section
 const CREATE_ENROLLMENT_TABLE = `CREATE TABLE IF NOT EXISTS ENROLLMENT(
@@ -88,10 +92,23 @@ const CREATE_STUDENT_TABLE = `CREATE TABLE IF NOT EXISTS STUDENT(
     uid VARCHAR(20),
     name VARCHAR(50),
     password VARCHAR(50) NOT NULL,
-    PRIMARY KEY (uid)
+    classID VARCHAR(20),
+    PRIMARY KEY (uid),
+    FOREIGN KEY (classID) REFERENCES CLASS(classID) ON DELETE SET NULL
 );`;
 
-const GRANT_STUDENT_PRIV = `GRANT SELECT ON university.STUDENT TO '${SQL_STUDENT_USER}'@'${SQL_HOST}';`;
+const GRANT_STUDENT_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.STUDENT TO '${SQL_STUDENT_USER}'@'${SQL_HOST}';`;
+
+// student enlistment section
+const CREATE_STUDENT_ENLISTMENT_TABLE = `CREATE TABLE IF NOT EXISTS STUD_ENLISTMENT(
+  uid VARCHAR(20),
+  courseID VARCHAR(20),
+  PRIMARY KEY (uid, courseID),
+  FOREIGN KEY (uid) REFERENCES STUDENT(uid) ON DELETE CASCADE,
+  FOREIGN KEY (courseID) REFERENCES COURSE(courseID) ON DELETE CASCADE
+);`;
+
+const GRANT_STUDENT_ENLISTMENT_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.STUD_ENLISTMENT TO '${SQL_STUDENT_USER}'@'${SQL_HOST}';`;
 
 // slot section
 const CREATE_SLOT_TABLE = `CREATE TABLE IF NOT EXISTS SLOT(
@@ -128,9 +145,12 @@ module.exports = async () => {
     // course section
     await makeQuery(CREATE_COURSE_TABLE, databasePermissions.ROOT);
     await makeQuery(GRANT_TEACHER_COURSE_PRIV, databasePermissions.ROOT);
+    await makeQuery(GRANT_STUDENT_COURSE_PRIV, databasePermissions.ROOT);
     // class section
     await makeQuery(CREATE_CLASS_TABLE, databasePermissions.ROOT);
-    await makeQuery(GRANT_CLASS_ENROLLMENT_PRIV, databasePermissions.ROOT);
+    await makeQuery(GRANT_TEACHER_CLASS_PRIV, databasePermissions.ROOT);
+    await makeQuery(GRANT_STUDENT_CLASS_PRIV, databasePermissions.ROOT);
+
     // enrollment section
     await makeQuery(CREATE_ENROLLMENT_TABLE, databasePermissions.ROOT);
     await makeQuery(GRANT_TEACHER_ENROLLMENT_PRIV, databasePermissions.ROOT);
@@ -142,6 +162,9 @@ module.exports = async () => {
     await makeQuery(CREATE_SLOT_TABLE, databasePermissions.ROOT);
     // timetable table
     await makeQuery(CREATE_TIMETABLE_TABLE, databasePermissions.ROOT);
+    // student enlistment section
+    await makeQuery(CREATE_STUDENT_ENLISTMENT_TABLE, databasePermissions.ROOT);
+    await makeQuery(GRANT_STUDENT_ENLISTMENT_PRIV, databasePermissions.ROOT);
   } catch (err) {
     console.error(err);
   }

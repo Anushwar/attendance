@@ -8,6 +8,7 @@ import CreateStudent from './CreateStudent';
 import CreateSlot from './CreateSlot';
 import TimeTable from './TimeTable';
 import TimeTables from './TimeTables';
+import CreateEnlistment from './CreateEnlistment';
 
 export {
   Login,
@@ -20,4 +21,5 @@ export {
   CreateSlot,
   TimeTable,
   TimeTables,
+  CreateEnlistment,
 };

@@ -1,5 +1,5 @@
-import { updateStudentUser } from '../actions';
-import { postStudentLogin } from '../api';
+import { loadStudentCourses, updateStudentUser } from '../actions';
+import { getStudentCourses, postStudentLogin } from '../api';
 
 const dispatchLoginStudentUser = (uid, password) => {
   return async (dispatch) => {
@@ -8,5 +8,12 @@ const dispatchLoginStudentUser = (uid, password) => {
   };
 };
 
+const dispatchLoadCoursesStudent = () => {
+  return async (dispatch) => {
+    const { data: courses } = await getStudentCourses();
+    dispatch(loadStudentCourses(courses));
+  };
+};
+
 // eslint-disable-next-line import/prefer-default-export
-export { dispatchLoginStudentUser };
+export { dispatchLoginStudentUser, dispatchLoadCoursesStudent };

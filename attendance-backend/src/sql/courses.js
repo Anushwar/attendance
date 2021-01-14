@@ -22,7 +22,10 @@ const INSERT_COURSE = (courseCode,
 const SELECT_ALL_COURSE = () => 'SELECT * FROM COURSE;';
 
 const SELECT_COURSE_DETAILS_FROM_TID = (tid) => `SELECT C.classID, C.semester, C.section, CO.courseID, CO.courseName from COURSE CO,
-CLASS C WHERE courseID IN (select courseID FROM ENROLLMENT WHERE tid ='${tid}' AND c.classID = classID )`;
+CLASS C WHERE courseID IN (select courseID FROM ENROLLMENT WHERE tid ='${tid}' AND C.classID = classID )`;
+
+const SELECT_COURSE_DETAILS_FROM_UID = (uid) => `SELECT C.classID, C.semester, C.section, CO.courseID, CO.courseName from COURSE CO,
+CLASS C WHERE courseID IN (select courseID FROM STUD_ENLISTMENT WHERE uid ='${uid}' AND C.classID = classID )`;
 
 const SELECT_COURSE_DETAILS_FROM_COURSE_ID = (courseID) => `SELECT * FROM course where courseID in (select courseID from ENROLLMENT where classID='${courseID}');`;
 
@@ -78,6 +81,16 @@ module.exports.getCoursesFromTid = async (tid) => {
 module.exports.getCoursesFromClass = async (classID) => {
   const { data: classes } = await makeQuery(
     SELECT_COURSE_DETAILS_FROM_COURSE_ID(classID), databasePermissions.ADMIN,
+  );
+  return classes;
+};
+
+module.exports.getCoursesFromUid = async (uid) => {
+  if (!/^\S{5,}$/.test(uid)) {
+    throw createValidationError('student_id_invalid', 'The requested student id format is incorrect');
+  }
+  const { data: classes } = await makeQuery(
+    SELECT_COURSE_DETAILS_FROM_UID(uid), databasePermissions.STUDENT,
   );
   return classes;
 };

@@ -29,6 +29,9 @@ const Dashboard = () => {
       <Link to={`${path}/timetable`}>
         <Button css={{ marginLeft: 20 }}>Timetables</Button>
       </Link>
+      <Link to={`${path}/create/enlistment`}>
+        <Button css={{ marginLeft: 20 }}>Create Enlistment</Button>
+      </Link>
     </>
   );
 };

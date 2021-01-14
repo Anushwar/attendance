@@ -1,7 +1,7 @@
 const {
   createdResponseWithData, conflictResponse, successResponseWithData,
 } = require('../helpers/response');
-const { createNewStudent } = require('../sql/students');
+const { createNewStudent, getAllStudents } = require('../sql/students');
 
 const { createNewTeacher, getAllTeachers } = require('../sql/teachers');
 const { createCourse, getAllCourses, getCoursesFromClass } = require('../sql/courses');
@@ -9,6 +9,7 @@ const { createClass, getAllClasses } = require('../sql/classes');
 const { getAllEnrollment, createEnrollment } = require('../sql/enrollments');
 const { createSlot, getAllSlots } = require('../sql/slots');
 const { getTimeTableFromClass, createTimtableEntry } = require('../sql/timetables');
+const { createEnlistment, getAllEnlistment } = require('../sql/enlistment');
 
 /* teacher section  */
 module.exports.postAdminTeacherRegisterController = [async (req, res) => {
@@ -156,9 +157,9 @@ module.exports.getAdminAllEnrollmentController = [async (req, res) => {
 module.exports.postAdminStudentRegisterController = [async (req, res) => {
   try {
     const {
-      uid, name, password,
+      uid, name, password, classID,
     } = req.body;
-    const student = await createNewStudent(uid, name, password);
+    const student = await createNewStudent(uid, name, password, classID);
     delete student.password;
     createdResponseWithData(res, student);
   } catch (error) {
@@ -177,11 +178,41 @@ module.exports.postAdminCreateSlotController = [async (req, res) => {
     conflictResponse(res, error);
   }
 }];
+module.exports.getAdminAllStudentsController = [async (req, res) => {
+  try {
+    const students = (await getAllStudents()).map(({ password, ...student }) => student);
+    successResponseWithData(res, students);
+  } catch (error) {
+    conflictResponse(res, error);
+  }
+}];
+
+/* enlistment section */
+module.exports.postAdminCreateEnlitmentController = [async (req, res) => {
+  try {
+    const {
+      uid, courseID,
+    } = req.body;
+    const enrollment = await createEnlistment(uid, courseID);
+    createdResponseWithData(res, enrollment);
+  } catch (error) {
+    conflictResponse(res, error);
+  }
+}];
 
 module.exports.getAdminAllSlotsController = [async (req, res) => {
   try {
     const slots = await getAllSlots();
     successResponseWithData(res, slots);
+  } catch (error) {
+    conflictResponse(res, error);
+  }
+}];
+
+module.exports.getAdminAllEnlistmentController = [async (req, res) => {
+  try {
+    const enrollments = await getAllEnlistment();
+    successResponseWithData(res, enrollments);
   } catch (error) {
     conflictResponse(res, error);
   }
