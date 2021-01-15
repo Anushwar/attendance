@@ -25,9 +25,13 @@ const SELECT_COURSE_DETAILS_FROM_TID = (tid) => `SELECT C.classID, C.semester, C
 CLASS C WHERE courseID IN (select courseID FROM ENROLLMENT WHERE tid ='${tid}' AND C.classID = classID )`;
 
 const SELECT_COURSE_DETAILS_FROM_UID = (uid) => `SELECT C.classID, C.semester, C.section, CO.courseID, CO.courseName from COURSE CO,
-CLASS C WHERE courseID IN (select courseID FROM STUD_ENLISTMENT WHERE uid ='${uid}' AND C.classID = classID )`;
+CLASS C WHERE courseID IN (select courseID FROM STUD_ENLISTMENT WHERE uid ='${uid}' AND C.classID = (SELECT classID from STUDENT where uid = '${uid}') )`;
 
-const SELECT_COURSE_DETAILS_FROM_COURSE_ID = (courseID) => `SELECT * FROM course where courseID in (select courseID from ENROLLMENT where classID='${courseID}');`;
+const SELECT_COURSE_DETAILS_FROM_CLASS_ID = (courseID) => `SELECT * FROM COURSE where courseID in (select courseID from ENROLLMENT where classID='${courseID}');`;
+
+const SELECT_COURSE_DETAILS_FOR_UID = (courseID) => `SELECT *
+FROM   ENLISTMENT_DETAIL
+WHERE  courseid = '${courseID}'; `;
 
 // executors
 module.exports.createCourse = async (
@@ -80,7 +84,7 @@ module.exports.getCoursesFromTid = async (tid) => {
 
 module.exports.getCoursesFromClass = async (classID) => {
   const { data: classes } = await makeQuery(
-    SELECT_COURSE_DETAILS_FROM_COURSE_ID(classID), databasePermissions.ADMIN,
+    SELECT_COURSE_DETAILS_FROM_CLASS_ID(classID), databasePermissions.ADMIN,
   );
   return classes;
 };
@@ -93,4 +97,12 @@ module.exports.getCoursesFromUid = async (uid) => {
     SELECT_COURSE_DETAILS_FROM_UID(uid), databasePermissions.STUDENT,
   );
   return classes;
+};
+
+module.exports.getCourseDetailsFromUid = async (courseID) => {
+  const { data: course } = await makeQuery(
+    SELECT_COURSE_DETAILS_FOR_UID(courseID),
+    databasePermissions.STUDENT,
+  );
+  return course[0];
 };

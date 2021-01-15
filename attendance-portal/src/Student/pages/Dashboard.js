@@ -4,6 +4,7 @@ import { Grid, Heading, Text } from '@chakra-ui/core';
 import styled from '@emotion/styled';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link, useRouteMatch } from 'react-router-dom';
 import { Container } from '../../components';
 import { dispatchLoadCoursesStudent } from '../../redux/triggers/student';
 
@@ -38,6 +39,7 @@ const Dashboard = () => {
   const uid = useSelector(({ studentData }) => studentData.user.uid);
   const courses = useSelector(({ studentData }) => studentData.courses);
   const dispatch = useDispatch();
+  const { path } = useRouteMatch();
 
   useEffect(() => {
     dispatchLoadCoursesStudent()(dispatch);
@@ -56,24 +58,26 @@ const Dashboard = () => {
         {courses?.map(
           ({ classID, courseName, section, semester, courseID }) => {
             return (
-              <Course key={`${classID}-${courseID}`}>
-                <Text fontSize="sm" color="gray.500">
-                  {courseID}
-                </Text>
-                <Text
-                  fontSize="lg"
-                  textAlign="center"
-                  fontWeight="medium"
-                  color="gray.700"
-                  paddingTop={2.5}
-                  paddingBottom={2.5}
-                >
-                  {courseName}
-                </Text>
-                <Text textAlign="right" color="gray.500">
-                  {`${semester} - ${section}`}
-                </Text>
-              </Course>
+              <Link to={`${path}/${courseID}`} key={courseID} style={{}}>
+                <Course key={`${classID}-${courseID}`}>
+                  <Text fontSize="sm" color="gray.500">
+                    {courseID}
+                  </Text>
+                  <Text
+                    fontSize="lg"
+                    textAlign="center"
+                    fontWeight="medium"
+                    color="gray.700"
+                    paddingTop={2.5}
+                    paddingBottom={2.5}
+                  >
+                    {courseName}
+                  </Text>
+                  <Text textAlign="right" color="gray.500">
+                    {`${semester} - ${section}`}
+                  </Text>
+                </Course>
+              </Link>
             );
           }
         )}

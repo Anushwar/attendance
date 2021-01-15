@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/core */
 
 import { Switch, useRouteMatch } from 'react-router-dom';
-import { Dashboard } from './pages';
+import { Dashboard, Card } from './pages';
 import StudentRoute from './StudentRoute';
 
 const Student = () => {
@@ -9,6 +9,7 @@ const Student = () => {
   return (
     <Switch>
       <StudentRoute exact path={path} component={Dashboard} />
+      <StudentRoute path={`${path}/:courseID`} component={Card} />
     </Switch>
   );
 };
