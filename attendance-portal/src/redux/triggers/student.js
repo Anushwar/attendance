@@ -23,9 +23,9 @@ const dispatchLoadCoursesStudent = () => {
   };
 };
 
-const dispatchLoadCourseOfStudent = () => {
+const dispatchLoadCourseOfStudent = (courseID) => {
   return async (dispatch) => {
-    const { data: course } = await getStudentCourseDetails();
+    const { data: course } = await getStudentCourseDetails(courseID);
     dispatch(loadStudentCourseDetails(course));
   };
 };
