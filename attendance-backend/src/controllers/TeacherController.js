@@ -1,7 +1,7 @@
 const {
   successResponseWithData, conflictResponse,
 } = require('../helpers/response');
-const { getCoursesFromTid, getCoursesForTodayFromTid } = require('../sql/courses');
+const { getCoursesFromTid, getCoursesForTodayFromTid, getCourseDetailsFromTid } = require('../sql/courses');
 
 module.exports.getMyTeacherDetailsController = [async (req, res) => {
   delete req.user.password;
@@ -23,6 +23,17 @@ module.exports.getAllTeacherCoursesForTodayController = [async (req, res) => {
   try {
     const courses = await getCoursesForTodayFromTid(tid);
     successResponseWithData(res, courses);
+  } catch (error) {
+    conflictResponse(res, error);
+  }
+}];
+
+module.exports.getTeacherCourseDetailsFromClassController = [async (req, res) => {
+  const { classID, courseID } = req.params;
+  const { tid } = req.user;
+  try {
+    const course = await getCourseDetailsFromTid(classID, courseID, tid);
+    successResponseWithData(res, course);
   } catch (error) {
     conflictResponse(res, error);
   }

@@ -10,3 +10,6 @@ export const getTeacherCourses = () => axios.get('/teachers/courses');
 
 export const getTeacherCoursesToday = () =>
   axios.get('/teachers/todays/courses');
+
+export const getTeacherCourseDetails = (classID, courseID) =>
+  axios.get(`/teachers/classes/${classID}/courses/${courseID}`);

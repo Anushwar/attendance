@@ -3,6 +3,7 @@ import { Heading, Text, Grid } from '@chakra-ui/core';
 import styled from '@emotion/styled';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 import { Container } from '../../components';
 import {
   dispatchLoadCoursesTeacher,
@@ -42,6 +43,8 @@ const Dashboard = () => {
   const coursesToday = useSelector(
     ({ teacherData }) => teacherData.coursesToday
   );
+  const history = useHistory();
+  const { url } = useRouteMatch();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -69,7 +72,12 @@ const Dashboard = () => {
             endTime,
           }) => {
             return (
-              <Course key={`${classID}-${courseID}`}>
+              <Course
+                key={`${classID}-${courseID}`}
+                onClick={() => {
+                  history.push(`${url}/${classID}/${courseID}`);
+                }}
+              >
                 <Text fontSize="sm" color="gray.500">
                   {`${courseID} / ${semester} - ${section}`}
                 </Text>
@@ -100,7 +108,10 @@ const Dashboard = () => {
         {courses?.map(
           ({ classID, courseName, section, semester, courseID }) => {
             return (
-              <Course key={`${classID}-${courseID}`}>
+              <Course
+                key={`${classID}-${courseID}`}
+                onClick={() => history.push(`${url}/${classID}/${courseID}`)}
+              >
                 <Text fontSize="sm" color="gray.500">
                   {courseID}
                 </Text>

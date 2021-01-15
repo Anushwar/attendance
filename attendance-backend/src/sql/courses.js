@@ -34,6 +34,11 @@ TIME_FORMAT(s.startTime, '%h:%i %p') as startTime, TIME_FORMAT(s.endTime, '%h:%i
 CLASS C, slot S where courseID in (select courseID from TIMETABLE T where day=dayofweek(now()) and s.slotID = t.slotID and t.courseID in 
 (select courseID FROM ENROLLMENT WHERE tid ='${tid}' AND c.classID = classID));`;
 
+const SELECT_COURSE_DETAILS_FOR_TID = (classID, courseID) => `SELECT *
+FROM   enrollment_detail
+WHERE  classid = '${classID}'
+       AND courseid = '${courseID}'; `;
+
 // executors
 module.exports.createCourse = async (
   courseCode,
@@ -108,4 +113,12 @@ module.exports.getCoursesFromUid = async (uid) => {
     SELECT_COURSE_DETAILS_FROM_UID(uid), databasePermissions.STUDENT,
   );
   return classes;
+};
+
+module.exports.getCourseDetailsFromTid = async (classID, courseID) => {
+  const { data: course } = await makeQuery(
+    SELECT_COURSE_DETAILS_FOR_TID(classID, courseID),
+    databasePermissions.TEACHER,
+  );
+  return course[0];
 };
