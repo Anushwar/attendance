@@ -3,12 +3,14 @@ import {
   loadTeacherCoursesToday,
   updateTeacherUser,
   loadTeacherCourseDetails,
+  loadTeacherAttendances,
 } from '../actions';
 import {
   getTeacherCourses,
   getTeacherCoursesToday,
   postTeacherLogin,
   getTeacherCourseDetails,
+  getTeacherAttendances,
 } from '../api';
 
 const dispatchLoginTeacherUser = (tid, password) => {
@@ -39,9 +41,20 @@ const dispatchLoadCourseOfTeacher = (classID, courseID) => {
   };
 };
 
+const dispatchLoadAttendancesOfTeacher = (classID, courseID) => {
+  return async (dispatch) => {
+    const { data: attendances } = await getTeacherAttendances(
+      classID,
+      courseID
+    );
+    dispatch(loadTeacherAttendances(attendances));
+  };
+};
+
 export {
   dispatchLoginTeacherUser,
   dispatchLoadCoursesTeacher,
   dispatchLoadCoursesTeacherToday,
   dispatchLoadCourseOfTeacher,
+  dispatchLoadAttendancesOfTeacher,
 };

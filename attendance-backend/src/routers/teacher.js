@@ -4,6 +4,7 @@ const {
   getAllTeacherCoursesController,
   getAllTeacherCoursesForTodayController,
   getTeacherCourseDetailsFromClassController,
+  getTeacherAttendanceFromClassController,
 } = require('../controllers/TeacherController');
 const { teacherAuth } = require('../middlewares/auth');
 
@@ -36,6 +37,15 @@ router.get('/courses', getAllTeacherCoursesController);
  * response :  200 OK Response
  */
 router.get('/todays/courses', getAllTeacherCoursesForTodayController);
+
+/**
+ * path : /classes/:classID/courses/:courseID
+ *
+ * request  : COURSE - details
+ *
+ * response :  200 OK Response
+ */
+router.get('/classes/:classID/courses/:courseID/attendances', getTeacherAttendanceFromClassController);
 
 /**
  * path : /classes/:classID/courses/:courseID

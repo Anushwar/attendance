@@ -6,6 +6,8 @@ export const LOAD_TEACHER_COURSES_TODAY = 'LOAD_TEACHER_COURSES_TODAY';
 
 export const LOAD_TEACHER_COURSE_DETAILS = 'LOAD_TEACHER_COURSE_DETAILS';
 
+export const LOAD_TEACHER_ATTENDANCES = 'LOAD_TEACHER_ATTENDANCES';
+
 export const updateTeacherUser = (user) => ({
   type: UPDATE_TEACHER_USER,
   user,
@@ -24,4 +26,9 @@ export const loadTeacherCoursesToday = (courses) => ({
 export const loadTeacherCourseDetails = (course) => ({
   type: LOAD_TEACHER_COURSE_DETAILS,
   course,
+});
+
+export const loadTeacherAttendances = (attendances) => ({
+  type: LOAD_TEACHER_ATTENDANCES,
+  attendances,
 });

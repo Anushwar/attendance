@@ -138,40 +138,40 @@ const GRANT_TEACHER_TIMETABLE_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.TIMETABLE 
 
 // attendance section
 const CREATE_ATTENDANCE_TABLE = `CREATE TABLE IF NOT EXISTS ATTENDANCE(
-  attendanceID VARCHAR(20),
+  attendanceID VARCHAR(36),
   classID VARCHAR(20),
   courseID VARCHAR(20),
-  date DATE,
+  slotID INT,
+  date DATETIME,
   PRIMARY KEY (attendanceID),
   FOREIGN KEY (classID) REFERENCES CLASS(classID) ON DELETE SET NULL,
-  FOREIGN KEY (courseID) REFERENCES COURSE(courseID) ON DELETE SET NULL
+  FOREIGN KEY (courseID) REFERENCES COURSE(courseID) ON DELETE SET NULL,
+  FOREIGN KEY (slotID) REFERENCES SLOT(slotID) ON DELETE SET NULL
 )`;
 
 const GRANT_TEACHER_ATTENDANCE_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.ATTENDANCE TO '${SQL_TEACHER_USER}'@'${SQL_HOST}'`;
 
 // student attendance section
 const CREATE_STUD_ATTENDANCE_TABLE = `CREATE TABLE IF NOT EXISTS STUD_ATTENDANCE(
-  attendanceID VARCHAR(20),
+  attendanceID VARCHAR(36),
   uid VARCHAR(20),
   isPresent BOOL,
   PRIMARY KEY(attendanceID, uid),
   FOREIGN KEY (attendanceID) REFERENCES ATTENDANCE(attendanceID) ON DELETE CASCADE,
   FOREIGN KEY (uid) REFERENCES STUDENT(uid) ON DELETE CASCADE
-
 )`;
 
 const GRANT_TEACHER_STUD_ATTENDANCE_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.STUD_ATTENDANCE TO '${SQL_TEACHER_USER}'@'${SQL_HOST}'`;
 
 // enrollment details view
-
 const CREATE_ENROLLMENT_DETAIL_VIEW = `CREATE OR REPLACE VIEW ENROLLMENT_DETAIL AS 
-SELECT C.classID, C.semester, C.section, CO.courseID, CO.courseName,CO.courseDescription, T.tid, T.name FROM ENROLLMENT  E
-JOIN CLASS C
-ON E.classID = C.classID
-JOIN COURSE CO
-ON E.courseID = CO.courseID
-JOIN TEACHER T
-on E.tid = T.tid;`;
+  SELECT C.classID, C.semester, C.section, CO.courseID, CO.courseName,CO.courseDescription, T.tid, T.name FROM ENROLLMENT  E
+  JOIN CLASS C
+  ON E.classID = C.classID
+  JOIN COURSE CO
+  ON E.courseID = CO.courseID
+  JOIN TEACHER T
+  on E.tid = T.tid;`;
 
 const GRANT_TEACHER_ENROLLMENT_DETAIL_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.ENROLLMENT_DETAIL TO '${SQL_TEACHER_USER}'@'${SQL_HOST}'`;
 
@@ -220,6 +220,7 @@ module.exports = async () => {
     await makeQuery(CREATE_ENROLLMENT_DETAIL_VIEW, databasePermissions.ROOT);
     await makeQuery(GRANT_TEACHER_ENROLLMENT_DETAIL_PRIV, databasePermissions.ROOT);
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.error(err);
   }
 };
