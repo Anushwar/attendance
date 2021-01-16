@@ -5,6 +5,8 @@ import {
   loadTeacherCourseDetails,
   loadTeacherAttendances,
   loadTeacherStudents,
+  loadTeacherAttendanceDetails,
+  loadStudentAttendance,
 } from '../actions';
 import {
   getTeacherCourses,
@@ -13,6 +15,8 @@ import {
   getTeacherCourseDetails,
   getTeacherAttendances,
   getTeacherStudents,
+  getTeacherAttendanceDetails,
+  getTeacherStudentAttendance,
 } from '../api';
 
 const dispatchLoginTeacherUser = (tid, password) => {
@@ -60,6 +64,24 @@ const dispatchLoadStudentsOfTeacher = (classID, courseID) => {
   };
 };
 
+const dispatchLoadAttendanceDetails = (classID, courseID, attendanceID) => {
+  return async (dispatch) => {
+    const { data: attendance } = await getTeacherAttendanceDetails(
+      classID,
+      courseID,
+      attendanceID
+    );
+    dispatch(loadTeacherAttendanceDetails(attendance));
+  };
+};
+
+const dispatchLoadStudentAttendance = (attendanceID) => {
+  return async (dispatch) => {
+    const { data: student } = await getTeacherStudentAttendance(attendanceID);
+    dispatch(loadStudentAttendance(student));
+  };
+};
+
 export {
   dispatchLoginTeacherUser,
   dispatchLoadCoursesTeacher,
@@ -67,4 +89,6 @@ export {
   dispatchLoadCourseOfTeacher,
   dispatchLoadAttendancesOfTeacher,
   dispatchLoadStudentsOfTeacher,
+  dispatchLoadStudentAttendance,
+  dispatchLoadAttendanceDetails,
 };

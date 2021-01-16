@@ -5,6 +5,8 @@ import {
   LOAD_TEACHER_COURSE_DETAILS,
   LOAD_TEACHER_ATTENDANCES,
   LOAD_TEACHER_STUDENTS,
+  LOAD_TEACHER_ATTENDANCE_DETAILS,
+  LOAD_TEACHER_STUDENT_ATTENDANCE,
 } from '../actions';
 
 const teacherReducer = (
@@ -17,6 +19,21 @@ const teacherReducer = (
     },
     attendances: [],
     students: [],
+    attendance: {
+      date: '',
+      semester: '',
+      section: '',
+      name: '',
+      startTime: '',
+      endTime: '',
+      courseName: '',
+      courseHoursLecture: '',
+      courseHoursTutorial: '',
+      courseHoursPractical: '',
+      courseCredits: '',
+      courseDescription: '',
+    },
+    student: [],
   },
   action
 ) => {
@@ -33,6 +50,10 @@ const teacherReducer = (
       return { ...state, attendances: action.attendances };
     case LOAD_TEACHER_STUDENTS:
       return { ...state, students: action.students };
+    case LOAD_TEACHER_ATTENDANCE_DETAILS:
+      return { ...state, attendance: action.attendance };
+    case LOAD_TEACHER_STUDENT_ATTENDANCE:
+      return { ...state, student: action.student };
     default:
       return state;
   }

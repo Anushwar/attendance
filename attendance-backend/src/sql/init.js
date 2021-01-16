@@ -99,6 +99,8 @@ const CREATE_STUDENT_TABLE = `CREATE TABLE IF NOT EXISTS STUDENT(
 
 const GRANT_STUDENT_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.STUDENT TO '${SQL_STUDENT_USER}'@'${SQL_HOST}';`;
 
+const GRANT_TEACHER_STUDENT_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.STUDENT TO '${SQL_TEACHER_USER}'@'${SQL_HOST}';`;
+
 // student enlistment section
 const CREATE_STUDENT_ENLISTMENT_TABLE = `CREATE TABLE IF NOT EXISTS STUD_ENLISTMENT(
   uid VARCHAR(20),
@@ -224,6 +226,7 @@ module.exports = async () => {
     await makeQuery(CREATE_STUDENT_USER, databasePermissions.ROOT);
     await makeQuery(CREATE_STUDENT_TABLE, databasePermissions.ROOT);
     await makeQuery(GRANT_STUDENT_PRIV, databasePermissions.ROOT);
+    await makeQuery(GRANT_TEACHER_STUDENT_PRIV, databasePermissions.ROOT);
     // slot table
     await makeQuery(CREATE_SLOT_TABLE, databasePermissions.ROOT);
     await makeQuery(GRANT_TEACHER_SLOT_PRIV, databasePermissions.ROOT);

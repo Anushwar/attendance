@@ -19,3 +19,11 @@ export const getTeacherAttendances = (classID, courseID) =>
 
 export const getTeacherStudents = (classID, courseID) =>
   axios.get(`/teachers/classes/${classID}/courses/${courseID}/students`);
+
+export const getTeacherAttendanceDetails = (classID, courseID, attendanceID) =>
+  axios.get(
+    `/teachers/classes/${classID}/courses/${courseID}/attendances/${attendanceID}`
+  );
+
+export const getTeacherStudentAttendance = (attendanceID) =>
+  axios.get(`/teachers/attendances/${attendanceID}`);
