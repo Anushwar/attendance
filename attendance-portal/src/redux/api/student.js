@@ -8,3 +8,6 @@ export const getStudentCourses = () => axios.get('/students/courses');
 
 export const getStudentCourseDetails = (courseID) =>
   axios.get(`/students/courses/${courseID}`);
+
+export const getStudentAttendanceOfCourse = (courseID) =>
+  axios.get(`/students/course/${courseID}/attendances`);

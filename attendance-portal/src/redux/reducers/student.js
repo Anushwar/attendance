@@ -2,6 +2,7 @@ import {
   UPDATE_STUDENT_USER,
   LOAD_STUDENT_COURSE_DETAILS,
   LOAD_STUDENT_COURSES,
+  LOAD_STUDENT_COURSE_ATTENDANCE,
 } from '../actions';
 
 const studentReducer = (state = { course: { courseName: '' } }, action) => {
@@ -12,7 +13,8 @@ const studentReducer = (state = { course: { courseName: '' } }, action) => {
       return { ...state, courses: action.courses };
     case LOAD_STUDENT_COURSE_DETAILS:
       return { ...state, course: action.course };
-
+    case LOAD_STUDENT_COURSE_ATTENDANCE:
+      return { ...state, attendance: action.attendance };
     default:
       return state;
   }

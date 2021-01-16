@@ -193,7 +193,7 @@ const GRANT_TEACHER_ENROLLMENT_DETAIL_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.EN
 
 // student enlistment details
 const CREATE_STUDENT_ENLISTMENT_DETAIL_VIEW = `CREATE OR REPLACE VIEW STUD_ENLISTMENT_DETAIL AS 
-SELECT SE.uid, SE.courseID, S.name, S.classID, C.courseName from stud_enlistment SE
+SELECT SE.uid, SE.courseID, S.name, S.classID, C.courseName from STUD_ENLISTMENT SE
 JOIN STUDENT S
 on SE.uid = S.uid
 JOIN COURSE C

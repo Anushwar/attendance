@@ -39,7 +39,7 @@ CLASS C, slot S where courseID in (select courseID from TIMETABLE T where day=da
 (select courseID FROM ENROLLMENT WHERE tid ='${tid}' AND c.classID = classID));`;
 
 const SELECT_COURSE_DETAILS_FROM_CLASS_AND_COURSE = (classID, courseID) => `SELECT *
-FROM   enrollment_detail
+FROM   ENROLLMENT_DETAIL
 WHERE  classid = '${classID}'
        AND courseid = '${courseID}'; `;
 
