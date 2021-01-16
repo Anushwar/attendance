@@ -70,12 +70,13 @@ const Dashboard = () => {
             courseID,
             startTime,
             endTime,
+            slotID,
           }) => {
             return (
               <Course
                 key={`${classID}-${courseID}`}
                 onClick={() => {
-                  history.push(`${url}/${classID}/${courseID}`);
+                  history.push(`${url}/mark/${classID}/${courseID}/${slotID}`);
                 }}
               >
                 <Text fontSize="sm" color="gray.500">

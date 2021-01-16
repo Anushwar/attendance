@@ -11,7 +11,7 @@ import {
   dispatchLoadStudentsOfTeacher,
 } from '../../redux/triggers';
 
-const Course = () => {
+const Mark = () => {
   const [isLoading, setLoading] = useState(true);
 
   const { courseID, classID } = useParams();
@@ -99,4 +99,4 @@ const Course = () => {
   );
 };
 
-export default Course;
+export default Mark;

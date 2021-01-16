@@ -9,6 +9,7 @@ const customTheme = {
       800: '#153e75',
       700: '#2a69ac',
     },
+    green: '#90ee90',
   },
   speeds: {
     default: 150,
