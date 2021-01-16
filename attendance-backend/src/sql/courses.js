@@ -27,11 +27,22 @@ CLASS C WHERE courseID IN (select courseID FROM ENROLLMENT WHERE tid ='${tid}' A
 const SELECT_COURSE_DETAILS_FROM_UID = (uid) => `SELECT C.classID, C.semester, C.section, CO.courseID, CO.courseName from COURSE CO,
 CLASS C WHERE courseID IN (select courseID FROM STUD_ENLISTMENT WHERE uid ='${uid}' AND C.classID = (SELECT classID from STUDENT where uid = '${uid}') )`;
 
+
 const SELECT_COURSE_DETAILS_FROM_CLASS_ID = (courseID) => `SELECT * FROM COURSE where courseID in (select courseID from ENROLLMENT where classID='${courseID}');`;
 
 const SELECT_COURSE_DETAILS_FOR_UID = (courseID) => `SELECT *
 FROM   ENLISTMENT_DETAIL
 WHERE  courseid = '${courseID}'; `;
+
+const SELECT_COURSE_DETAILS_FOR_TODAY_FROM_TID = (tid) => `SELECT C.classID, C.semester, C.section, CO.courseID, CO.courseName, 
+TIME_FORMAT(s.startTime, '%h:%i %p') as startTime, TIME_FORMAT(s.endTime, '%h:%i %p') as endTime from COURSE CO,
+CLASS C, slot S where courseID in (select courseID from TIMETABLE T where day=dayofweek(now()) and s.slotID = t.slotID and t.courseID in 
+(select courseID FROM ENROLLMENT WHERE tid ='${tid}' AND c.classID = classID));`;
+
+const SELECT_COURSE_DETAILS_FROM_CLASS_AND_COURSE = (classID, courseID) => `SELECT *
+FROM   enrollment_detail
+WHERE  classid = '${classID}'
+       AND courseid = '${courseID}'; `;
 
 // executors
 module.exports.createCourse = async (
@@ -76,10 +87,20 @@ module.exports.getCoursesFromTid = async (tid) => {
   if (!/^\S{5,}$/.test(tid)) {
     throw createValidationError('teacher_id_invalid', 'The requested teacher id format is incorrect');
   }
-  const { data: classes } = await makeQuery(
+  const { data: courses } = await makeQuery(
     SELECT_COURSE_DETAILS_FROM_TID(tid), databasePermissions.TEACHER,
   );
-  return classes;
+  return courses;
+};
+
+module.exports.getCoursesForTodayFromTid = async (tid) => {
+  if (!/^\S{5,}$/.test(tid)) {
+    throw createValidationError('teacher_id_invalid', 'The requested teacher id format is incorrect');
+  }
+  const { data: courses } = await makeQuery(
+    SELECT_COURSE_DETAILS_FOR_TODAY_FROM_TID(tid), databasePermissions.TEACHER,
+  );
+  return courses;
 };
 
 module.exports.getCoursesFromClass = async (classID) => {
@@ -103,6 +124,14 @@ module.exports.getCourseDetailsFromUid = async (courseID) => {
   const { data: course } = await makeQuery(
     SELECT_COURSE_DETAILS_FOR_UID(courseID),
     databasePermissions.STUDENT,
-  );
+    );
+  return course[0];
+};
+
+module.exports.getCourseDetailsFromClassAndCourse = async (classID, courseID) => {
+  const { data: course } = await makeQuery(
+    SELECT_COURSE_DETAILS_FROM_CLASS_AND_COURSE(classID, courseID),
+    databasePermissions.TEACHER,
+    );
   return course[0];
 };

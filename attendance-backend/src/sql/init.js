@@ -99,6 +99,8 @@ const CREATE_STUDENT_TABLE = `CREATE TABLE IF NOT EXISTS STUDENT(
 
 const GRANT_STUDENT_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.STUDENT TO '${SQL_STUDENT_USER}'@'${SQL_HOST}';`;
 
+const GRANT_TEACHER_STUDENT_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.STUDENT TO '${SQL_TEACHER_USER}'@'${SQL_HOST}';`;
+
 // student enlistment section
 const CREATE_STUDENT_ENLISTMENT_TABLE = `CREATE TABLE IF NOT EXISTS STUD_ENLISTMENT(
   uid VARCHAR(20),
@@ -119,6 +121,8 @@ const CREATE_SLOT_TABLE = `CREATE TABLE IF NOT EXISTS SLOT(
   CONSTRAINT end_time_after_start_time CHECK ( endTime > startTime ),
   PRIMARY KEY (slotID)
   );`;
+
+const GRANT_TEACHER_SLOT_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.SLOT TO '${SQL_TEACHER_USER}'@'${SQL_HOST}'`;
 
 // timetable section
 const CREATE_TIMETABLE_TABLE = `CREATE TABLE IF NOT EXISTS TIMETABLE(
@@ -141,6 +145,70 @@ JOIN STUDENT S
 on E.uid = S.uid;`;
 
 const GRANT_STUDENT_ENLISTMENT_DETAIL_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.ENLISTMENT_DETAIL TO '${SQL_STUDENT_USER}'@'${SQL_HOST}'`;
+
+const GRANT_TEACHER_TIMETABLE_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.TIMETABLE TO '${SQL_TEACHER_USER}'@'${SQL_HOST}'`;
+
+// attendance section
+const CREATE_ATTENDANCE_TABLE = `CREATE TABLE IF NOT EXISTS ATTENDANCE(
+  attendanceID VARCHAR(36),
+  classID VARCHAR(20),
+  courseID VARCHAR(20),
+  slotID INT,
+  date DATETIME,
+  PRIMARY KEY (attendanceID),
+  FOREIGN KEY (classID) REFERENCES CLASS(classID) ON DELETE SET NULL,
+  FOREIGN KEY (courseID) REFERENCES COURSE(courseID) ON DELETE SET NULL,
+  FOREIGN KEY (slotID) REFERENCES SLOT(slotID) ON DELETE SET NULL
+)`;
+
+const GRANT_TEACHER_ATTENDANCE_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.ATTENDANCE TO '${SQL_TEACHER_USER}'@'${SQL_HOST}'`;
+
+// student attendance section
+const CREATE_STUD_ATTENDANCE_TABLE = `CREATE TABLE IF NOT EXISTS STUD_ATTENDANCE(
+  attendanceID VARCHAR(36),
+  uid VARCHAR(20),
+  isPresent BOOL,
+  PRIMARY KEY(attendanceID, uid),
+  FOREIGN KEY (attendanceID) REFERENCES ATTENDANCE(attendanceID) ON DELETE CASCADE,
+  FOREIGN KEY (uid) REFERENCES STUDENT(uid) ON DELETE CASCADE
+)`;
+
+const GRANT_TEACHER_STUD_ATTENDANCE_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.STUD_ATTENDANCE TO '${SQL_TEACHER_USER}'@'${SQL_HOST}'`;
+
+// enrollment details view
+const CREATE_ENROLLMENT_DETAIL_VIEW = `CREATE OR REPLACE VIEW ENROLLMENT_DETAIL AS 
+  SELECT C.classID, C.semester, C.section, CO.courseID, CO.courseName,CO.courseDescription, T.tid, T.name FROM ENROLLMENT  E
+  JOIN CLASS C
+  ON E.classID = C.classID
+  JOIN COURSE CO
+  ON E.courseID = CO.courseID
+  JOIN TEACHER T
+  on E.tid = T.tid;`;
+
+const GRANT_TEACHER_ENROLLMENT_DETAIL_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.ENROLLMENT_DETAIL TO '${SQL_TEACHER_USER}'@'${SQL_HOST}'`;
+
+// student enlistment details
+const CREATE_STUDENT_ENLISTMENT_DETAIL_VIEW = `CREATE OR REPLACE VIEW STUD_ENLISTMENT_DETAIL AS 
+SELECT SE.uid, SE.courseID, S.name, S.classID, C.courseName from stud_enlistment SE
+JOIN STUDENT S
+on SE.uid = S.uid
+JOIN COURSE C
+on SE.courseID = C.courseID`;
+
+const GRANT_TEACHER_STUD_ENLISTMENT_DETAIL_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.STUD_ENLISTMENT_DETAIL TO '${SQL_TEACHER_USER}'@'${SQL_HOST}'`;
+
+// attendance dtails
+const CREATE_TEACHER_ATTENDANCE_DETAIL_VIEW = `CREATE OR REPLACE VIEW ATTENDANCE_DETAIL AS
+  SELECT A.attendanceID, A.classID, A.slotID, A.date, C.semester, C.section, S.name, S.startTime, S.endTime, CO.* FROM
+  ATTENDANCE A
+  JOIN CLASS C
+  ON A.classID = C.classID
+  JOIN SLOT S
+  ON A.SLOTID = S.slotID
+  JOIN COURSE CO
+  on A.courseID = CO.courseID`;
+
+const GRANT_TEACHER_ATTENDANCE_DETAIL_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.ATTENDANCE_DETAIL TO '${SQL_TEACHER_USER}'@'${SQL_HOST}'`;
 
 module.exports = async () => {
   try {
@@ -168,17 +236,36 @@ module.exports = async () => {
     await makeQuery(CREATE_STUDENT_USER, databasePermissions.ROOT);
     await makeQuery(CREATE_STUDENT_TABLE, databasePermissions.ROOT);
     await makeQuery(GRANT_STUDENT_PRIV, databasePermissions.ROOT);
+    await makeQuery(GRANT_TEACHER_STUDENT_PRIV, databasePermissions.ROOT);
     // slot table
     await makeQuery(CREATE_SLOT_TABLE, databasePermissions.ROOT);
+    await makeQuery(GRANT_TEACHER_SLOT_PRIV, databasePermissions.ROOT);
     // timetable table
     await makeQuery(CREATE_TIMETABLE_TABLE, databasePermissions.ROOT);
+    await makeQuery(GRANT_TEACHER_TIMETABLE_PRIV, databasePermissions.ROOT);
     // student enlistment section
     await makeQuery(CREATE_STUDENT_ENLISTMENT_TABLE, databasePermissions.ROOT);
     await makeQuery(GRANT_STUDENT_ENLISTMENT_PRIV, databasePermissions.ROOT);
     // Enlistment detail section
     await makeQuery(CREATE_ENLISTMENT_DETAIL_VIEW, databasePermissions.ROOT);
     await makeQuery(GRANT_STUDENT_ENLISTMENT_DETAIL_PRIV, databasePermissions.ROOT);
+    // attendance section
+    await makeQuery(CREATE_ATTENDANCE_TABLE, databasePermissions.ROOT);
+    await makeQuery(GRANT_TEACHER_ATTENDANCE_PRIV, databasePermissions.ROOT);
+    // student attendance section
+    await makeQuery(CREATE_STUD_ATTENDANCE_TABLE, databasePermissions.ROOT);
+    await makeQuery(GRANT_TEACHER_STUD_ATTENDANCE_PRIV, databasePermissions.ROOT);
+    // Enrollment details section
+    await makeQuery(CREATE_ENROLLMENT_DETAIL_VIEW, databasePermissions.ROOT);
+    await makeQuery(GRANT_TEACHER_ENROLLMENT_DETAIL_PRIV, databasePermissions.ROOT);
+    // student enlistment details
+    await makeQuery(CREATE_STUDENT_ENLISTMENT_DETAIL_VIEW, databasePermissions.ROOT);
+    await makeQuery(GRANT_TEACHER_STUD_ENLISTMENT_DETAIL_PRIV, databasePermissions.ROOT);
+    // attenadance details
+    await makeQuery(CREATE_TEACHER_ATTENDANCE_DETAIL_VIEW, databasePermissions.ROOT);
+    await makeQuery(GRANT_TEACHER_ATTENDANCE_DETAIL_PRIV, databasePermissions.ROOT);
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.error(err);
   }
 };
