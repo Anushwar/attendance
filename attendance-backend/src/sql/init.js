@@ -163,6 +163,8 @@ const CREATE_ATTENDANCE_TABLE = `CREATE TABLE IF NOT EXISTS ATTENDANCE(
 
 const GRANT_TEACHER_ATTENDANCE_PRIV = `GRANT SELECT, INSERT ON ${SQL_DATABASE}.ATTENDANCE TO '${SQL_TEACHER_USER}'@'${SQL_HOST}'`;
 
+const GRANT_STUDENT_ATTENDANCE_PRIV = `GRANT SELECT, INSERT ON ${SQL_DATABASE}.ATTENDANCE TO '${SQL_STUDENT_USER}'@'${SQL_HOST}'`;
+
 // student attendance section
 const CREATE_STUD_ATTENDANCE_TABLE = `CREATE TABLE IF NOT EXISTS STUD_ATTENDANCE(
   attendanceID VARCHAR(36),
@@ -174,6 +176,8 @@ const CREATE_STUD_ATTENDANCE_TABLE = `CREATE TABLE IF NOT EXISTS STUD_ATTENDANCE
 )`;
 
 const GRANT_TEACHER_STUD_ATTENDANCE_PRIV = `GRANT SELECT, INSERT ON ${SQL_DATABASE}.STUD_ATTENDANCE TO '${SQL_TEACHER_USER}'@'${SQL_HOST}'`;
+
+const GRANT_STUDENT_STUD_ATTENDANCE_PRIV = `GRANT SELECT, INSERT ON ${SQL_DATABASE}.STUD_ATTENDANCE TO '${SQL_STUDENT_USER}'@'${SQL_HOST}'`;
 
 // enrollment details view
 const CREATE_ENROLLMENT_DETAIL_VIEW = `CREATE OR REPLACE VIEW ENROLLMENT_DETAIL AS 
@@ -197,7 +201,7 @@ on SE.courseID = C.courseID`;
 
 const GRANT_TEACHER_STUD_ENLISTMENT_DETAIL_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.STUD_ENLISTMENT_DETAIL TO '${SQL_TEACHER_USER}'@'${SQL_HOST}'`;
 
-// attendance dtails
+// attendance details
 const CREATE_TEACHER_ATTENDANCE_DETAIL_VIEW = `CREATE OR REPLACE VIEW ATTENDANCE_DETAIL AS
   SELECT A.attendanceID, A.classID, A.slotID, A.date, C.semester, C.section, S.name, S.startTime, S.endTime, CO.* FROM
   ATTENDANCE A
@@ -228,7 +232,6 @@ module.exports = async () => {
     await makeQuery(CREATE_CLASS_TABLE, databasePermissions.ROOT);
     await makeQuery(GRANT_TEACHER_CLASS_PRIV, databasePermissions.ROOT);
     await makeQuery(GRANT_STUDENT_CLASS_PRIV, databasePermissions.ROOT);
-
     // enrollment section
     await makeQuery(CREATE_ENROLLMENT_TABLE, databasePermissions.ROOT);
     await makeQuery(GRANT_TEACHER_ENROLLMENT_PRIV, databasePermissions.ROOT);
@@ -252,9 +255,11 @@ module.exports = async () => {
     // attendance section
     await makeQuery(CREATE_ATTENDANCE_TABLE, databasePermissions.ROOT);
     await makeQuery(GRANT_TEACHER_ATTENDANCE_PRIV, databasePermissions.ROOT);
+    await makeQuery(GRANT_STUDENT_ATTENDANCE_PRIV, databasePermissions.ROOT);
     // student attendance section
     await makeQuery(CREATE_STUD_ATTENDANCE_TABLE, databasePermissions.ROOT);
     await makeQuery(GRANT_TEACHER_STUD_ATTENDANCE_PRIV, databasePermissions.ROOT);
+    await makeQuery(GRANT_STUDENT_STUD_ATTENDANCE_PRIV, databasePermissions.ROOT);
     // Enrollment details section
     await makeQuery(CREATE_ENROLLMENT_DETAIL_VIEW, databasePermissions.ROOT);
     await makeQuery(GRANT_TEACHER_ENROLLMENT_DETAIL_PRIV, databasePermissions.ROOT);
