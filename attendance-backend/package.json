@@ -3,10 +3,22 @@
   "version": "1.0.0",
   "description": "",
   "main": "src/index.js",
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
     "start": "env-cmd --file ./.env nodemon src/index.js",
     "trail": "env-cmd --file ./.env nodemon src/sql/trial.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Anushwar/attendance/"
+  },
+  "keywords": [
+    "node",
+    "heroku",
+    "express"
+  ],
   "author": "Anushwar Sharma",
   "license": "ISC",
   "dependencies": {
