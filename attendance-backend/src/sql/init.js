@@ -136,6 +136,16 @@ const CREATE_TIMETABLE_TABLE = `CREATE TABLE IF NOT EXISTS TIMETABLE(
   FOREIGN KEY (courseID) REFERENCES COURSE(courseID) ON DELETE CASCADE
 );`;
 
+// enlistment view section
+const CREATE_ENLISTMENT_DETAIL_VIEW = `CREATE OR REPLACE VIEW ENLISTMENT_DETAIL AS 
+SELECT CO.courseID, CO.courseName,CO.courseDescription, S.uid FROM STUD_ENLISTMENT  E
+JOIN COURSE CO
+ON E.courseID = CO.courseID
+JOIN STUDENT S
+on E.uid = S.uid;`;
+
+const GRANT_STUDENT_ENLISTMENT_DETAIL_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.ENLISTMENT_DETAIL TO '${SQL_STUDENT_USER}'@'${SQL_HOST}'`;
+
 const GRANT_TEACHER_TIMETABLE_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.TIMETABLE TO '${SQL_TEACHER_USER}'@'${SQL_HOST}'`;
 
 // attendance section
@@ -236,6 +246,9 @@ module.exports = async () => {
     // student enlistment section
     await makeQuery(CREATE_STUDENT_ENLISTMENT_TABLE, databasePermissions.ROOT);
     await makeQuery(GRANT_STUDENT_ENLISTMENT_PRIV, databasePermissions.ROOT);
+    // Enlistment detail section
+    await makeQuery(CREATE_ENLISTMENT_DETAIL_VIEW, databasePermissions.ROOT);
+    await makeQuery(GRANT_STUDENT_ENLISTMENT_DETAIL_PRIV, databasePermissions.ROOT);
     // attendance section
     await makeQuery(CREATE_ATTENDANCE_TABLE, databasePermissions.ROOT);
     await makeQuery(GRANT_TEACHER_ATTENDANCE_PRIV, databasePermissions.ROOT);
