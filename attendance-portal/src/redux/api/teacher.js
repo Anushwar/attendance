@@ -27,3 +27,11 @@ export const getTeacherAttendanceDetails = (classID, courseID, attendanceID) =>
 
 export const getTeacherStudentAttendance = (attendanceID) =>
   axios.get(`/teachers/attendances/${attendanceID}`);
+
+export const postTeacherStudentAttendance = (
+  classID,
+  courseID,
+  slotID,
+  students
+) =>
+  axios.post('/teachers/attendances/', { classID, courseID, slotID, students });

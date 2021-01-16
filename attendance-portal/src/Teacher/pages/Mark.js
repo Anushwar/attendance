@@ -9,25 +9,30 @@ import {
   Checkbox,
   Stack,
   Button,
+  useToast,
 } from '@chakra-ui/core';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Container } from '../../components';
-import { getTeacherStudents } from '../../redux/api';
+import {
+  getTeacherStudents,
+  postTeacherStudentAttendance,
+} from '../../redux/api';
 import { dispatchLoadCourseOfTeacher } from '../../redux/triggers';
 
 const Course = () => {
   const [isLoading, setLoading] = useState(true);
   const [students, setStudents] = useState([]);
 
-  const { courseID, classID } = useParams();
+  const { courseID, classID, slotID } = useParams();
 
   const course = useSelector(({ teacherData }) => teacherData.course);
   const { semester, section, courseName, courseDescription } = course;
 
   const dispatch = useDispatch();
   const { colors } = useTheme();
+  const toast = useToast();
 
   useEffect(async () => {
     try {
@@ -57,8 +62,31 @@ const Course = () => {
     setStudents(newStudents);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      await postTeacherStudentAttendance(
+        classID,
+        courseID,
+        slotID,
+        students.map(({ uid, isPresent }) => ({ uid, isPresent }))
+      );
+      toast({
+        title: 'Sucessful',
+        description: `Course ${courseName} created`,
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
+    } catch (err) {
+      toast({
+        title: 'Warning.',
+        description: err?.response?.data?.message,
+        status: 'warning',
+        duration: 5000,
+        isClosable: true,
+      });
+    }
   };
   return isLoading ? (
     <div />

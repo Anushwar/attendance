@@ -1,5 +1,7 @@
+const uuid = require('uuid').v4;
 const makeQuery = require('../helpers/result');
 const { databasePermissions } = require('../helpers/constants');
+const { beginTransaction, commit, rollback } = require('../helpers/transactions');
 
 // queries
 const SELECT_ALL_ATTENDANCE_BY_CLASS_AND_COURSE = (classID, courseID) => `SELECT A.attendanceID, 
@@ -10,6 +12,10 @@ const SELECT_ATTENDANCE_BY_ATTENDANCE_ID_TEACHER = (classID, courseID, attendanc
     WHERE classID='${classID}' and courseID='${courseID}' and attendanceID='${attendanceID}'`;
 
 const SELECT_STUDENT_ATTENDANCE_BY_ATTENDANCE_ID = (attendanceID) => `SELECT S.*, SA.isPresent FROM STUD_ATTENDANCE SA JOIN STUDENT S ON S.uid=SA.uid  where SA.attendanceID='${attendanceID}'`;
+
+const CREATE_ATTENDANCE = (attendanceID, classID, courseID, slotID) => `INSERT INTO ATTENDANCE VALUES ('${attendanceID}', '${classID}', '${courseID}','${slotID}', NOW())`;
+
+const INSERT_INTO_STUD_ATTENDANCE = (attendanceID, uid, isPresent) => `INSERT INTO STUD_ATTENDANCE VALUES ('${attendanceID}', '${uid}', ${isPresent});`;
 
 // executors
 module.exports.getAttendanceFromClassAndCourse = async (classID, courseID) => {
@@ -33,4 +39,23 @@ module.exports.getAllAttendanceOfStudentFromId = async (attendanceID) => {
     databasePermissions.TEACHER,
   );
   return students;
+};
+
+module.exports.createAttendanceEntry = async (classID, courseID, slotID, students) => {
+  try {
+    await beginTransaction(databasePermissions.ROOT);
+    const attendanceID = uuid();
+    await makeQuery(
+      CREATE_ATTENDANCE(attendanceID, classID, courseID, slotID), databasePermissions.TEACHER,
+    );
+    await Promise.all(students.map(async ({ uid, isPresent }) => {
+      await makeQuery(INSERT_INTO_STUD_ATTENDANCE(attendanceID, uid, isPresent),
+        databasePermissions.TEACHER);
+    }));
+    await commit;
+    return { attendanceID };
+  } catch (error) {
+    await rollback;
+    throw error;
+  }
 };

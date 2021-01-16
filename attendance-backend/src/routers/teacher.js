@@ -8,6 +8,7 @@ const {
   getTeacherStudentFromClassController,
   getTeacherAttendanceDetailsController,
   getTeacherAllAttendanceOfStudent,
+  postTeacherAttendanceController,
 } = require('../controllers/TeacherController');
 const { teacherAuth } = require('../middlewares/auth');
 
@@ -85,5 +86,14 @@ router.get('/classes/:classID/courses/:courseID', getTeacherCourseDetailsFromCla
  * response :  200 OK Response
  */
 router.get('/attendances/:attendanceID', getTeacherAllAttendanceOfStudent);
+
+/**
+ * path : /attendances/
+ *
+ * request  : attendance
+ *
+ * response :  2101 Created Response
+ */
+router.post('/attendances', postTeacherAttendanceController);
 
 module.exports = router;

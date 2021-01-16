@@ -33,7 +33,7 @@ const getDbmsUserFromPermissionLevel = (permissionLevel) => {
   }
 };
 
-module.exports = (query, permissionLevel) => new Promise((resolve, reject) => {
+module.exports.beginTransaction = (permissionLevel) => new Promise((resolve, reject) => {
   const dbmsUser = getDbmsUserFromPermissionLevel(permissionLevel);
   if (connection.user !== dbmsUser.user) {
     connection.changeUser({
@@ -41,11 +41,31 @@ module.exports = (query, permissionLevel) => new Promise((resolve, reject) => {
       password: dbmsUser.password,
     });
   }
-  connection.query(query, (err, results, fields) => {
+  connection.beginTransaction((err) => {
     if (err) {
       reject(err);
       return;
     }
-    resolve({ data: results, fields });
+    resolve();
+  });
+});
+
+module.exports.commit = new Promise((resolve, reject) => {
+  connection.commit((error) => {
+    if (error) {
+      reject(error);
+      return;
+    }
+    resolve();
+  });
+});
+
+module.exports.rollback = new Promise((resolve, reject) => {
+  connection.rollback((error) => {
+    if (error) {
+      reject(error);
+      return;
+    }
+    resolve();
   });
 });

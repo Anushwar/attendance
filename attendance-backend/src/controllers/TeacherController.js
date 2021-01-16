@@ -1,6 +1,7 @@
 const {
   successResponseWithData, conflictResponse,
 } = require('../helpers/response');
+
 const {
   getCoursesFromTid,
   getCoursesForTodayFromTid,
@@ -11,6 +12,7 @@ const {
   getAttendanceFromClassAndCourse,
   getAttendanceDetailFromClassAndCourse,
   getAllAttendanceOfStudentFromId,
+  createAttendanceEntry,
 } = require('../sql/attendance');
 
 const {
@@ -89,6 +91,18 @@ module.exports.getTeacherAllAttendanceOfStudent = [async (req, res) => {
   try {
     const students = await getAllAttendanceOfStudentFromId(attendanceID);
     successResponseWithData(res, students);
+  } catch (error) {
+    conflictResponse(res, error);
+  }
+}];
+
+module.exports.postTeacherAttendanceController = [async (req, res) => {
+  const {
+    classID, courseID, slotID, students,
+  } = req.body;
+  try {
+    const meta = await createAttendanceEntry(classID, courseID, slotID, students);
+    successResponseWithData(res, meta);
   } catch (error) {
     conflictResponse(res, error);
   }
