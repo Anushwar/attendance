@@ -4,6 +4,7 @@ import {
   LOAD_TEACHER_COURSES_TODAY,
   LOAD_TEACHER_COURSE_DETAILS,
   LOAD_TEACHER_ATTENDANCES,
+  LOAD_TEACHER_STUDENTS,
 } from '../actions';
 
 const teacherReducer = (
@@ -15,6 +16,7 @@ const teacherReducer = (
       courseDescription: '',
     },
     attendances: [],
+    students: [],
   },
   action
 ) => {
@@ -29,6 +31,8 @@ const teacherReducer = (
       return { ...state, course: action.course };
     case LOAD_TEACHER_ATTENDANCES:
       return { ...state, attendances: action.attendances };
+    case LOAD_TEACHER_STUDENTS:
+      return { ...state, students: action.students };
     default:
       return state;
   }

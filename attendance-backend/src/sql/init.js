@@ -175,6 +175,29 @@ const CREATE_ENROLLMENT_DETAIL_VIEW = `CREATE OR REPLACE VIEW ENROLLMENT_DETAIL 
 
 const GRANT_TEACHER_ENROLLMENT_DETAIL_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.ENROLLMENT_DETAIL TO '${SQL_TEACHER_USER}'@'${SQL_HOST}'`;
 
+// student enlistment details
+const CREATE_STUDENT_ENLISTMENT_DETAIL_VIEW = `CREATE OR REPLACE VIEW STUD_ENLISTMENT_DETAIL AS 
+SELECT SE.uid, SE.courseID, S.name, S.classID, C.courseName from stud_enlistment SE
+JOIN STUDENT S
+on SE.uid = S.uid
+JOIN COURSE C
+on SE.courseID = C.courseID`;
+
+const GRANT_TEACHER_STUD_ENLISTMENT_DETAIL_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.STUD_ENLISTMENT_DETAIL TO '${SQL_TEACHER_USER}'@'${SQL_HOST}'`;
+
+// attendance dtails
+const CREATE_TEACHER_ATTENDANCE_DETAIL_VIEW = `CREATE OR REPLACE VIEW ATTENDANCE_DETAIL AS
+  SELECT A.attendanceID, A.classID, A.slotID, A.date, C.semester, C.section, S.name, S.startTime, S.endTime, CO.* FROM
+  ATTENDANCE A
+  JOIN CLASS C
+  ON A.classID = C.classID
+  JOIN SLOT S
+  ON A.SLOTID = S.slotID
+  JOIN COURSE CO
+  on A.courseID = CO.courseID`;
+
+const GRANT_TEACHER_ATTENDANCE_DETAIL_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.ATTENDANCE_DETAIL TO '${SQL_TEACHER_USER}'@'${SQL_HOST}'`;
+
 module.exports = async () => {
   try {
     // admin section
@@ -219,6 +242,12 @@ module.exports = async () => {
     // Enrollment details section
     await makeQuery(CREATE_ENROLLMENT_DETAIL_VIEW, databasePermissions.ROOT);
     await makeQuery(GRANT_TEACHER_ENROLLMENT_DETAIL_PRIV, databasePermissions.ROOT);
+    // student enlistment details
+    await makeQuery(CREATE_STUDENT_ENLISTMENT_DETAIL_VIEW, databasePermissions.ROOT);
+    await makeQuery(GRANT_TEACHER_STUD_ENLISTMENT_DETAIL_PRIV, databasePermissions.ROOT);
+    // attenadance details
+    await makeQuery(CREATE_TEACHER_ATTENDANCE_DETAIL_VIEW, databasePermissions.ROOT);
+    await makeQuery(GRANT_TEACHER_ATTENDANCE_DETAIL_PRIV, databasePermissions.ROOT);
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error(err);

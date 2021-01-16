@@ -5,6 +5,9 @@ const {
   getAllTeacherCoursesForTodayController,
   getTeacherCourseDetailsFromClassController,
   getTeacherAttendanceFromClassController,
+  getTeacherStudentFromClassController,
+  getTeacherAttendanceDetailsController,
+  getTeacherAllAttendanceOfStudent,
 } = require('../controllers/TeacherController');
 const { teacherAuth } = require('../middlewares/auth');
 
@@ -39,13 +42,31 @@ router.get('/courses', getAllTeacherCoursesController);
 router.get('/todays/courses', getAllTeacherCoursesForTodayController);
 
 /**
- * path : /classes/:classID/courses/:courseID
+ * path : /classes/:classID/courses/:courseID/attendances
+ *
+ * request  : Attendance-List
+ *
+ * response :  200 OK Response
+ */
+router.get('/classes/:classID/courses/:courseID/attendances', getTeacherAttendanceFromClassController);
+
+/**
+ * path : /classes/:classID/courses/:courseID/attendances/:attendanceID
+ *
+ * request  : Attendance-List
+ *
+ * response :  200 OK Response
+ */
+router.get('/classes/:classID/courses/:courseID/attendances/:attendanceID', getTeacherAttendanceDetailsController);
+
+/**
+ * path : /classes/:classID/courses/:courseID/students
  *
  * request  : COURSE - details
  *
  * response :  200 OK Response
  */
-router.get('/classes/:classID/courses/:courseID/attendances', getTeacherAttendanceFromClassController);
+router.get('/classes/:classID/courses/:courseID/students', getTeacherStudentFromClassController);
 
 /**
  * path : /classes/:classID/courses/:courseID
@@ -55,5 +76,14 @@ router.get('/classes/:classID/courses/:courseID/attendances', getTeacherAttendan
  * response :  200 OK Response
  */
 router.get('/classes/:classID/courses/:courseID', getTeacherCourseDetailsFromClassController);
+
+/**
+ * path : /attendances/:attendancesID
+ *
+ * request  : attendance
+ *
+ * response :  200 OK Response
+ */
+router.get('/attendances/:attendanceID', getTeacherAllAttendanceOfStudent);
 
 module.exports = router;

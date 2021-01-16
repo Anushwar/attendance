@@ -9,7 +9,13 @@ const {
 
 const {
   getAttendanceFromClassAndCourse,
+  getAttendanceDetailFromClassAndCourse,
+  getAllAttendanceOfStudentFromId,
 } = require('../sql/attendance');
+
+const {
+  getStudentsOfTeacher,
+} = require('../sql/students');
 
 module.exports.getMyTeacherDetailsController = [async (req, res) => {
   delete req.user.password;
@@ -51,6 +57,38 @@ module.exports.getTeacherAttendanceFromClassController = [async (req, res) => {
   try {
     const attendance = await getAttendanceFromClassAndCourse(classID, courseID);
     successResponseWithData(res, attendance);
+  } catch (error) {
+    conflictResponse(res, error);
+  }
+}];
+
+module.exports.getTeacherStudentFromClassController = [async (req, res) => {
+  const { classID, courseID } = req.params;
+  try {
+    const students = await getStudentsOfTeacher(classID, courseID);
+    successResponseWithData(res, students);
+  } catch (error) {
+    conflictResponse(res, error);
+  }
+}];
+
+module.exports.getTeacherAttendanceDetailsController = [async (req, res) => {
+  const { classID, courseID, attendanceID } = req.params;
+  try {
+    const attendence = await getAttendanceDetailFromClassAndCourse(
+      classID, courseID, attendanceID,
+    );
+    successResponseWithData(res, attendence);
+  } catch (error) {
+    conflictResponse(res, error);
+  }
+}];
+
+module.exports.getTeacherAllAttendanceOfStudent = [async (req, res) => {
+  const { attendanceID } = req.params;
+  try {
+    const students = await getAllAttendanceOfStudentFromId(attendanceID);
+    successResponseWithData(res, students);
   } catch (error) {
     conflictResponse(res, error);
   }

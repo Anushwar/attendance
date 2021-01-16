@@ -8,6 +8,8 @@ export const LOAD_TEACHER_COURSE_DETAILS = 'LOAD_TEACHER_COURSE_DETAILS';
 
 export const LOAD_TEACHER_ATTENDANCES = 'LOAD_TEACHER_ATTENDANCES';
 
+export const LOAD_TEACHER_STUDENTS = 'LOAD_TEACHER_STUDENTS';
+
 export const updateTeacherUser = (user) => ({
   type: UPDATE_TEACHER_USER,
   user,
@@ -31,4 +33,9 @@ export const loadTeacherCourseDetails = (course) => ({
 export const loadTeacherAttendances = (attendances) => ({
   type: LOAD_TEACHER_ATTENDANCES,
   attendances,
+});
+
+export const loadTeacherStudents = (students) => ({
+  type: LOAD_TEACHER_STUDENTS,
+  students,
 });

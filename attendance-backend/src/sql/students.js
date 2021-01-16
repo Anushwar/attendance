@@ -37,3 +37,11 @@ module.exports.getAllStudents = async () => {
   const { data: students } = await makeQuery(SELECT_ALL_STUDENT(), databasePermissions.ADMIN);
   return students;
 };
+
+const SELECT_STUDENTS_FROM_CLASS_AND_COURSE = (classID, courseID) => `SELECT * FROM STUD_ENLISTMENT_DETAIL WHERE classID='${classID}' and courseID='${courseID}'`;
+module.exports.getStudentsOfTeacher = async (classID, courseID) => {
+  const { data: students } = await makeQuery(
+    SELECT_STUDENTS_FROM_CLASS_AND_COURSE(classID, courseID), databasePermissions.ROOT,
+  );
+  return students;
+};
