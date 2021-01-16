@@ -1,5 +1,3 @@
-import { LOAD_TEACHER_STUDENTS } from './teacher';
-
 export const UPDATE_STUDENT_USER = 'UPDATE_STUDENT_USER';
 
 export const LOAD_STUDENT_COURSES = 'LOAD_STUDENT_COURSES';
@@ -23,6 +21,6 @@ export const loadStudentCourseDetails = (course) => ({
 });
 
 export const loadStudentCourseAttendance = (attendance) => ({
-  type: LOAD_TEACHER_STUDENTS,
+  type: LOAD_STUDENT_COURSE_ATTENDANCE,
   attendance,
 });

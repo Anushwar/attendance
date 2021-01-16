@@ -17,10 +17,14 @@ const CREATE_ATTENDANCE = (attendanceID, classID, courseID, slotID) => `INSERT I
 
 const INSERT_INTO_STUD_ATTENDANCE = (attendanceID, uid, isPresent) => `INSERT INTO STUD_ATTENDANCE VALUES ('${attendanceID}', '${uid}', ${isPresent});`;
 
-const GET_ATTENDANCE_FOR_COURSE_BY_UID = (courseID, uid) => `SELECT A.*, DATE_FORMAT(A.date, '%m/%d/%Y %h:%i %p - %W') as date, SA.isPresent, SA.uid FROM STUD_ATTENDANCE SA
-JOIN ATTENDANCE A
-ON 
-SA.attendanceID = A.attendanceID where courseID='${courseID}' and uid='${uid}'`;
+const GET_ATTENDANCE_FOR_COURSE_BY_UID = (courseID, uid) => `SELECT A.*, DATE_FORMAT(A.date, '%m/%d/%Y %h:%i %p') as date, 
+    SA.isPresent, SA.uid, S.name, S.startTime, S.endTime FROM STUD_ATTENDANCE SA
+    JOIN ATTENDANCE A
+    ON 
+    SA.attendanceID = A.attendanceID
+    JOIN SLOT S
+    ON
+    S.slotID = A.slotID where courseID='${courseID}' and uid='${uid}'`;
 // executors
 module.exports.getAttendanceFromClassAndCourse = async (classID, courseID) => {
   const { data: attendences } = await makeQuery(

@@ -5,7 +5,10 @@ import {
   LOAD_STUDENT_COURSE_ATTENDANCE,
 } from '../actions';
 
-const studentReducer = (state = { course: { courseName: '' } }, action) => {
+const studentReducer = (
+  state = { course: { courseName: '' }, attendance: [] },
+  action
+) => {
   switch (action.type) {
     case UPDATE_STUDENT_USER:
       return { ...state, user: action.user };

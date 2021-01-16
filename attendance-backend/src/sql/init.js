@@ -124,6 +124,8 @@ const CREATE_SLOT_TABLE = `CREATE TABLE IF NOT EXISTS SLOT(
 
 const GRANT_TEACHER_SLOT_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.SLOT TO '${SQL_TEACHER_USER}'@'${SQL_HOST}'`;
 
+const GRANT_STUDENT_SLOT_PRIV = `GRANT SELECT ON ${SQL_DATABASE}.SLOT TO '${SQL_STUDENT_USER}'@'${SQL_HOST}'`;
+
 // timetable section
 const CREATE_TIMETABLE_TABLE = `CREATE TABLE IF NOT EXISTS TIMETABLE(
   classID VARCHAR(20),
@@ -243,6 +245,7 @@ module.exports = async () => {
     // slot table
     await makeQuery(CREATE_SLOT_TABLE, databasePermissions.ROOT);
     await makeQuery(GRANT_TEACHER_SLOT_PRIV, databasePermissions.ROOT);
+    await makeQuery(GRANT_STUDENT_SLOT_PRIV, databasePermissions.ROOT);
     // timetable table
     await makeQuery(CREATE_TIMETABLE_TABLE, databasePermissions.ROOT);
     await makeQuery(GRANT_TEACHER_TIMETABLE_PRIV, databasePermissions.ROOT);

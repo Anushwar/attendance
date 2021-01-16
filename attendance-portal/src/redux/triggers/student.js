@@ -1,5 +1,5 @@
 import {
-  loadStudentAttendance,
+  loadStudentCourseAttendance,
   loadStudentCourseDetails,
   loadStudentCourses,
   updateStudentUser,
@@ -35,7 +35,7 @@ const dispatchLoadCourseOfStudent = (courseID) => {
 const dispatchLoadCourseAttendanceOfStudent = (courseID) => {
   return async (dispatch) => {
     const { data: attendances } = await getStudentAttendanceOfCourse(courseID);
-    dispatch(loadStudentAttendance(attendances));
+    dispatch(loadStudentCourseAttendance(attendances));
   };
 };
 
