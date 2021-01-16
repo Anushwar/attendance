@@ -55,7 +55,7 @@ const CreateCourse = () => {
         css={{ margin: '1rem auto 2rem', display: 'block', width: '100%' }}
         type="submit"
       >
-        Create Course
+        Create slots
       </Button>
       {result && (
         <>
