@@ -34,9 +34,9 @@ FROM   ENLISTMENT_DETAIL
 WHERE  courseid = '${courseID}'; `;
 
 const SELECT_COURSE_DETAILS_FOR_TODAY_FROM_TID = (tid) => `SELECT C.classID, C.semester, C.section, CO.courseID, CO.courseName, 
-TIME_FORMAT(s.startTime, '%h:%i %p') as startTime, TIME_FORMAT(s.endTime, '%h:%i %p') as endTime, S.slotID from COURSE CO,
-CLASS C, slot S where courseID in (select courseID from TIMETABLE T where day=dayofweek(now()) and s.slotID = t.slotID and t.courseID in 
-(select courseID FROM ENROLLMENT WHERE tid ='${tid}' AND c.classID = classID));`;
+TIME_FORMAT(S.startTime, '%h:%i %p') as startTime, TIME_FORMAT(S.endTime, '%h:%i %p') as endTime, S.slotID from COURSE CO,
+CLASS C, SLOT S where courseID in (select courseID from TIMETABLE T where day=dayofweek(now()) and S.slotID = T.slotID and T.courseID in 
+(select courseID FROM ENROLLMENT WHERE tid ='${tid}' AND C.classID = classID));`;
 
 const SELECT_COURSE_DETAILS_FROM_CLASS_AND_COURSE = (classID, courseID) => `SELECT *
 FROM   ENROLLMENT_DETAIL
