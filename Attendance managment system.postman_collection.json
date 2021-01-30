@@ -1,0 +1,1105 @@
+{
+	"info": {
+		"_postman_id": "9d1ddfbe-5f8c-466e-8d2b-d9a4aa6e347d",
+		"name": "Attendance managment system",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Teacher",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-user-id",
+						"type": "text",
+						"value": "AIT18BECS071"
+					},
+					{
+						"key": "x-user-password",
+						"type": "text",
+						"value": "1019810198"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"tid\": \"teacher4\",\n    \"name\": \"Anushwar\",\n    \"password\": \"1019810198\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/admins/teachers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"admins",
+						"teachers"
+					]
+				},
+				"description": "dfsd"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Slot",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-user-id",
+						"type": "text",
+						"value": "AIT18BECS071"
+					},
+					{
+						"key": "x-user-password",
+						"type": "text",
+						"value": "1019810198"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Morning sesh 2\",\n    \"startTime\": \"10:00\",\n    \"endTime\": \"11:00\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/admins/slots",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"admins",
+						"slots"
+					]
+				},
+				"description": "dfsd"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Class",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-user-id",
+						"type": "text",
+						"value": "AIT18BECS071"
+					},
+					{
+						"key": "x-user-password",
+						"type": "text",
+						"value": "1019810198"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"classID\": \"2018-B\",\n     \"semester\": 5, \n     \"section\": \"A\", \n     \"tid\": \"teacher\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/admins/classes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"admins",
+						"classes"
+					]
+				},
+				"description": "dfsd"
+			},
+			"response": []
+		},
+		{
+			"name": "Get all teachers",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-user-id",
+						"type": "text",
+						"value": "AIT18BECS071"
+					},
+					{
+						"key": "x-user-password",
+						"type": "text",
+						"value": "1019810198"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/admins/teachers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"admins",
+						"teachers"
+					]
+				},
+				"description": "dfsd"
+			},
+			"response": []
+		},
+		{
+			"name": "Get all courses",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-user-id",
+						"type": "text",
+						"value": "AIT18BECS071"
+					},
+					{
+						"key": "x-user-password",
+						"type": "text",
+						"value": "1019810198"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/admins/courses",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"admins",
+						"courses"
+					]
+				},
+				"description": "dfsd"
+			},
+			"response": []
+		},
+		{
+			"name": "Get enrollments",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-user-id",
+						"type": "text",
+						"value": "AIT18BECS071"
+					},
+					{
+						"key": "x-user-password",
+						"type": "text",
+						"value": "1019810198"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/admins/enrollments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"admins",
+						"enrollments"
+					]
+				},
+				"description": "dfsd"
+			},
+			"response": []
+		},
+		{
+			"name": "Get all classes",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-user-id",
+						"type": "text",
+						"value": "AIT18BECS071"
+					},
+					{
+						"key": "x-user-password",
+						"type": "text",
+						"value": "1019810198"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/admins/classes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"admins",
+						"classes"
+					]
+				},
+				"description": "dfsd"
+			},
+			"response": []
+		},
+		{
+			"name": "Get timetable from class",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-user-id",
+						"type": "text",
+						"value": "AIT18BECS071"
+					},
+					{
+						"key": "x-user-password",
+						"type": "text",
+						"value": "1019810198"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/admins/classes/AIT-2018-A/timetables",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"admins",
+						"classes",
+						"AIT-2018-A",
+						"timetables"
+					]
+				},
+				"description": "dfsd"
+			},
+			"response": []
+		},
+		{
+			"name": "Get courses from class",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-user-id",
+						"type": "text",
+						"value": "AIT18BECS071"
+					},
+					{
+						"key": "x-user-password",
+						"type": "text",
+						"value": "1019810198"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/admins/classes/AIT-2018-A/courses",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"admins",
+						"classes",
+						"AIT-2018-A",
+						"courses"
+					]
+				},
+				"description": "dfsd"
+			},
+			"response": []
+		},
+		{
+			"name": "Get course details for teachers",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-user-id",
+						"type": "text",
+						"value": "shruthika"
+					},
+					{
+						"key": "x-user-password",
+						"type": "text",
+						"value": "shruthika"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/teachers/classes/AIT-2018-A/courses/18CS52",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"teachers",
+						"classes",
+						"AIT-2018-A",
+						"courses",
+						"18CS52"
+					]
+				},
+				"description": "dfsd"
+			},
+			"response": []
+		},
+		{
+			"name": "Get attendance",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-user-id",
+						"type": "text",
+						"value": "shruthika"
+					},
+					{
+						"key": "x-user-password",
+						"type": "text",
+						"value": "shruthika"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/teachers/classes/AIT-2018-A/courses/18CS52/attendances/8d2f3282-5731-11eb-a940-9769472afd76",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"teachers",
+						"classes",
+						"AIT-2018-A",
+						"courses",
+						"18CS52",
+						"attendances",
+						"8d2f3282-5731-11eb-a940-9769472afd76"
+					]
+				},
+				"description": "dfsd"
+			},
+			"response": []
+		},
+		{
+			"name": "Get attendance of students from aid",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-user-id",
+						"type": "text",
+						"value": "shruthika"
+					},
+					{
+						"key": "x-user-password",
+						"type": "text",
+						"value": "shruthika"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/teachers/attendances/8d2f3282-5731-11eb-a940-9769472afd76",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"teachers",
+						"attendances",
+						"8d2f3282-5731-11eb-a940-9769472afd76"
+					]
+				},
+				"description": "dfsd"
+			},
+			"response": []
+		},
+		{
+			"name": "Get attendance Copy",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-user-id",
+						"type": "text",
+						"value": "shruthika"
+					},
+					{
+						"key": "x-user-password",
+						"type": "text",
+						"value": "shruthika"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/teachers/classes/AIT-2018-A/courses/18CS52/students",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"teachers",
+						"classes",
+						"AIT-2018-A",
+						"courses",
+						"18CS52",
+						"students"
+					]
+				},
+				"description": "dfsd"
+			},
+			"response": []
+		},
+		{
+			"name": "Post timetable from class",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-user-id",
+						"type": "text",
+						"value": "AIT18BECS071"
+					},
+					{
+						"key": "x-user-password",
+						"type": "text",
+						"value": "1019810198"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"day\":2,\n    \"slotID\": 3,\n    \"courseID\":\"18CS51\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/admins/classes/AIT-2018-A/timetables",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"admins",
+						"classes",
+						"AIT-2018-A",
+						"timetables"
+					]
+				},
+				"description": "dfsd"
+			},
+			"response": []
+		},
+		{
+			"name": "Get all slots",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-user-id",
+						"type": "text",
+						"value": "AIT18BECS071"
+					},
+					{
+						"key": "x-user-password",
+						"type": "text",
+						"value": "1019810198"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/admins/slots",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"admins",
+						"slots"
+					]
+				},
+				"description": "dfsd"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Course",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-user-id",
+						"type": "text",
+						"value": "AIT18BECS071"
+					},
+					{
+						"key": "x-user-password",
+						"type": "text",
+						"value": "1019810198"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n      \"courseCode\": \"\",\n      \"courseName\": \"\",\n      \"courseHoursLecture\": \"\",\n      \"courseHoursTutorial\": \"\",\n      \"courseHoursPractical\": \"\",\n      \"courseCredits\": \"\",\n      \"courseDescription\":\"Hello this is maths\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/admins/courses",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"admins",
+						"courses"
+					]
+				},
+				"description": "dfsd"
+			},
+			"response": []
+		},
+		{
+			"name": "Admin Login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-user-id",
+						"type": "text",
+						"value": "AIT18BECS071",
+						"disabled": true
+					},
+					{
+						"key": "x-user-password",
+						"type": "text",
+						"value": "1019810198",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"aid\": \"admin\",\n    \"password\": \"admin\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/auth/admin/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"auth",
+						"admin",
+						"login"
+					]
+				},
+				"description": "dfsd"
+			},
+			"response": []
+		},
+		{
+			"name": "Teacher Login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-user-id",
+						"type": "text",
+						"value": "AIT18BECS071",
+						"disabled": true
+					},
+					{
+						"key": "x-user-password",
+						"type": "text",
+						"value": "1019810198",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"tid\": \"teacher\",\n    \"password\": \"aagath\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/auth/teacher/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"auth",
+						"teacher",
+						"login"
+					]
+				},
+				"description": "Teacher login"
+			},
+			"response": []
+		},
+		{
+			"name": "Teacher me",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "e9d56bc723f9c3733a60c0076836a035b94ce6e2",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-user-id",
+						"type": "text",
+						"value": "ancythomas"
+					},
+					{
+						"key": "x-user-password",
+						"type": "text",
+						"value": "ancythomas"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/teachers/me",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"teachers",
+						"me"
+					]
+				},
+				"description": "Teacher login"
+			},
+			"response": []
+		},
+		{
+			"name": "Teacher Classes",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "e9d56bc723f9c3733a60c0076836a035b94ce6e2",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-user-id",
+						"type": "text",
+						"value": "ancythomas"
+					},
+					{
+						"key": "x-user-password",
+						"type": "text",
+						"value": "ancythomas"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/teachers/courses",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"teachers",
+						"courses"
+					]
+				},
+				"description": "Teacher login"
+			},
+			"response": []
+		},
+		{
+			"name": "Teacher Classes Today",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "e9d56bc723f9c3733a60c0076836a035b94ce6e2",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-user-id",
+						"type": "text",
+						"value": "ancythomas"
+					},
+					{
+						"key": "x-user-password",
+						"type": "text",
+						"value": "ancythomas"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/teachers/todays/courses",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"teachers",
+						"todays",
+						"courses"
+					]
+				},
+				"description": "Teacher login"
+			},
+			"response": []
+		},
+		{
+			"name": "Greate brh",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-user-id",
+						"value": "shruthika",
+						"type": "text"
+					},
+					{
+						"key": "x-user-password",
+						"value": "shruthika",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"courseID\": \"18CS52\",\n    \"classID\": \"AIT-2018-A\",\n    \"slotID\": 3,\n    \"students\": [\n        {\n            \"uid\": \"1AY18CS045\",\n            \"isPresent\": true\n        },\n        {\n            \"uid\": \"1AY18CS016\",\n            \"isPresent\": true\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/teachers/attendances",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"teachers",
+						"attendances"
+					]
+				},
+				"description": "THis is attendance post"
+			},
+			"response": []
+		},
+		{
+			"name": "GET ATTENDANCE DETAILS FOR STUDENT",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-user-id",
+						"value": "1AY18CS045",
+						"type": "text"
+					},
+					{
+						"key": "X-user-password",
+						"value": "jeevan",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5000/students/courses/18CS52/attendances",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"students",
+						"courses",
+						"18CS52",
+						"attendances"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
