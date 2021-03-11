@@ -19,7 +19,8 @@ There are involvement of three end users while the web app is used:
 DBMS project by [Anushwar Sharma](https://github.com/Anushwar) and [Jeevan Surendran](https://github.com/jeevansurendran)
 
 ## Things to do before starting:
-- In the "attendance-backend" folder create a .env file including sql details and the service account details for all the users
+- In the "attendance-backend" folder create a ".env" file including sql details and the service account details for all the users (i.e Admin, Teacher and Student).
+- Mention the port number.
 - Install [Yarn](https://yarnpkg.com/).
 ## Installation:
 
