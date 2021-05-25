@@ -32,6 +32,7 @@ Install the dependencies and devDependencies and start the server.
 yarn
 ```
 
-To run this project, start backend in port 5000 and start the react server.
+### `yarn start`
 
-Future integrations may indicate actual deployment and more.
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
