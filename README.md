@@ -31,3 +31,6 @@ Install the dependencies and devDependencies and start the server.
 ```bash
 yarn
 ```
+To run this project, start backend in port 5000 and start the react server.
+
+Future integrations may indicate actual deployment and more.
